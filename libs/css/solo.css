@@ -1,0 +1,47 @@
+#logo{
+	width: 200px;
+	height: 200px;
+	margin-left: 21px;
+	margin-top: 21px;
+	margin-bottom: 10px; 
+}
+
+button{
+	padding: 0 !important;
+}
+
+.now{
+	font-size: 1.2em ;
+}
+
+#papertemplate_btn{
+	display: none;
+}
+#otherref_btn{
+	display: none;
+}
+
+#leftnav{
+	width: 239px; 
+	margin-left: 21px;
+}
+
+a{
+	display: block;
+}
+a:link{
+	text-decoration: none;
+}
+a:visited{
+	text-decoration: none;
+}a:hover{
+	text-decoration: none;
+}
+a:active{
+	text-decoration: none;
+}
+
+#maincontent{
+	
+}
+
