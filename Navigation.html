@@ -19,7 +19,7 @@
             <nav class="navbar navbar-default" role="navigation">
                 <br/> 
                 <div class="container-fluid">
-                    <div class="navbar-header" style="margin-left: 20%">
+                    <div class="navbar-header" style="margin-left: 15%">
                         <a class="navbar-brand" href="#">学术会议管理平台</a>
                     </div>
                     <div class="hidden-sm hidden-xs" style="margin-right: 10%">
@@ -36,9 +36,12 @@
                                 </div>
                         </form>
                     </div>
+                    <div class="navbar-form navbar-left">
+                        <button class="btn btn-default" onclick="createMeeting()">创建会议</button>
+                    </div>
                     <div>
                         <div id="navbar">
-                            <ul class="nav navbar-nav" style="margin-left: 15%">
+                            <ul class="nav navbar-nav" style="margin-left: 10%">
                                 <li class="dropdown">
                                     <a href="#" id="uname" class="dropdown-toggle" data-toggle="dropdown"> 
                                         <span class="caret"></span>
@@ -279,8 +282,8 @@
                     {
                         document.cookie = "userId="+data;
                         alert("登录成功！");
-                        //window.location.href="Navigation.html";
-                        window.location.href="createmeetings.html";
+                        window.location.href="Navigation.html";
+                        //window.location.href="createmeetings.html";
                     }
                 });	
             }
@@ -381,6 +384,14 @@
         function userRegister()
         {
             $('#userRegister').modal();
+        }
+        function createMeeting()
+        {
+            var type = getCookie("type");
+			var userid = getCookie("userId");
+            if(type=="institution_option"&&userid!=""){
+                window.location.href="createmeetings.html";
+            }
         }
     </script>
 </html>
