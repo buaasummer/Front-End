@@ -14,8 +14,8 @@
         </style>
     </head>
     <body onLoad="uname1()">
-        <!--Navigation导航栏部分-->
-        <div>
+        <!--顶部导航栏部分-->
+        <div style="margin-bottom: 0px">
             <nav class="navbar navbar-default" role="navigation">
                 <br/> 
                 <div class="container-fluid">
@@ -61,7 +61,7 @@
                 <br/>   
             </nav>
         </div>
-        <!--Navigation导航栏结束-->
+        <!--顶部导航栏结束-->
         <!--注册部分-->
         <div class="modal fade" id="userRegister" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -93,10 +93,12 @@
                                     <label for="repassword" class="control-label">确认密码：</label>
                                     <input class="form-control required" type="password" placeholder="Confirm Password" id="repassword" name="repassword" autofocus maxlength="20"/>
                                 </div>
-                                
-                                    <div class="form-group col-md-offset-9">
-                                        <button id='btn' type="submit" class="btn btn-primary" name="submit" onclick="doPostRegister()">注册</button>
-                                    </div>
+                                <div class="form-group" >
+                                    <font color="#999999">单位用户注册？</font><a href="institution-register.html" color="#CCCC00">前往注册</a>
+                                </div>
+                                <div class="form-group col-md-offset-9">
+                                    <button id='btn' type="submit" class="btn btn-primary" name="submit" onclick="doPostRegister()">注册</button>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +127,6 @@
                                     </label>
                                 </div>
                                 <br>
-                                <br>
                                 <div class="form-group">
                                     <label class="control-label">邮箱/用户名</label>
                                     <input class="form-control required" type="text" placeholder="Email/Username" id="email_username" name="email" autofocus maxlength="50"/>
@@ -135,9 +136,7 @@
                                     <input class="form-control required" type="password" placeholder="Password" id="password" name="password" maxlength="20"/>
                                 </div>
                                 
-                                <div class="form-group" >
-                                    <font color="#999999">还没有账号？</font><a href="Navigation.html" color="#CCCC00">前往注册</a>
-                                </div>
+                                
                                     <div class="form-group col-md-offset-9">
                                         <button id='btn' type="submit" class="btn btn-success" name="submit" onclick="doPostLogin()">登录</button>
                                     </div>
