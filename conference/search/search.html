@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>学术会议管理平台</title>
+    <meta charset="utf-8">
+    <link href="./css/bootstrap.css" rel="stylesheet">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <style media="screen">
+      tbody {
+        display: table-row-group;
+        vertical-align: middle;
+        border-color: inherit;
+      }
+      .list .list-item{
+        padding: 3% 0% 2% 5%;
+        width: 100%;
+        height: 100%;
+        float: left;
+        border-left: 10px solid transparent;
+        overflow: hidden;
+      }
+      .information{
+        position: relative;
+        background: #f6f6f6
+      }
+      .information-l-4{
+        padding:15px;
+      }
+      .dll{
+        width:80%;
+      }
+      .calendar-container{
+        margin-right: 20px;
+      }
+      th{
+        font-weight: 500;
+        border-bottom: 1px solid #deeee9;
+        border-top: 1px solid #deeee9;
+      }
+      th .list:hover{
+
+      }
+    </style>
+  </head>
+  <body>
+    <!--Navigation导航栏部分-->
+    <div>
+        <nav class="navbar navbar-default" role="navigation">
+            <br/>
+            <div class="container-fluid">
+                <div class="navbar-header" style="margin-left: 20%">
+                    <a class="navbar-brand" href="#">学术会议管理平台</a>
+                </div>
+                <div class="hidden-sm hidden-xs" style="margin-right: 10%">
+                    <form class="navbar-form navbar-left" style="margin-left: 10%">
+                            <div class="form-group">
+                                <select class="form-control">
+                                        <option>按时间</option>
+                                        <option>按地区</option>
+                                        <option>主办方</option>
+                                        <option>按名称</option>
+                                    </select>
+                                <input type="text" class="form-control" placeholder="查找会议">
+                                <button type="submit" class="btn btn-default">查找</button>
+                            </div>
+                    </form>
+                </div>
+                <div>
+                    <div id="navbar">
+                            <ul class="nav navbar-nav" style="margin-left: 20%">
+                                    <li class="dropdown">
+                                            <a class="dropdown-toggle " data-toggle="dropdown" role="button" href="#">
+                                              游客 <span class="caret"></span>
+                                            </a>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop">
+                                              <li><a id="LogIn" href="#">登录</a></li>
+                                              <li class="divider"></li>
+                                              <li><a id="SignIn" href="#">注册</a></li>
+                                              <li class="divider"></li>
+                                              <li><a id="LogOut"href="#">登出</a></li>
+                                            </ul>
+                                    </li>
+                            </ul>
+                    </div>
+                </div>
+            </div>
+            <br/>
+        </nav>
+    </div>
+    <!--Navigation导航栏结束-->
+    <!--Search-->
+    <div class="information">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-9 main">
+            <div class="panel panel-default" style="margin-bottom:10px; background: #fff; margin-top: 10px; float: left; width: 100%;">
+              <div class="posirt-h panel panel-default" style="height: 60px;position: relative;z-index: 1;float: left;width: 100%;">
+                <ul class="list-inline">
+                  <li class="list-item "><h4 style="margin:20px;"><strong>搜索结果</strong></h4></li>
+                </ul>
+              </div>
+              <table id="conference-info-container" class="table" border="0" class="table_ric2" cellspacing="0" cellpadding="0" style="100%">
+                <tbody id="info">
+                  <tr>
+                    <th class="list">
+                      <div class="list-item">
+                        <dl class="dll" style="width: 88%;">
+                          <dt>
+                            <h4><a href="#" target="" class="title">2018测试</a></h4>
+                          </dt>
+                          <dd class="">
+                            <p>
+                              <span class="calendar-container" style="">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                <span id="calendar">2018-06-30</span>
+                              </span>
+                              <span class="place-container" style="">
+                                <i class="glyphicon glyphicon-map-marker"></i>
+                                <span id="place">Beijing</span>
+                              </span>
+                            </p>
+                          </dd>
+                          <dd class="institution">
+                            <div class="">
+                              <i class="glyphicon glyphicon-home"></i>
+                              <span>单位名</span>
+                            </div>
+                          </dd>
+                        </dl>
+                      </div>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th class="list">
+                      <div class="list-item">
+                        <dl class="dll" style="width: 88%;">
+                          <dt>
+                            <h4><a href="#" target="" class="title">2018测试</a></h4>
+                          </dt>
+                          <dd class="">
+                            <p>
+                              <span class="calendar-container" style="">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                <span id="calendar">2018-06-30</span>
+                              </span>
+                              <span class="place-container" style="">
+                                <i class="glyphicon glyphicon-map-marker"></i>
+                                <span id="place">Beijing</span>
+                              </span>
+                            </p>
+                          </dd>
+                          <dd class="institution">
+                            <div class="">
+                              <i class="glyphicon glyphicon-home"></i>
+                              <span>单位名</span>
+                            </div>
+                          </dd>
+                        </dl>
+                      </div>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th class="list">
+                      <div class="list-item">
+                        <dl class="dll" style="width: 88%;">
+                          <dt>
+                            <h4><a href="#" target="" class="title">2018测试</a></h4>
+                          </dt>
+                          <dd class="">
+                            <p>
+                              <span class="calendar-container" style="">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                <span id="calendar">2018-06-30</span>
+                              </span>
+                              <span class="place-container" style="">
+                                <i class="glyphicon glyphicon-map-marker"></i>
+                                <span id="place">Beijing</span>
+                              </span>
+                            </p>
+                          </dd>
+                          <dd class="institution">
+                            <div class="">
+                              <i class="glyphicon glyphicon-home"></i>
+                              <span>单位名</span>
+                            </div>
+                          </dd>
+                        </dl>
+                      </div>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th class="list">
+                      <div class="list-item">
+                        <dl class="dll" style="width: 88%;">
+                          <dt>
+                            <h4><a href="#" target="" class="title">2018测试</a></h4>
+                          </dt>
+                          <dd class="">
+                            <p>
+                              <span class="calendar-container" style="">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                <span id="calendar">2018-06-30</span>
+                              </span>
+                              <span class="place-container" style="">
+                                <i class="glyphicon glyphicon-map-marker"></i>
+                                <span id="place">Beijing</span>
+                              </span>
+                            </p>
+                          </dd>
+                          <dd class="institution">
+                            <div class="">
+                              <i class="glyphicon glyphicon-home"></i>
+                              <span>单位名</span>
+                            </div>
+                          </dd>
+                        </dl>
+                      </div>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th class="list">
+                      <div class="list-item">
+                        <dl class="dll" style="width: 88%;">
+                          <dt>
+                            <h4><a href="#" target="" class="title">2018测试</a></h4>
+                          </dt>
+                          <dd class="">
+                            <p>
+                              <span class="calendar-container" style="">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                <span id="calendar">2018-06-30</span>
+                              </span>
+                              <span class="place-container" style="">
+                                <i class="glyphicon glyphicon-map-marker"></i>
+                                <span id="place">Beijing</span>
+                              </span>
+                            </p>
+                          </dd>
+                          <dd class="institution">
+                            <div class="">
+                              <i class="glyphicon glyphicon-home"></i>
+                              <span>单位名</span>
+                            </div>
+                          </dd>
+                        </dl>
+                      </div>
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <nav class="text-center">
+            <div class="pagination pagination-lg">
+              <li class="page previous" ><a id="page" class="pagg" href="#">上一页</a></li>
+              <li class="page first active"><a id="page" class="pagg" href="#" >1</a></li>
+              <li class="page second"><a id="page" class="pagg" href="#" >2</a></li>
+              <li class="page third"><a id="page" class="pagg" href="#" >3</a></li>
+              <li class="page fourth"><a id="page" class="pagg" href="#" >4</a></li>
+              <li class="page fifth"><a id="page" class="pagg" href="#" >5</a></li>
+              <li class="page next"><a id="page" class="pagg next_link" href="#">下一页</a></li>
+            </div>
+            </nav>
+          </div>
+          <div class="col-sm-3 side-bar" style="float:left; top:10px;">
+            <div class=" panel panel-default" style="padding: 20px;">
+              <div class="search-condition">
+                <div class="keyword input-group input-group-lg">
+                  <input id="keyword" class="form-control"type="text" name="keyword" value="" placeholder="关键词">
+                </div>
+              </div>
+              <br>
+              <div class="keyword">
+                <button id="searchbtn" type="submit" class="btn btn-primary btn-block btn-lg"  name="" onclick="doSearch()">搜索</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+  var url="http://154.8.211.55:8081/search/meeting?keyword=";
+  var cur_page=0;
+  var keyword="";
+  $("a.pagg").click(function(){
+    var ele=$(this);
+    var page_list=$(".page");
+    page=ele.text();
+    $("tbody").empty();
+    if(page=="上一页")
+    {
+      if(cur_page+1>1)
+      {
+        cur_page=cur_page-1;
+      }
+      //else if((cur_page+1)<5)
+      //{
+      //  cur_page=cur_page+1;
+      //}
+    }
+    else if(page=="下一页"){
+      if(cur_page+1<5)
+      cur_page=cur_page+1;
+    }
+    else{
+      cur_page=page-1;
+    }
+    page_list.removeClass("active");
+    var urll=url+keyword+"&page="+cur_page+"&size=20";
+    $.get(urll,function(data)
+    {
+      if(!data)
+      {
+        alert("错误");
+      }
+      else
+      {
+
+        for(var i=0;i<data.length;i++)
+        {
+          var v1=data[i].meetingId;
+          var v2=data[i].title;
+          var v3=data[i].postStartDate;
+          var v4=data[i].institution.institutionName;
+          var v5=data[i].address;
+          $("tbody").append(
+            "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='#' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span id='calendar'>"+v3+"</span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'>"+v5+"</span></span></p></dd><dd class='institution'><div class=''>"+v4+"</div></dd></dl></div></th></tr>"
+          );
+        }
+        page_list[cur_page+1].classList.add("active");
+        //page_list[cur_page].addClass("active");
+      }
+    });
+  });
+  function doSearch(){
+      var maxsize=20;
+      page_list=$(".page").removeClass("active");
+      keyword=$("#keyword").val();
+      $("tbody").empty();
+      //alert("url: "+url+keyword+"&page=1&size="+maxsize);
+      $.get(url+keyword+"&page=0&size="+maxsize,function(data){
+        if(!data)
+        {
+          alert("错误");
+        }
+        else
+        {
+          var conference_url="";
+          for(var i=0;i<data.length;i++)
+          {
+              var v1=data[i].meetingId;
+              var v2=data[i].title;
+              var v3=data[i].postStartDate;
+              var v4=data[i].institution.institutionName;
+              var v5=data[i].address;
+              if(v5==="")
+                v5="无";
+              $("tbody").append(
+                "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='#' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span id='calendar'> "+v3+" </span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'> "+v5+" </span></span></p></dd><dd class='institution'><div class=''><i class='glyphicon glyphicon-home'></i><span> "+v4+" </span></div></dd></dl></div></th></tr>"
+              );
+          }
+          alert(data.length);
+          $(".first").addClass("active");
+        }
+      });
+  }
+  </script>
+</html>
