@@ -8,42 +8,516 @@
 	<script type="text/javascript" src="../libs/js/solo.js"></script>
 	<link rel="stylesheet" type="text/css" href="../libs/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="../libs/css/solo.css">
-	<link rel="stylesheet" type="text/css" href="../libs/css/leftnav.css">
 	<script type="text/javascript">
-		window.onload=function(){
-			$('#leftnav').load('./leftnav.html');
-			$('#topnav').load('./Navigation.html');
-	}
+	var url="http://154.8.211.55:8081";
 
+		function doPostRegister()
+		{
+			//alert("qqq");
+			var val1 = document.getElementById("username").value;
+            var val2 = document.getElementById("password1").value;
+            var val3 = document.getElementById("repassword").value;
+			var val4 = document.getElementById("useremail").value;
+            var val5 = document.getElementById("idnumber").value;
+			var user = {
+        	"username":val1,
+        	"password":val2,
+			"email":val4,
+            "idnumber":val5
+        	};
+                   
+			user = JSON.stringify(user);
+        	var settings = {
+			        type: "POST",
+			        url:url+"/personal_user",
+			        data:user,
+			        error: function(XHR,textStatus,errorThrown) {
+			            alert("error!");
+						alert(errorThrown);
+			        },
+			        success: function(data,textStatus) {
+						if(data==false)
+						{
+							alert("该昵称已被注册！");
+						}
+						else
+						{
+							alert("注册成功！");
+							window.location.href='Navigation.html';
+							
+						}
+			        },
+			        headers: {
+			            "Content-Type":"application/json"
+			        }
+			        
+			};
+			
+
+            var isRightForm = true;
+			if(val1=="")
+			{
+				alert("昵称不能为空！");
+                isRightForm = false;
+			}
+			if(val2=="")
+			{
+				alert("密码不能为空！");
+                isRightForm = false;
+			}
+			if(val2!=val3)
+			{
+				alert("两次输入密码不相同！");
+                isRightForm = false;
+			}
+			if(val4=="")
+			{
+				alert("邮箱不能为空！");
+                isRightForm = false;
+			}
+            
+
+            /*判断输入身份证号是否合法 */
+            /*简单判断是否为18位数字 */
+            /*
+            if(val5.length!=18){ 
+                isRightForm = false; 
+            }
+            if(!isNumber(val5)){ 
+                isRightForm = false;
+            }*/
+            
+            var reg1 = /^(\d{15}|\d{18})$/;
+            if(!reg1.test(val5)){
+                alert("身份证号输入错误！");
+                isRightForm = false;
+            }
+
+            /*判断邮箱是否格式正确 */
+            var reg2 = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"); //正则表达式
+            if(!reg2.test(val4)){
+                alert("邮箱格式输入错误！");
+                isRightForm = false;
+            }
+
+            if(isRightForm){
+                $.ajax(settings);
+            }
+		}
+		function doPostLogin()
+		{
+			//alert("qqq");
+			var val1 = document.getElementById("email_username").value;
+            var val2 = document.getElementById("password").value;
+            var type = $('#option input:radio:checked').val();
+            document.cookie = "type="+type;
+            //alert(document.cookie);
+
+            if(type=="user_option"){
+                $.get(url+"/personal_user?email="+val1+"&password="+val2,function(data)
+                {
+                    if(data==0)
+                    {
+                        alert("用户名或密码不正确！");
+                    }
+                    else
+                    {
+                        //alert(document.cookie);
+                        document.cookie = "userId="+data;
+                        alert("登录成功！");
+                        window.location.href="conference-main.html";
+                    }
+                });	
+            }
+            else if(type=="institution_option"){
+                $.get(url+"/institution/login?username="+val1+"&password="+val2,function(data)
+                {
+                    if(data==0)
+                    {
+                        alert("用户名或密码不正确！");
+                    }
+                    else
+                    {
+                        document.cookie = "userId="+data;
+                        alert("登录成功！");
+                        window.location.href="Navigation.html";
+                        //window.location.href="createmeetings.html";
+                    }
+                });	
+            }
+		}
+		function logout() 
+		{
+   		    setCookie("userId", "", -1);
+            setCookie("type","",-1)
+		    location.reload();
+		}
+        window.onload=function()
+		{
+            $('#leftnav').load('./leftnav.html');
+			var a=checkName();
+			$("#uname").append(a);
+			doooget();	
+		}
+        
+        function doooget(){
+        	let meetingid = location.search.split('=')[1];
+        	$.get(url+'/meeting/info?meeting_id='+meetingid, function(data){
+				$('#general-show h1').text(data.title);
+				$('#general-show p').text(data.introduction);
+				$('#essay_description').text(data.paperInfo);
+				var startdate = data.startDate;
+				var poststartdate = data.postStartDate;
+				var postenddate = data.postEndDate;
+				var informdate = data.informDate;
+				var registstartdate=data.registStartDate;
+				var registrationdeadline = data.registrationDeadline;
+				var enddate = data.endDate;
+				if(startdate!=null)
+					$('#important_table').append('<tr><td>会议开始时间</td><td>'+startdate+'</td></tr>');
+				else
+					$('#important_table').append('<tr><td>会议开始时间</td><td>未定</td></tr>');
+				if(poststartdate!=null)
+					$('#important_table').append('<tr><td>投稿开始日期</td><td>'+poststartdate+'</td></tr>');
+				else
+					$('#important_table').append('<tr><td>投稿开始日期</td><td>未定</td></tr>');
+				if(postenddate!=null)
+					$('#important_table').append('<tr><td>投稿结束日期</td><td>'+postenddate+'</td></tr>');
+				else
+					$('#important_table').append('<tr><td>投稿结束日期</td><td>未定</td></tr>');
+				if(informdate!=null)
+					$('#important_table').append('<tr><td>公示投稿结果日期</td><td>'+data.informDate+'</td></tr>');
+				else
+					$('#important_table').append('<tr><td>公示投稿结果日期</td><td>未定</td></tr>');
+				if(registstartdate!=null)
+					$('#important_table').append('<tr><td>注册开始日期</td><td>'+data.registStartDate+'</td></tr>');
+				else
+					$('#important_table').append('<tr><td>注册开始日期</td><td>未定</td></tr>');
+				if(registrationdeadline!=null)
+					$('#important_table').append('<tr><td>注册截止日期</td><td>'+data.registrationDeadline+'</td></tr>');
+				else
+					$('#important_table').append('<tr><td>注册截止日期</td><td>未定</td></tr>');
+				if(enddate!=null)
+					$('#important_table').append('<tr><td>会议结束日期</td><td>'+data.endDate+'</td></tr>')
+				else
+					$('#important_table').append('<tr><td>会议结束日期</td><td>未定</td></tr>');
+				$('#schedule_table').append('<tr><td>'+data.schedule+'</td></tr>');
+
+				//暂时只返回了一个机构的信息，ins是一个对象而不是数组，后面可以改成数组
+				var ins = data.institution;
+				var inn=document.createElement('div');
+				$(inn).append('<h3>'+ins.institutionName+'</h3>')
+				$(inn).append('<h4>组织编码: '+'&nbsp;&nbsp;&nbsp;'+ins.organizationCode+'</h3>')
+				$(inn).append('<h4>法人信息: '+'&nbsp;&nbsp;&nbsp;'+ins.legalPersonName+'&nbsp;&nbsp;&nbsp;'+ins.legalPersonEmail+'&nbsp;&nbsp;&nbsp;'+ins.legalPersonPhoneNumber+'</h4>')
+				$(inn).append('<h4>组织地址: '+'&nbsp;&nbsp;&nbsp;'+ins.postalAddress+'</h3>')
+				$('#organization_list').append(inn);
+
+				$('#register-btn').html('&nbsp;&nbsp;Register for the Conference&nbsp;&nbsp;$'+data.registrationFee);
+				$('#contact_address').text(data.address);
+				$('#contact_name').text(data.contactPerson);
+				$('#contact_email').text(data.email);
+				$('#contact_phone').text(data.phone);
+			});
+			
+        }
+		function getCookie(c_name)
+        {
+            let c_end;
+			if(document.cookie.length>0){
+				c_start=document.cookie.indexOf(c_name+"=");
+				if(c_start==-1)
+					return "";
+				else if(c_start!=-1){
+					c_start=c_start+c_name.length+1;
+					c_end=document.cookie.indexOf(";",c_start);
+					if(c_end==-1){
+						c_end=document.cookie.length;
+					}
+				}
+                return unescape(document.cookie.substring(c_start,c_end));
+			}
+			return "";
+		}
+		function checkName()
+        {
+            var type = getCookie("type");
+			var userid = getCookie("userId");
+            //alert("userid"+userid+"  type"+type);
+			if(userid=="")
+			{
+                var b="游客";
+				return b;
+			}
+			else if(userid!="")
+			{
+                if(type=="user_option"){
+                    document.getElementById("SignIn").href="#";
+                    document.getElementById("LogIn").onclick=null;
+                    var c="";
+                    $.ajaxSettings.async=false;
+                    //url=url+"/personal_user";
+                    $.get(url+"/personal_user/info?uid="+userid,function(data,status){
+                        c=data['username'];
+                    });
+                    return c;
+                }
+                else if(type=="institution_option"){
+                    document.getElementById("SignIn").href="#";
+                    document.getElementById("LogIn").onclick=null;
+                    var c="";
+                    $.ajaxSettings.async=false;
+                    //url=url+"/personal_user";
+                    $.get(url+"/institution/info?institution_id="+userid,function(data,status){
+                        c=data['institutionName'];
+
+                    });
+                    return c;
+                }
+                
+			}
+		}
+        function setCookie(cname, cvalue, exdays)
+        {
+		    var d = new Date();
+		    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+		    var expires = "expires="+d.toUTCString();
+		    document.cookie = cname + "=" + cvalue + "; " + expires;
+	    }
+        function userLogin()
+        {
+            $('#userLogin').modal();
+        }
+        function userRegister()
+        {
+            $('#userRegister').modal();
+        }
+        function createMeeting()
+        {
+            var type = getCookie("type");
+			var userid = getCookie("userId");
+            if(type=="institution_option"&&userid!=""){
+                window.location.href="createmeetings.html";
+            }
+        }
 	</script>
+	<style>
+    .center {
+        float: none;
+        margin-left: 26%;
+    }
+    #leftnav{
+	position: fixed;
+	float: left;
+	width: 300px; 
+	margin-left: 21px;
+}
+
+td{
+	font-size: 20px;
+	text-align: center;
+}
+
+th{
+	text-align: center;
+}
+
+.now{
+	font-size: 1.2em ;
+	background-color: green;
+}
+
+#papertemplate{
+	display: none;
+}
+#otherref{
+	display: none;
+}
+
+
+h4 a{
+	display: block;
+}
+h4 a:link{
+	text-decoration: none;
+}
+h4 a:visited{
+	text-decoration: none;
+}
+h4 a:hover{
+	text-decoration: none;
+}
+h4 a:active{
+	text-decoration: none;
+}
+
+.out_btn{
+	height: 40px;
+	margin: auto;
+	 transform: translate(100%,50%);
+}
+
+#reference_link:hover{
+	cursor: pointer;
+}
+
+    </style>
 </head>
-<body>
-	<div id='topnav'></div>
+<body">
+	<div id='topnav'>
+		<!--Navigation导航栏部分-->
+        <div>
+            <nav class="navbar navbar-default" role="navigation">
+                <br/> 
+                <div class="container-fluid">
+                    <div class="navbar-header" style="margin-left: 15%">
+                        <a class="navbar-brand" href="#">学术会议管理平台</a>
+                    </div>
+                    <div class="hidden-sm hidden-xs" style="margin-right: 10%">
+                        <form class="navbar-form navbar-left" style="margin-left: 10%">
+                                <div class="form-group">
+                                    <select class="form-control">
+                                            <option>按时间</option>
+                                            <option>按地区</option>
+                                            <option>主办方</option>
+                                            <option>按名称</option>
+                                        </select>  
+                                    <input type="text" class="form-control" placeholder="查找会议">
+                                    <button type="submit" class="btn btn-default">查找</button>
+                                </div>
+                        </form>
+                    </div>
+                    <div class="navbar-form navbar-left">
+                        <button class="btn btn-default" onclick="createMeeting()">创建会议</button>
+                    </div>
+                    <div>
+                        <div id="navbar">
+                            <ul class="nav navbar-nav" style="margin-left: 10%">
+                                <li class="dropdown">
+                                    <a href="#" id="uname" class="dropdown-toggle" data-toggle="dropdown"> 
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop">
+                                        <li><a id="LogIn" href="#" onclick="userLogin()">登录</a></li>
+                                        <li class="divider"></li>
+                                        <li><a id="SignIn" href="#" onclick="userRegister()">注册</a></li>
+                                        <li class="divider"></li>
+                                        <li><a id="LogOut"href="#" onclick="logout()">登出</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div> 
+                    </div>
+                </div>  
+                <br/>   
+            </nav>
+        </div>
+        <!--Navigation导航栏结束-->
+        <!--注册部分-->
+        <div class="modal fade" id="userRegister" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="margin-top:40%">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">注册</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-horizontal col-md-offset-0" id="login_form">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="username1" class="control-label">昵称：</label>
+                                    <input class="form-control required" type="text" placeholder="Username" id="username" name="username" autofocus maxlength="20"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="useremail" class="control-label">邮箱：</label>
+                                    <input class="form-control required" type="email" placeholder="Email" id="useremail" name="useremail" autofocus maxlength="20"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="idnumber" class="control-label">身份证号：</label>
+                                    <input class="form-control required" type="text" placeholder="Idnumber" id="idnumber" name="idnumber" autofocus maxlength="20"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password1" class="control-label">密码：</label>
+                                    <input class="form-control required" type="password" placeholder="Password" id="password1" name="password" autofocus maxlength="20"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="repassword" class="control-label">确认密码：</label>
+                                    <input class="form-control required" type="password" placeholder="Confirm Password" id="repassword" name="repassword" autofocus maxlength="20"/>
+                                </div>
+                                
+                                    <div class="form-group col-md-offset-9">
+                                        <button id='btn' type="submit" class="btn btn-primary" name="submit" onclick="doPostRegister()">注册</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="modal-footer"></div>
+                </div>
+            </div>
+        </div>
+        <!--注册部分结束-->
+        <!--用户登录部分-->
+        <div class="modal fade" id="userLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="margin-top:40%">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">登录</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-horizontal col-md-offset-0" id="login_form">
+                            <div class="col-md-12">
+                                <div class="btn-group center" id="option" data-toggle="buttons">
+                                    <label class="btn btn-default">
+                                        <input type="radio" class="toggle" value="user_option">个人用户登录
+                                    </label>
+                                    <label class="btn btn-default">
+                                        <input type="radio" class="toggle" value="institution_option">单位用户登录
+                                    </label>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="form-group">
+                                    <label class="control-label">邮箱/用户名</label>
+                                    <input class="form-control required" type="text" placeholder="Email/Username" id="email_username" name="email" autofocus maxlength="50"/>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">密码</label>
+                                    <input class="form-control required" type="password" placeholder="Password" id="password" name="password" maxlength="20"/>
+                                </div>
+                                
+                                <div class="form-group" >
+                                    <font color="#999999">还没有账号？</font><a href="Navigation.html" color="#CCCC00">前往注册</a>
+                                </div>
+                                    <div class="form-group col-md-offset-9">
+                                        <button id='btn' type="submit" class="btn btn-success" name="submit" onclick="doPostLogin()">登录</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="modal-footer"></div>
+                </div>
+            </div>
+        </div>
+        <!--用户登录部分结束-->
+	</div>
 	<div id='leftnav' class='col-md-4'>
 		
 	</div>
 	<div id='maincontent' class="col-md-12">
 		<a name="general" class="content" ></a>
-            <div class="jumbotron">
-			  <h1>Welcome to SIGCOMM 2018</h1>
-			  <p>The organizing committee is delighted to invite you to ACM SIGCOMM 2018, to be held in Budapest, Hungary on August 20-25, 2018. SIGCOMM is the flagship annual conference of the ACM Special Interest Group on Data Communication (SIGCOMM) on the applications, technologies, architectures, and protocols for computer communication.</p>
+            <div id='general-show' class="jumbotron">
+			  <h1></h1>
+			  <p></p>
 			  <img src="../libs/img/c.jpg" style="width: 100%" >
 			</div>
         <a name="essay" class="content"></a>
-        	<div class="jumbotron">
+        	<div id='essay-show' class="jumbotron">
             	<h2><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>&nbsp;&nbsp;Call for Papers</h2>
-	            <p id='essay_description'>The ACM SIGCOMM 2018 conference seeks papers describing significant research contributions to the field of data communication networks and networked systems. SIGCOMM’18 takes a broad view of networking research. This includes new ideas relating to (but not limited to) mobile, wide-area, data-center, home, and enterprise networks using a variety of link technologies (wired, wireless, visual, and acoustic), as well as social networks and network architecture. It encompasses all aspects of networks and networked systems, including packet-processing hardware and software, virtualization, mobility, sensors, provisioning and resource management, performance, energy consumption, topology, robustness and security, measurement, diagnosis, verification, privacy, economics and evolution, interactions with applications, internet-of-things, novel applications of machine learning to networking, and usability of underlying networking technologies.
-
-				We want SIGCOMM’18 to be daring and emphasize novelty and creativity. The more novel the concept, the harder it can be to fully develop or evaluate all aspects, and the review process will take this into account. We encourage authors to discuss not only the benefits but also the limitations of their ideas.
-
-				Unlike in previous years, SIGCOMM’18 will not have a separate experience track. However, we do encourage the submission of experience papers that provide detailed technical insight into real-world deployments of novel networking technologies and systems.
-
-				In addition to the main conference, SIGCOMM 2018 will have a series of co-located workshops, tutorials, poster and demo sessions, a travel grant program, and conference best paper and SIGCOMM awards.</p>		
+	            <p id='essay_description'>.</p>		
 			</div>        
         <a name="important" class="content"></a>
             <h2><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;Important Dates</h2>
             <table id='important_table' class="table table-hover">
-            <!--7-->
             	<tr>
             		<th><h3>Description</h3></th>
             		<th><h3>Specific Date</h3></th>
@@ -56,36 +530,41 @@
             </table>
         
         <a name="organization" class="content"></a>
-           <div class="jumbotron">
+           <div id='organization-show' class="jumbotron">
             	<h2><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;&nbsp;Organization Committee</h2>
-            	<ul id='organization_list'>
-            	</ul>
+            	<div id='organization_list'>
+            	</div>
 			</div>        
         <a name="register" class="content"></a>
-        	<div class="jumbotron">
+        	<div id="register-show" class="jumbotron">
             	<h2><span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;Registration</h2>
             	<p id="register_description"></p>
-            	<button class="out_btn btn btn-lg btn-primary" onclick="toRegistration()">&nbsp;&nbsp;Register for the Conference&nbsp;&nbsp;</button>
+            	<button id='register-btn' class="out_btn btn btn-lg btn-primary" onclick="toRegistration()"></button>
 			</div>  
         <a name="hotel" class="content"></a>
-        	<div class="jumbotron">
+        	<div id="hotel-show" class="jumbotron">
             	<h2><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>&nbsp;&nbsp;Conference Hotel&Traffic</h2>
             	<img src="../libs/img/hotel_1.jpg" style="width: 100%">
             	<p id="hotel_description">
-            		The conference hotel of ACM SIGCOMM 2018 is InterContinental Budapest located on the Danube bank in the heart of the Hungarian capital. The SIGCOMM 2018 workshops and tutorials meet on the first floor of the hotel. On August 20, InterContinental Budapest hosts the SIGCOMM 2018 reception during the spectacular fireworks held on the Danube to celebrate the most important national holiday of Hungarians. The hotel is a leisurely two-minute walk to Vigadó, which serves as the venue for the main conference of SIGCOMM 2018. InterContinental Budapest also lies in close proximity to other SIGCOMM 2018 social events and numerous Budapest landmarks, including the Széchenyi Chain Bridge, Gresham Palace, Hungarian Parliament Building, St. Stephen’s Basilica, Dohány Street Synagogue, and Buda Castle with its Fisherman’s Bastion and Matthias Church.
-
-					The ACM arranged for SIGCOMM 2018 attendees a block of sleeping rooms for stays in the hotel during August 18-26 with nightly rates starting from 199 Euros. To reserve a sleeping room at InterContinental Budapest, please click on the button below.
             	</p>
             	<button class="out_btn btn btn-lg btn-success" onclick="toReserve()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reserve a Hotel Room&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
 			</div> 
         <a name="contact" class="content"></a>
-        	<div class="jumbotron">
+        	<div id="contact-show" class="jumbotron">
             	<h2><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>&nbsp;&nbsp;Contact with us</h2>
             	<address id="contact_description"><h3>
-				    <strong id="contact_name"></strong><br>
-				    1355 Market Street, Suite 900<br>
-				    San Francisco, CA 94103<br>
-				    <abbr title="Phone">P:</abbr> (123) 456-7890
+            		<abbr title="Name">N:</abbr>
+				    <strong id="contact_name">
+				    </strong><br>
+				    <abbr title="Address">A:</abbr>
+				    <strong id="contact_address">
+				    </strong><br>
+				    <abbr title="Email">E:</abbr>
+				    <strong id="contact_email">
+				    </strong><br>
+				    <abbr title="Phone">P:</abbr> 
+				    <strong id='contact_phone'>
+				    </strong>
 				</h3></address>
 			</div>
 	</div>
