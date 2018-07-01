@@ -1,5 +1,3 @@
-
-
 $(window).scroll(function(){
 	let bar = document.documentElement.scrollTop;
 	let contents = document.getElementsByClassName('content');	let now=0;
@@ -32,7 +30,7 @@ function toRegistration(){
 }
 
 function toReserve(){
-	alert('to Reserve!');
+	alert('Suprise! All by Yourself!');
 }
 
 function now_general(){
