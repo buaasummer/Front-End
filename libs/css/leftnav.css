@@ -1,0 +1,53 @@
+#leftnav{
+	position: fixed;
+	float: left;
+	width: 300px; 
+	margin-left: 21px;
+}
+
+h4{
+	margin: 0;
+}
+
+li{
+	height: 40px;
+	overflow: hidden;
+}
+
+.now{
+	font-size: 1.2em ;
+	background-color: green;
+}
+
+#papertemplate{
+	display: none;
+}
+#otherref{
+	display: none;
+}
+
+
+a{
+	display: block;
+}
+a:link{
+	text-decoration: none;
+}
+a:visited{
+	text-decoration: none;
+}a:hover{
+	text-decoration: none;
+}
+a:active{
+	text-decoration: none;
+}
+
+.out_btn{
+	height: 40px;
+	margin: auto;
+	 transform: translate(100%,50%);
+}
+
+#reference_link:hover{
+	cursor: pointer;
+}

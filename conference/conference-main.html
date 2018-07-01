@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Demo Conference</title>
+	<script type="text/javascript" src="../libs/js/jquery.js"></script>
+	<script type="text/javascript" src="../libs/js/bootstrap.js"></script>
+	<script type="text/javascript" src="../libs/js/solo.js"></script>
+	<link rel="stylesheet" type="text/css" href="../libs/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="../libs/css/solo.css">
+	<link rel="stylesheet" type="text/css" href="../libs/css/leftnav.css">
+	<script type="text/javascript">
+		window.onload=function(){
+			$('#leftnav').load('./leftnav.html');
+			$('#topnav').load('./Navigation.html');
+	}
+
+	</script>
+</head>
+<body>
+	<div id='topnav'></div>
+	<div id='leftnav' class='col-md-4'>
+		
+	</div>
+	<div id='maincontent' class="col-md-12">
+		<a name="general" class="content" ></a>
+            <div class="jumbotron">
+			  <h1>Welcome to SIGCOMM 2018</h1>
+			  <p>The organizing committee is delighted to invite you to ACM SIGCOMM 2018, to be held in Budapest, Hungary on August 20-25, 2018. SIGCOMM is the flagship annual conference of the ACM Special Interest Group on Data Communication (SIGCOMM) on the applications, technologies, architectures, and protocols for computer communication.</p>
+			  <img src="../libs/img/c.jpg" style="width: 100%" >
+			</div>
+        <a name="essay" class="content"></a>
+        	<div class="jumbotron">
+            	<h2><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>&nbsp;&nbsp;Call for Papers</h2>
+	            <p id='essay_description'>The ACM SIGCOMM 2018 conference seeks papers describing significant research contributions to the field of data communication networks and networked systems. SIGCOMM’18 takes a broad view of networking research. This includes new ideas relating to (but not limited to) mobile, wide-area, data-center, home, and enterprise networks using a variety of link technologies (wired, wireless, visual, and acoustic), as well as social networks and network architecture. It encompasses all aspects of networks and networked systems, including packet-processing hardware and software, virtualization, mobility, sensors, provisioning and resource management, performance, energy consumption, topology, robustness and security, measurement, diagnosis, verification, privacy, economics and evolution, interactions with applications, internet-of-things, novel applications of machine learning to networking, and usability of underlying networking technologies.
+
+				We want SIGCOMM’18 to be daring and emphasize novelty and creativity. The more novel the concept, the harder it can be to fully develop or evaluate all aspects, and the review process will take this into account. We encourage authors to discuss not only the benefits but also the limitations of their ideas.
+
+				Unlike in previous years, SIGCOMM’18 will not have a separate experience track. However, we do encourage the submission of experience papers that provide detailed technical insight into real-world deployments of novel networking technologies and systems.
+
+				In addition to the main conference, SIGCOMM 2018 will have a series of co-located workshops, tutorials, poster and demo sessions, a travel grant program, and conference best paper and SIGCOMM awards.</p>		
+			</div>        
+        <a name="important" class="content"></a>
+            <h2><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;Important Dates</h2>
+            <table id='important_table' class="table table-hover">
+            <!--7-->
+            	<tr>
+            		<th><h3>Description</h3></th>
+            		<th><h3>Specific Date</h3></th>
+            	</tr>
+            </table>
+        
+        <a name="schedule" class="content"></a>
+            <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span>&nbsp;&nbsp;Schedule</h2>
+            <table id='schedule_table' class="table table-hover">
+            </table>
+        
+        <a name="organization" class="content"></a>
+           <div class="jumbotron">
+            	<h2><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;&nbsp;Organization Committee</h2>
+            	<ul id='organization_list'>
+            	</ul>
+			</div>        
+        <a name="register" class="content"></a>
+        	<div class="jumbotron">
+            	<h2><span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;Registration</h2>
+            	<p id="register_description"></p>
+            	<button class="out_btn btn btn-lg btn-primary" onclick="toRegistration()">&nbsp;&nbsp;Register for the Conference&nbsp;&nbsp;</button>
+			</div>  
+        <a name="hotel" class="content"></a>
+        	<div class="jumbotron">
+            	<h2><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>&nbsp;&nbsp;Conference Hotel&Traffic</h2>
+            	<img src="../libs/img/hotel_1.jpg" style="width: 100%">
+            	<p id="hotel_description">
+            		The conference hotel of ACM SIGCOMM 2018 is InterContinental Budapest located on the Danube bank in the heart of the Hungarian capital. The SIGCOMM 2018 workshops and tutorials meet on the first floor of the hotel. On August 20, InterContinental Budapest hosts the SIGCOMM 2018 reception during the spectacular fireworks held on the Danube to celebrate the most important national holiday of Hungarians. The hotel is a leisurely two-minute walk to Vigadó, which serves as the venue for the main conference of SIGCOMM 2018. InterContinental Budapest also lies in close proximity to other SIGCOMM 2018 social events and numerous Budapest landmarks, including the Széchenyi Chain Bridge, Gresham Palace, Hungarian Parliament Building, St. Stephen’s Basilica, Dohány Street Synagogue, and Buda Castle with its Fisherman’s Bastion and Matthias Church.
+
+					The ACM arranged for SIGCOMM 2018 attendees a block of sleeping rooms for stays in the hotel during August 18-26 with nightly rates starting from 199 Euros. To reserve a sleeping room at InterContinental Budapest, please click on the button below.
+            	</p>
+            	<button class="out_btn btn btn-lg btn-success" onclick="toReserve()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reserve a Hotel Room&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+			</div> 
+        <a name="contact" class="content"></a>
+        	<div class="jumbotron">
+            	<h2><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>&nbsp;&nbsp;Contact with us</h2>
+            	<address id="contact_description"><h3>
+				    <strong id="contact_name"></strong><br>
+				    1355 Market Street, Suite 900<br>
+				    San Francisco, CA 94103<br>
+				    <abbr title="Phone">P:</abbr> (123) 456-7890
+				</h3></address>
+			</div>
+	</div>
+</body>
+</html>

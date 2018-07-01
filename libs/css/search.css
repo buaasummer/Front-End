@@ -1,0 +1,16 @@
+.body-layouy{
+  width: 100%;
+  min-width: 1140px;
+  margin: 0 auto;
+  position: relative;
+    /* background: url(../images/index-bg.png) no-repeat scroll top center; */
+  background-size: 100% 344px;
+  padding-top: 94px
+}
+.body-layout img{
+  height: 342px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
