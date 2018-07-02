@@ -5,9 +5,9 @@ BuaaSummer Front-End part
 -conference:会议相关页面
 |----conference-main.html:会议展示页面
 |----leftnav.html:会议展示页面左侧导航栏
-|----Navigation.html:所有页面顶部导航栏
 |----paper.docx:用于测试下载的论文模板
 |----other.zip:用于测试下载的其他参考资料
+|----createmeetings.html:创建会议的页面
 -institution:机构相关页面
 |----institution-register.html:机构注册页面
 -libs:开发需要的外部文件
