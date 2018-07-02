@@ -420,10 +420,9 @@
           var v5=data[i].address;
           if(v5==="")
            v5="无";
-          $("tbody").append("<tr><th class='list'><div class='list-item'><dl class='dll' style='width:88%;'></dl></div></th></tr>");
-          $(".dll").append("<dt><h4><a href='../conference/conference-main.html/?meetingId="+v1+"' class='title'>"+v2+"</a></h4></dt>");
-          $(".dll").append("<dd><p><span class='calendar-container'><i class='glyphicon glyphicon-calendar'></i><span id='calender'>"+v3+"</span></span><span class='place-container'><i class='glyphicon glyphicon-map-marker'></i><span id='place'>"+v5+"</span></span></p></dd>");
-          $(".dll").append("<dd class='institution'><div><i class='glyphicon glyphicon-home'></i><span>"+v4+"<span></div></dd>");
+           $("tbody").append(
+             "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='#' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span id='calendar'>"+v3+"</span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'>"+v5+"</span></span></p></dd><dd class='institution'><div class=''>"+v4+"</div></dd></dl></div></th></tr>"
+           );
         }
         page_list[cur_page+1].classList.add("active");
         //page_list[cur_page].addClass("active");
@@ -457,10 +456,9 @@
               //var v5="aaa";
               if(v5==="")
                 v5="无";
-                $("tbody").append("<tr><th class='list'><div class='list-item'><dl class='dll' style='width:88%;'></dl></div></th></tr>");
-                $(".dll").append("<dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' class='title'> "+v2+" </a></h4></dt>");
-                $(".dll").append("<dd><p><span class='calendar-container'><i class='glyphicon glyphicon-calendar'></i><span id='calender'> "+v3+"</span></span><span class='place-container'><i class='glyphicon glyphicon-map-marker'></i><span id='place'> "+v5+"</span></span></p></dd>");
-                $(".dll").append("<dd class='institution'><div><i class='glyphicon glyphicon-home'></i><span> "+v4+" <span></div></dd>");
+                $("tbody").append(
+                  "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span id='calendar'>"+v3+"</span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'>"+v5+"</span></span></p></dd><dd class='institution'><div class=''>"+v4+"</div></dd></dl></div></th></tr>"
+                );
           }
           //alert(data.length);
           $(".first").addClass("active");
