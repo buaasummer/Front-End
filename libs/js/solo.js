@@ -96,3 +96,9 @@ function now_contact(){
 	$('#contact_link').attr('class','now aa list-group-item scroll');
 }
 
+function now_postPaper(){
+	$('.aa').each(function(){
+		$(this).attr('class','aa list-group-item scroll');
+	});
+	$('#postPaper_link').attr('class','now aa list-group-item scroll');
+}
