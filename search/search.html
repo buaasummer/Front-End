@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <title>学术会议管理平台</title>
     <meta charset="utf-8">
-    <link href="./css/bootstrap.css" rel="stylesheet">
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
-    <script src="./js/jquery.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
+    <link href="../libs/css/bootstrap.css" rel="stylesheet">
+    <link href="../libs/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../libs/js/jquery.min.js"></script>
+    <script src="../libs/js/bootstrap.min.js"></script>
     <style media="screen">
       tbody {
         display: table-row-group;
@@ -474,20 +474,19 @@
     var user = {
         "username":val1,
         "password":val2,
-    "email":val4,
-          "idnumber":val5
-        };
-
+        "email":val4,
+        "idnumber":val5
+    };
     user = JSON.stringify(user);
-        var settings = {
-            type: "POST",
-            url:url+"/personal_user",
-            data:user,
-            error: function(XHR,textStatus,errorThrown) {
-                alert("error!");
-          alert(errorThrown);
-            },
-            success: function(data,textStatus) {
+    var settings = {
+        type: "POST",
+        url:url+"/personal_user",
+        data:user,
+        error: function(XHR,textStatus,errorThrown) {
+            alert("error!");
+            alert(errorThrown);
+        },
+        success: function(data,textStatus) {
           if(data==false)
           {
             alert("该昵称已被注册！");
@@ -496,17 +495,13 @@
           {
             alert("注册成功！");
             window.location.href='Navigation.html';
-
           }
-            },
-            headers: {
-                "Content-Type":"application/json"
-            }
-
+        },
+        headers: {
+            "Content-Type":"application/json"
+        }
     };
-
-
-          var isRightForm = true;
+    var isRightForm = true;
     if(val1=="")
     {
       alert("昵称不能为空！");
