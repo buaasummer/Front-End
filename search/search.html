@@ -201,7 +201,7 @@
                       <div class="list-item">
                         <dl class="dll" style="width: 88%;">
                           <dt>
-                            <h4><a href="#" target="" class="title">2018测试</a></h4>
+                            <h4><a href="../conference/conference-main.html" target="" class="title">2018测试</a></h4>
                           </dt>
                           <dd class="">
                             <p>
@@ -421,7 +421,7 @@
           if(v5==="")
            v5="无";
           $("tbody").append("<tr><th class='list'><div class='list-item'><dl class='dll' style='width:88%;'></dl></div></th></tr>");
-          $(".dll").append("<dt><h4><a href='#' target='' class='title'>"+v2+"</a></h4></dt>");
+          $(".dll").append("<dt><h4><a href='../conference/conference-main.html/?meetingId="+v1+"' class='title'>"+v2+"</a></h4></dt>");
           $(".dll").append("<dd><p><span class='calendar-container'><i class='glyphicon glyphicon-calendar'></i><span id='calender'>"+v3+"</span></span><span class='place-container'><i class='glyphicon glyphicon-map-marker'></i><span id='place'>"+v5+"</span></span></p></dd>");
           $(".dll").append("<dd class='institution'><div><i class='glyphicon glyphicon-home'></i><span>"+v4+"<span></div></dd>");
         }
@@ -436,14 +436,13 @@
       keyword=$("#keyword").val();
       $("tbody").empty();
       //alert("url: "+url+keyword+"&page=1&size="+maxsize);
-      $.get(meeting_url,{keyword:keyword,page:1,size:maxsize},function(data){
+      $.get(meeting_url,{keyword:keyword,page:0,size:maxsize},function(data){
         if(!data)
         {
           alert("错误");
         }
         else
         {
-          var conference_url="";
           for(var i=0;i<data.length;i++)
           {
               var v1=data[i].meetingId;
@@ -451,17 +450,26 @@
               var v3=data[i].postStartDate;
               var v4=data[i].institution.institutionName;
               var v5=data[i].address;
+              //var v1="1";
+              //var v2="aaa";
+              //var v3="2018-3-3";
+              //var v4="eee";
+              //var v5="aaa";
               if(v5==="")
                 v5="无";
                 $("tbody").append("<tr><th class='list'><div class='list-item'><dl class='dll' style='width:88%;'></dl></div></th></tr>");
-                $(".dll").append("<dt><h4><a href='#' target='' class='title'>"+v2+"</a></h4></dt>");
-                $(".dll").append("<dd><p><span class='calendar-container'><i class='glyphicon glyphicon-calendar'></i><span id='calender'>"+v3+"</span></span><span class='place-container'><i class='glyphicon glyphicon-map-marker'></i><span id='place'>"+v5+"</span></span></p></dd>");
-                $(".dll").append("<dd class='institution'><div><i class='glyphicon glyphicon-home'></i><span>"+v4+"<span></div></dd>");
+                $(".dll").append("<dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' class='title'> "+v2+" </a></h4></dt>");
+                $(".dll").append("<dd><p><span class='calendar-container'><i class='glyphicon glyphicon-calendar'></i><span id='calender'> "+v3+"</span></span><span class='place-container'><i class='glyphicon glyphicon-map-marker'></i><span id='place'> "+v5+"</span></span></p></dd>");
+                $(".dll").append("<dd class='institution'><div><i class='glyphicon glyphicon-home'></i><span> "+v4+" <span></div></dd>");
           }
           //alert(data.length);
           $(".first").addClass("active");
         }
       });
+  }
+  function doSearchh()
+  {
+
   }
   function doPostRegister()
   {
@@ -474,19 +482,20 @@
     var user = {
         "username":val1,
         "password":val2,
-        "email":val4,
-        "idnumber":val5
-    };
+    "email":val4,
+          "idnumber":val5
+        };
+
     user = JSON.stringify(user);
-    var settings = {
-        type: "POST",
-        url:url+"/personal_user",
-        data:user,
-        error: function(XHR,textStatus,errorThrown) {
-            alert("error!");
-            alert(errorThrown);
-        },
-        success: function(data,textStatus) {
+        var settings = {
+            type: "POST",
+            url:url+"/personal_user",
+            data:user,
+            error: function(XHR,textStatus,errorThrown) {
+                alert("error!");
+          alert(errorThrown);
+            },
+            success: function(data,textStatus) {
           if(data==false)
           {
             alert("该昵称已被注册！");
@@ -495,13 +504,17 @@
           {
             alert("注册成功！");
             window.location.href='Navigation.html';
+
           }
-        },
-        headers: {
-            "Content-Type":"application/json"
-        }
+            },
+            headers: {
+                "Content-Type":"application/json"
+            }
+
     };
-    var isRightForm = true;
+
+
+          var isRightForm = true;
     if(val1=="")
     {
       alert("昵称不能为空！");
@@ -572,7 +585,7 @@
                       //alert(document.cookie);
                       document.cookie = "userId="+data;
                       alert("登录成功！");
-                      window.location.href="Navigation.html";
+                      window.location.href="search.html";
                   }
               });
           }
@@ -587,7 +600,7 @@
                   {
                       document.cookie = "userId="+data;
                       alert("登录成功！");
-                      window.location.href="Navigation.html";
+                      window.location.href="seach.html";
                       //window.location.href="createmeetings.html";
                   }
               });
@@ -599,21 +612,20 @@
           setCookie("type","",-1)
       location.reload();
   }
-      function uname1()
+  function uname1()
   {
-          //alert("uname1"+document.cookie);
+    //alert("uname1"+document.cookie);
     var a=checkName();
     $("#uname").append(a);
   }
-
   function getCookie(c_name)
       {
-          //alert(c_name);
-          //alert(document.cookie);
           let c_end;
     if(document.cookie.length>0){
       c_start=document.cookie.indexOf(c_name+"=");
-      if(c_start!=-1){
+      if(c_start==-1)
+        return "";
+      else if(c_start!=-1){
         c_start=c_start+c_name.length+1;
         c_end=document.cookie.indexOf(";",c_start);
         if(c_end==-1){
@@ -624,21 +636,6 @@
     }
     return "";
   }
-      /*
-      function getCookie(cname)
-      {
-          var name = cname + "=";
-          var ca = document.cookie.split(';');
-          for(var i=0; i<ca.length; i++)
-          {
-              var c = ca[i].trim();
-              if (c.indexOf(name)==0)
-                  return c.substring(name.length,c.length);
-          }
-          return "";
-      }*/
-
-
   function checkName()
       {
           var type = getCookie("type");
@@ -670,6 +667,7 @@
                   //url=url+"/personal_user";
                   $.get(url+"/institution/info?institution_id="+userid,function(data,status){
                       c=data['institutionName'];
+
                   });
                   return c;
               }
