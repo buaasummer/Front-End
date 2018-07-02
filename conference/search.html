@@ -9,6 +9,16 @@
     <script src="../libs/js/jquery.min.js"></script>
     <script src="../libs/js/bootstrap.min.js"></script>
     <style media="screen">
+      .main-header {
+                padding-top: 100px;
+                padding-bottom: 100px;
+                background-repeat: no-repeat;
+
+                background-position: center 20%;
+                -webkit-background-size: cover;
+                background-size: cover;
+            }
+
       tbody {
         display: table-row-group;
         vertical-align: middle;
@@ -49,6 +59,24 @@
       }
     </style>
   </head>
+  <header class="main-header" style="background-image: url(../libs/img/c.jpg)">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+
+                    
+                    <h1 style="color: white; text-align: center;"><font size="24">学术会议交流管理平台</font></h1>
+                    <!--<img src="./Ghost 开源博客平台 _ Ghost中文网_files/fcb3879e14429d75833a461572e64.jpg" alt="Ghost 博客系统" class="hide">-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <h3 style="color: white; text-align: center;">开发团队：Uno</h3>
+                </div>
+            </div>
+        </div>
+    </header>
   <body onLoad="uname1()">
       <!--Navigation导航栏部分-->
       <div>
@@ -130,7 +158,7 @@
                                   <input class="form-control required" type="password" placeholder="Confirm Password" id="repassword" name="repassword" autofocus maxlength="20"/>
                               </div>
                               <div class="form-group" >
-                                  <font color="#999999">单位用户注册？</font><a href="institution/institution-register.html" color="#CCCC00">前往注册</a>
+                                  <font color="#999999">单位用户注册？</font><a href="../institution/institution-register.html" color="#CCCC00">前往注册</a>
                               </div>
                               <div class="form-group col-md-offset-9">
                                   <button id='btn' type="submit" class="btn btn-primary" name="submit" onclick="doPostRegister()">注册</button>
@@ -421,7 +449,7 @@
           if(v5==="")
            v5="无";
           $("tbody").append("<tr><th class='list'><div class='list-item'><dl class='dll' style='width:88%;'></dl></div></th></tr>");
-          $(".dll").append("<dt><h4><a href='../conference/conference-main.html/?meetingId="+v1+"' class='title'>"+v2+"</a></h4></dt>");
+          $(".dll").append("<dt><h4><a href='conference-main.html/?meetingId="+v1+"' class='title'>"+v2+"</a></h4></dt>");
           $(".dll").append("<dd><p><span class='calendar-container'><i class='glyphicon glyphicon-calendar'></i><span id='calender'>"+v3+"</span></span><span class='place-container'><i class='glyphicon glyphicon-map-marker'></i><span id='place'>"+v5+"</span></span></p></dd>");
           $(".dll").append("<dd class='institution'><div><i class='glyphicon glyphicon-home'></i><span>"+v4+"<span></div></dd>");
         }
@@ -457,10 +485,10 @@
               //var v5="aaa";
               if(v5==="")
                 v5="无";
-                $("tbody").append("<tr><th class='list'><div class='list-item'><dl class='dll' style='width:88%;'></dl></div></th></tr>");
-                $(".dll").append("<dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' class='title'> "+v2+" </a></h4></dt>");
-                $(".dll").append("<dd><p><span class='calendar-container'><i class='glyphicon glyphicon-calendar'></i><span id='calender'> "+v3+"</span></span><span class='place-container'><i class='glyphicon glyphicon-map-marker'></i><span id='place'> "+v5+"</span></span></p></dd>");
-                $(".dll").append("<dd class='institution'><div><i class='glyphicon glyphicon-home'></i><span> "+v4+" <span></div></dd>");
+                 $("tbody").append(
+                  "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span id='calendar'>"+v3+"</span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'>"+v5+"</span></span></p></dd><dd class='institution'><div class=''>"+v4+"</div></dd></灯笼></div></th></tr>"
+                );
+
           }
           //alert(data.length);
           $(".first").addClass("active");
@@ -600,7 +628,7 @@
                   {
                       document.cookie = "userId="+data;
                       alert("登录成功！");
-                      window.location.href="seach.html";
+                      window.location.href="search.html";
                       //window.location.href="createmeetings.html";
                   }
               });

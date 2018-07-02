@@ -8,6 +8,7 @@ BuaaSummer Front-End part
 |----paper.docx:用于测试下载的论文模板
 |----other.zip:用于测试下载的其他参考资料
 |----createmeetings.html:创建会议的页面
+|----search.html:搜索会议的页面
 -institution:机构相关页面
 |----institution-register.html:机构注册页面
 -libs:开发需要的外部文件

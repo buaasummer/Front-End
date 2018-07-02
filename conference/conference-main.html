@@ -11,7 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="../libs/css/solo.css">
 	<script type="text/javascript">
 	var url="http://154.8.211.55:8081";
-	var meetingid = 24;
+	var meetingid = -1;
     var userType;
 	var userid;
 	var authornum=1;
@@ -93,7 +93,7 @@
 								document.getElementById("infile").action=url+"/paper/submission?paperId="+data;
 								$("#infile").ajaxForm(function(){
 									alert("提交成功！");
-									window.location="conference-main.html?meetingid=24";
+									window.location="conference-main.html?meetingid="+meetingid;
 								});
 							});
 						}
@@ -414,7 +414,7 @@
                         //alert(document.cookie);
                         document.cookie = "userId="+data;
                         alert("登录成功！");
-                        window.location.href="conference-main.html?meetingid=24";
+                        window.location.href="conference-main.html?meetingid="+meetingid;
                     }
                 });	
             }
@@ -429,7 +429,7 @@
                     {
                         document.cookie = "userId="+data;
                         alert("登录成功！");
-                        window.location.href="conference-main.html?meetingid=24";
+                        window.location.href="conference-main.html?meetingid="+meetingid;
                         //window.location.href="createmeetings.html";
                     }
                 });	
@@ -458,8 +458,7 @@
 			else if(userType == "institution_option")
 			{
 				$("#uploadbtn").attr("style","display:none;");
-				$.get(url+"/meeting/isMatch?meetingId="+meetingid+"&institutionId="+institutionId,function(data){
-					alert(data);
+				$.get(url+"/meeting/isMatch?meetingId="+meetingid+"&institutionId="+userid,function(data){
 					if(data==true)
 					{
 						meetingpaperShow();
@@ -760,7 +759,7 @@
                                     <input class="form-control required" type="password" placeholder="Confirm Password" id="repassword" name="repassword" autofocus maxlength="20"/>
                                 </div>
                                 <div class="form-group" >
-                                    <font color="#999999">单位用户注册？</font><a href="institution/institution-register.html" color="#CCCC00">前往注册</a>
+                                    <font color="#999999">单位用户注册？</font><a href="../institution/institution-register.html" color="#CCCC00">前往注册</a>
                                 </div>
                                 <div class="form-group col-md-offset-9">
                                     <button id='btn' type="submit" class="btn btn-primary" name="submit" onclick="doPostRegister()">注册</button>
