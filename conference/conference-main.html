@@ -11,7 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="../libs/css/solo.css">
 	<script type="text/javascript">
 	var url="http://154.8.211.55:8081";
-	var meetingid = 24;
+	var meetingid = -1;
     var userType;
 	var userid;
 	var authornum=1;
@@ -19,6 +19,26 @@
 	var PId;
 
 	//upload-download js
+	function checkIDCard(idcode)
+		{
+		 	var weight_factor = [7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2];
+		 	var check_code = ['1', '0', 'X' , '9', '8', '7', '6', '5', '4', '3', '2'];
+			var code = idcode + "";
+			var last = idcode[17]; 
+			var seventeen = code.substring(0,17);
+			var arr = seventeen.split("");
+			var len = arr.length;
+		   	var num = 0;
+			for(var i = 0; i < len; i++)
+			{
+				num = num + arr[i] * weight_factor[i];
+			}
+		 	var resisue = num%11;
+		 	var last_no = check_code[resisue];
+			var idcard_patter = /^[1-9][0-9]{5}([1][9][0-9]{2}|[2][0][0|1][0-9])([0][1-9]|[1][0|1|2])([0][1-9]|[1|2][0-9]|[3][0|1])[0-9]{3}([0-9]|[X])$/;
+			var format = idcard_patter.test(idcode);
+			return last === last_no&&format?true:false;
+ 		}
 	function documentupload()
         {
             $('#upload').modal();
@@ -53,7 +73,11 @@
 				}
 				else
 				{
-					if(val3=="")
+					if(checkIDCard(val7)==false)
+					{
+						alert("身份证号不合法！");
+					}
+					else if(val3=="")
 					{
 						alert("稿件题目不能为空！");
 					}
@@ -69,7 +93,7 @@
 								document.getElementById("infile").action=url+"/paper/submission?paperId="+data;
 								$("#infile").ajaxForm(function(){
 									alert("提交成功！");
-									window.location="conference-main.html?meetingid=24";
+									window.location="conference-main.html?meetingid="+meetingid;
 								});
 							});
 						}
@@ -102,7 +126,11 @@
 				}
 				else
 				{
-					if(val3=="")
+					if(checkIDCard(val7)==false)
+					{
+						alert("身份证号不合法！");
+					}
+					else if(val3=="")
 					{
 						alert("稿件题目不能为空！");
 					}
@@ -386,7 +414,7 @@
                         //alert(document.cookie);
                         document.cookie = "userId="+data;
                         alert("登录成功！");
-                        window.location.href="conference-main.html?meetingid=24";
+                        window.location.href="conference-main.html?meetingid="+meetingid;
                     }
                 });	
             }
@@ -401,7 +429,7 @@
                     {
                         document.cookie = "userId="+data;
                         alert("登录成功！");
-                        window.location.href="conference-main.html?meetingid=24";
+                        window.location.href="conference-main.html?meetingid="+meetingid;
                         //window.location.href="createmeetings.html";
                     }
                 });	
@@ -429,8 +457,13 @@
 			}
 			else if(userType == "institution_option")
 			{
-				meetingpaperShow();
 				$("#uploadbtn").attr("style","display:none;");
+				$.get(url+"/meeting/isMatch?meetingId="+meetingid+"&institutionId="+userid,function(data){
+					if(data==true)
+					{
+						meetingpaperShow();
+					}
+				});
 			}
 			else
 			{
@@ -650,7 +683,7 @@
         <div>
             <nav class="navbar navbar-default" role="navigation">
                 <br/> 
-                <div class="container-fluserid">
+                <div class="container-fluid">
                     <div class="navbar-header" style="margin-left: 15%">
                         <a class="navbar-brand" href="#">学术会议管理平台</a>
                     </div>
@@ -725,13 +758,15 @@
                                     <label for="repassword" class="control-label">确认密码：</label>
                                     <input class="form-control required" type="password" placeholder="Confirm Password" id="repassword" name="repassword" autofocus maxlength="20"/>
                                 </div>
-                                
-                                    <div class="form-group col-md-offset-9">
-                                        <button id='btn' type="submit" class="btn btn-primary" name="submit" onclick="doPostRegister()">注册</button>
-                                    </div>
+                                <div class="form-group" >
+                                    <font color="#999999">单位用户注册？</font><a href="../institution/institution-register.html" color="#CCCC00">前往注册</a>
+                                </div>
+                                <div class="form-group col-md-offset-9">
+                                    <button id='btn' type="submit" class="btn btn-primary" name="submit" onclick="doPostRegister()">注册</button>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <div class="modal-footer"></div>
                 </div>
             </div>
@@ -766,16 +801,12 @@
                                     <label class="control-label">密码</label>
                                     <input class="form-control required" type="password" placeholder="Password" id="password" name="password" maxlength="20"/>
                                 </div>
-                                
-                                <div class="form-group" >
-                                    <font color="#999999">还没有账号？</font><a href="Navigation.html" color="#CCCC00">前往注册</a>
-                                </div>
-                                    <div class="form-group col-md-offset-9">
-                                        <button id='btn' type="submit" class="btn btn-success" name="submit" onclick="doPostLogin()">登录</button>
-                                    </div>
+                                <div class="form-group col-md-offset-9">
+                                    <button id='btn' type="submit" class="btn btn-success" name="submit" onclick="doPostLogin()">登录</button>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <div class="modal-footer"></div>
                 </div>
             </div>
