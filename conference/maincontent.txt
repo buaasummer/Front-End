@@ -1,0 +1,175 @@
+<a name="general" class="content" ></a>
+            <div id='general-show' class="jumbotron">
+			  <h1></h1>
+			  <p></p>
+			  <img src="../libs/img/c.jpg" style="width: 100%" >
+			</div>
+        <a name="essay" class="content"></a>
+        	<div id='essay-show' class="jumbotron">
+            	<h2><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>&nbsp;&nbsp;Call for Papers</h2>
+	            <p id='essay_description'>.</p>		
+			</div>        
+        <a name="important" class="content"></a>
+            <h2><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;&nbsp;Important Dates</h2>
+            <table id='important_table' class="table table-hover">
+            	<tr>
+            		<th><h3>Description</h3></th>
+            		<th><h3>Specific Date</h3></th>
+            	</tr>
+            </table>
+        
+        <a name="schedule" class="content"></a>
+            <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span>&nbsp;&nbsp;Schedule</h2>
+            <table id='schedule_table' class="table table-hover">
+            </table>
+        
+        <a name="organization" class="content"></a>
+           <div id='organization-show' class="jumbotron">
+            	<h2><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>&nbsp;&nbsp;Organization Committee</h2>
+            	<div id='organization_list'>
+            	</div>
+			</div>        
+        <a name="register" class="content"></a>
+        	<div id="register-show" class="jumbotron">
+            	<h2><span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;Registration</h2>
+            	<p id="register_description"></p>
+            	<button id='register-btn' class="out_btn btn btn-lg btn-primary" onclick="toRegistration()"></button>
+			</div>  
+        <a name="hotel" class="content"></a>
+        	<div id="hotel-show" class="jumbotron">
+            	<h2><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>&nbsp;&nbsp;Conference Hotel&Traffic</h2>
+            	<img src="../libs/img/hotel_1.jpg" style="width: 100%">
+            	<p id="hotel_description">
+            	</p>
+            	<button class="out_btn btn btn-lg btn-success" onclick="toReserve()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reserve a Hotel Room&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+			</div> 
+        <a name="contact" class="content"></a>
+        	<div id="contact-show" class="jumbotron">
+            	<h2><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>&nbsp;&nbsp;Contact with us</h2>
+            	<address id="contact_description"><h3>
+            		<abbr title="Name">N:</abbr>
+				    <strong id="contact_name">
+				    </strong><br>
+				    <abbr title="Address">A:</abbr>
+				    <strong id="contact_address">
+				    </strong><br>
+				    <abbr title="Email">E:</abbr>
+				    <strong id="contact_email">
+				    </strong><br>
+				    <abbr title="Phone">P:</abbr> 
+				    <strong id='contact_phone'>
+				    </strong>
+				</h3></address>
+			</div>
+		<a name="postPaper" class="content"></a>
+		<div id="postPaper-show">
+			<div class="form row" style="text-align:right; margin-right:100px; margin-top:50px; float:right; color:">
+            <button id="uploadbtn" type="submit" class="btn btn-success" onClick="documentupload()">提交稿件</button>
+        	</div>
+	        <div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	            <div class="modal-dialog" role="document" style="width:50%">
+	                <div class="modal-content" style="margin-top:10%;">
+	                    <div class="modal-header">
+	                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
+	                        <h4 class="modal-title" id="myModalLabel">提交稿件</h4>
+	                    </div>
+	                    <div class="modal-body">
+	                    	<div class="form-horizontal col-md-offset-0" id="update_form">
+	                            <div class="col-md-12">
+	                            	<div class="form-group">
+	                                	<i class="fa fa-user fa-lg"></i>
+	                                    <label for="name">作者</label>
+	                                    <label for="name" style="margin-left:13%;">身份证号</label>
+	                                    <label for="name" style="margin-left:19%;">单位</label>
+	                                </div>
+	                                <div class="form-group">
+	                                	<i class="fa fa-user fa-lg"></i>
+	                                    <input class="form-control" style="width:15%; float:left;" type="text" placeholder="请输入姓名" id="author1" name="author1" autofocus maxlength="20"/>
+	                                    <input class="form-control" style="width:25%; float:left; margin-left:2%" type="text" placeholder="请输入身份证号" id="authorid1" name="authorid1" autofocus maxlength="20"/>
+	                                    <input class="form-control" style="width:40%; float:left; margin-left:2%" type="text" placeholder="请输入单位名称" id="organ1" name="organ1" autofocus maxlength="20"/>
+	                                    <button id='addbtn' type="submit" class="btn btn-sm" style="margin-left:2%; width:5%;" name="submit" onclick="Add()">+</button>
+	                                    <button id='subbtn' type="submit" class="btn btn-sm" style="margin-left:2%; width:5%;" name="submit" onclick="Sub()" disabled="disabled">-</button>
+	                                </div>
+	                                <div id="add">
+	                                </div>
+	                                <form id="infile" method="post" target="frame1" enctype="multipart/form-data" class="form-group">
+	                                    <i class="fa fa-user fa-lg"></i>
+	                                    <label for="name">题目</label>
+	                                    <input class="form-control" type="text" placeholder="请输入稿件题目" id="title" name="title" autofocus maxlength="20"/>
+	                                	<br />
+	                                    <i class="fa fa-lock fa-lg"></i>
+	                                    <label for="name">摘要</label>
+	                                    <textarea class="form-control" placeholder="请输入摘要，0~200字" id="paperAbstract" name="paperAbstract" autofocus rows="5" cols="20" maxlength="200"></textarea>
+	                                	<br />
+	                                    <i class="fa fa-lock fa-lg"></i>
+	                                    <label for="inputfile">文件输入</label>
+	                                    <input type="file" name="multipartFile" id="multipartFile">
+	                                	<br />
+	                                    <i class="fa fa-lock fa-lg"></i>
+	                                    <button id='submitbtn' class="btn btn-success" style="float:left;" onclick="upLoad()">提交</button>
+	                                </form>
+	                                <iframe style="display:none;" name="frame1" frameborder="0" height="0"></iframe>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="modal-footer">
+	                    </div>
+	                </div>
+	            </div>
+	    	</div>
+	        <div class="modal fade" id="change" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	            <div class="modal-dialog" role="document" style="width:50%">
+	                <div class="modal-content" style="margin-top:10%;">
+	                    <div class="modal-header">
+	                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	                        <h4 class="modal-title" id="myModalLabel">修改稿件</h4>
+	                    </div>
+	                    <div class="modal-body">
+	                        <div class="form-horizontal col-md-offset-0" id="update_form">
+	                            <div class="col-md-12">
+	                            	<div class="form-group">
+	                                	<i class="fa fa-user fa-lg"></i>
+	                                    <label for="name">作者</label>
+	                                    <label for="name" style="margin-left:13%;">身份证号</label>
+	                                    <label for="name" style="margin-left:19%;">单位</label>
+	                                </div>
+	                                <div class="form-group">
+	                                	<i class="fa fa-user fa-lg"></i>
+	                                    <input class="form-control" style="width:15%; float:left;" type="text" placeholder="请输入姓名" id="reauthor1" name="reauthor1" autofocus maxlength="20"/>
+	                                    <input class="form-control" style="width:25%; float:left; margin-left:2%" type="text" placeholder="请输入身份证号" id="reauthorid1" name="reauthorid1" autofocus maxlength="20"/>
+	                                    <input class="form-control" style="width:40%; float:left; margin-left:2%" type="text" placeholder="请输入单位名称" id="reorgan1" name="reorgan1" autofocus maxlength="20"/>
+	                                    <button id='readdbtn' type="submit" class="btn btn-sm" style="margin-left:2%; width:5%;" name="submit" onclick="reAdd()">+</button>
+	                                    <button id='resubbtn' type="submit" class="btn btn-sm" style="margin-left:2%; width:5%;" name="submit" onclick="reSub()" disabled="disabled">-</button>
+	                                </div>
+	                                <div id="readd">
+	                                </div>
+	                                <form id="refile" method="post" enctype="multipart/form-data" target="frame2" class="form-group">
+	                                    <i class="fa fa-user fa-lg"></i>
+	                                    <label for="name">题目</label>
+	                                    <input class="form-control" type="text" placeholder="请输入稿件题目" id="title" name="title" autofocus maxlength="20"/>
+	                                	<br />
+	                                    <i class="fa fa-lock fa-lg"></i>
+	                                    <label for="name">摘要</label>
+	                                    <textarea class="form-control" placeholder="请输入摘要，0~200字" id="paperAbstract" name="paperAbstract" autofocus rows="5" cols="20" maxlength="200"></textarea>
+	                                	<br />
+	                                    <i class="fa fa-lock fa-lg"></i>
+	                                    <label for="inputfile">文件输入</label>
+	                                    <input type="file" name="multipartFile" id="multipartFile">
+	                                	<br>
+	                                    <i class="fa fa-lock fa-lg"></i>
+	                                    <button id='resubmitbtn' class="btn btn-success" onclick="Change()">修改</button>
+	                                </form>
+	                                <iframe style="display:none" name="frame2" frameborder="0" height="0"></iframe>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="modal-footer">
+	                    </div>
+	                </div>
+	            </div>
+	    	</div>
+	        <table id="usertable" style="margin-top:12%; text-align:center;" class="table table-striped table-hover">
+	        </table>
+	        <table id="meetingtable" style="margin-top:7%; text-align:center;" class="table table-striped table-hover">
+	        </table>
+		</div>
