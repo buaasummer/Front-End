@@ -68,12 +68,12 @@
                         <div class="form-horizontal col-md-offset-0" id="login_form">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="username1" class="control-label">昵称：</label>
+                                    <label for="username" class="control-label">昵称：</label>
                                     <input class="form-control required" type="text" placeholder="Username" id="username" name="username" autofocus maxlength="20"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password1" class="control-label">密码：</label>
-                                    <input class="form-control required" type="password" placeholder="Password" id="password1" name="password" autofocus maxlength="20"/>
+                                    <label for="password" class="control-label">密码：</label>
+                                    <input class="form-control required" type="password" placeholder="Password" id="password" name="password" autofocus maxlength="20"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="repassword" class="control-label">确认密码：</label>
@@ -97,9 +97,93 @@
         <!--主体部分结束-->
     </body>
     <script type="text/javascript">
-        var url="http://154.8.211.55:8081";
+        var url="http://f9c26244.ngrok.io/institution/addUser?institutionId="
+        //var url="http://154.8.211.55:8081/institution/addUser?institutionId=";
         function addUser(){
             $('#addInstitutionUser').modal();
+        }
+        function getCookie(c_name)
+        {
+            //alert(c_name);
+            //alert(document.cookie);
+            let c_end;
+			if(document.cookie.length>0){
+				c_start=document.cookie.indexOf(c_name+"=");
+				if(c_start!=-1){
+					c_start=c_start+c_name.length+1;
+					c_end=document.cookie.indexOf(";",c_start);
+					if(c_end==-1){
+						c_end=document.cookie.length;
+					}
+				}
+                return unescape(document.cookie.substring(c_start,c_end));
+			}
+			return "";
+		}
+        function doAddUser(){
+            
+            //获取要添加的用户信息
+			var val1 = document.getElementById("username").value;
+            var val2 = document.getElementById("password").value;
+            var val3 = document.getElementById("repassword").value;
+			var user = {
+        	"userName":val1,
+        	"password":val2
+        	};
+            //获取单位用户ID
+			var userid = getCookie("userId");
+            //alert(userid);
+
+			user = JSON.stringify(user);
+        	var settings = {
+			        type: "POST",
+			        url:url+userid,
+			        data:user,
+			        error: function(XHR,textStatus,errorThrown) {
+			            alert("error!");
+						alert(errorThrown);
+			        },
+			        success: function(data,textStatus) {
+						if(data==0)
+						{
+							alert("该账号无效！");
+						}
+                        else if(data==1)
+                        {
+                            alert("添加账号成功！");
+							window.location.href='add-institutionuser.html';	
+                        }
+						else if(data==2)
+						{
+							alert("用户名已存在！");
+						}
+			        },
+			        headers: {
+			            "Content-Type":"application/json"
+			        }        
+			};
+
+            //判断格式是否正确
+            var isRightForm = true;
+			if(val1=="")
+			{
+				alert("昵称不能为空！");
+                isRightForm = false;
+			}
+			if(val2=="")
+			{
+				alert("密码不能为空！");
+                isRightForm = false;
+			}
+			if(val2!=val3)
+			{
+				alert("两次输入密码不相同！");
+                isRightForm = false;
+			}
+
+            if(isRightForm){
+                $.ajax(settings);
+            }
         }
 
     </script>
