@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<!--link rel="stylesheet" type="text/css" href="../libs/css/leftnav.css"-->
-</head>
-<body>
-	<div id='leftpanel'>
+<div id='leftpanel'>
 		<ul id="leftul" class="list-group">
 				<h4>
 					<a href="#general" onclick="now_general()"  class="aa list-group-item " id='general_link' >
@@ -70,5 +62,3 @@
 				</h4>
 		</ul>
 	</div>
-</body>
-</html>

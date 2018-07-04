@@ -703,7 +703,6 @@
           }
           else
           {
-
             //alert(data[1].institution);
             //alert(data[1].institution.institutionName);
             for(var i=0;i<data.length;i++)
@@ -757,7 +756,7 @@
     //var select=$("select").find("option:selected").text();
     var select=$("select").find("option:selected").index();
     var type="";
-    alert(select);
+    //alert(select);
   }
   function doPostRegister()
   {
@@ -796,7 +795,6 @@
             headers: {
                 "Content-Type":"application/json"
             }
-
     };
     var isRightForm = true;
     if(val1=="")
@@ -819,8 +817,6 @@
       alert("邮箱不能为空！");
               isRightForm = false;
     }
-
-
           /*判断输入身份证号是否合法 */
           /*简单判断是否为18位数字 */
           /*
