@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>学术会议管理平台</title>
+        <meta charset="utf-8"> 
+        <link rel="stylesheet" href="../libs/css/bootstrap.min.css">
+        <script src="../libs/js/jquery.min.js"></script>
+        <script src="../libs/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <!--Navigation导航栏部分-->
+        <div>
+            <nav class="navbar navbar-default" role="navigation">
+                <br/> 
+                <div class="container-fluid">
+                    <div class="navbar-header" style="margin-left: 15%">
+                        <a class="navbar-brand" href="#">学术会议管理平台</a>
+                    </div>
+                    <div class="hidden-sm hidden-xs" style="margin-right: 10%">
+                        <form class="navbar-form navbar-left" style="margin-left: 10%">
+                                <div class="form-group">
+                                    <select class="form-control">
+                                            <option>按时间</option>
+                                            <option>按地区</option>
+                                            <option>主办方</option>
+                                            <option>按名称</option>
+                                        </select>  
+                                    <input type="text" class="form-control" placeholder="查找会议">
+                                    <button type="submit" class="btn btn-default">查找</button>
+                                </div>
+                        </form>
+                    </div>
+                    <div class="navbar-form navbar-left">
+                        <button class="btn btn-default" onclick="createMeeting()">创建会议</button>
+                    </div>
+                    <div>
+                        <div id="navbar">
+                            <ul class="nav navbar-nav" style="margin-left: 10%">
+                                <li class="dropdown">
+                                    <a href="#" id="uname" class="dropdown-toggle" data-toggle="dropdown"> 
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="drop">
+                                        <li><a id="LogIn" href="#" onclick="userLogin()">登录</a></li>
+                                        <li class="divider"></li>
+                                        <li><a id="SignIn" href="#" onclick="userRegister()">注册</a></li>
+                                        <li class="divider"></li>
+                                        <li><a id="LogOut"href="#" onclick="logout()">登出</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div> 
+                    </div>
+                </div>  
+                <br/>   
+            </nav>
+        </div>
+        <!--Navigation导航栏结束-->
+        <!--会议注册部分-->
+        <div class="container-fluid text-left">
+            <div class="modal-body" style="margin-left:20%">
+                <form>
+                    <h3>参会类型</h3>
+                    <input name="participantType" type="radio" value="1" onclick="changeMode()" checked/>作者参会
+                    <input name="participantType" type="radio" value="2" onclick="changeMode()"/>聆听参会
+                </form>
+                <br>
+                <div id="authorInfo">
+                    <h3>论文信息</h3>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" style="text-align: right">论文编号</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="paperId" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" style="text-align: right">作者名称</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="authorName" class="form-control">
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <div class="input-group" id="participants">
+                    <h3>参会人员</h3>
+                    <div>
+                        <button class="btn btn-info" data-toggle="tooltip" id="addParticipants" onclick="addParticipants()" name="addParticipants">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </div>
+                <br>
+                <div class="input-group">
+                    <h3>收费凭证</h3>
+                    <input type="file" id="certificate" name="certificate">
+                </div>
+                <div class="form-group col-md-offset-10">
+                    <button id="btn" class="btn btn-primary" name="submit" onclick="submitInfo()">提交参会信息</button>
+                </div>
+            </div>
+        </div>
+        <!--主体部分结束-->
+    </body>
+    <script type="text/javascript">
+        var url="http://154.8.211.55:8081";
+        function addUser(){
+            $('#addInstitutionUser').modal();
+        }
+        
+        function changeMode(){
+            var show="";  
+            var apm = document.getElementsByName("participantType");  
+            for(var i=0;i<apm.length;i++){  
+                if(apm[i].checked)  
+                    show = apm[i].value;  
+            } 
+            
+            switch (show){  
+                case '1':  
+                    document.getElementById("authorInfo").style.display="block";  
+                    break;  
+                case '2':  
+                    document.getElementById("authorInfo").style.display="none";  
+                    break;      
+                default:  
+                    document.getElementById("authorInfo").style.display="block";  
+                    break;                                           
+            }
+        }
+      
+        function addParticipants(){
+            var html = '<div class="input-group participantInfo" style="width:100%;padding:0 0 1px 0">'+
+                        '<label class="input-group-addon">姓名：</label>'+
+                        '<input type="text" class="form-control" id="pname" name="pname[]" style="max-width:100%">'+
+                        '<label class="input-group-addon">性别：</label>'+
+                        '<select class="form-control" id="gender" name="gender[]" style="min-width:15%">'+
+							'<option value="0">男</option>'+
+							'<option value="1">女</option>'+
+						'</select>'+
+                        '<label class="input-group-addon">手机号：</label>'+
+                        '<input type="text" class="form-control" id="phoneNumber" name="phoneNumber[]" style="max-width:100%">'+
+                        '<label class="input-group-addon">是否住宿：</label>'+
+                        '<select class="form-control" id="accommodation" name="accommodation[]" style="min-width:15%">'+
+							'<option value="0">是</option>'+
+							'<option value="1">否</option>'+
+						'</select>'+				
+                        '<span class="input-group-btn">'+
+                            '<button class="btn btn-info" type="button" data-toggle="tooltip" title="删除" id="delParticipant"><span class="glyphicon glyphicon-minus"></span></button>'+
+                        '</span>'+
+                    '</div>';
+            var obj = document.getElementById("addParticipants");
+            obj.insertAdjacentHTML('beforeBegin',html);
+        }
+
+        $(document).on('click','#delParticipant',function(){
+            //alert("sss");
+            /*
+            var element = document.getElementsByClassName("participantInfo");
+            element.removeChild();*/
+            
+            var el = this.parentNode.parentNode;
+            var info = $(this).parent().parent().find('#pname').val();
+            //alert(info);
+            el.parentNode.removeChild(el)
+            return;
+        })
+
+        function submitInfo(){
+
+            //判断是否上传凭证
+            /*
+            var certificate = document.getElementById("certicifate");
+            if(certificate==null){
+                alert("请上传收费凭证！");
+                return;
+            }*/
+
+            //传入参会人员信息到数组并判断是否存在空值
+            var pnameArr = new Array;
+            var genderArr = new Array;
+            var phoneArr = new Array;
+            var accoArr = new Array;
+            $("input[name='pname[]']").each(function(index, item){
+                pnameArr[index] = $(this).val();
+                if(pnameArr[index]==""){
+                    alert("请填写完整参会人员信息！");
+                    return;
+                }
+            });
+            $("select[name='gender[]']").each(function(index, item){
+                genderArr[index] = $(this).val();
+                if(genderArr[index]==""){
+                    alert("请填写完整参会人员信息！");
+                    return;
+                }
+            });
+            $("input[name='phoneNumber[]']").each(function(index, item){
+                phoneArr[index] = $(this).val();
+                if(phoneArr[index]==""){
+                    alert("请填写完整参会人员信息！");
+                    return;
+                }
+            });
+            $("select[name='accommodation[]']").each(function(index, item){
+                accoArr[index] = $(this).val();
+                if(accoArr[index]==""){
+                    alert("请填写完整参会人员信息！");
+                    return;
+                }
+            });
+            /*
+            var pnameArr = new Array;
+            $("input[name='pname[]']").each(function(index, item){
+                valArr[index] = $(this).val();
+                pnameArr[index] = valArr[index];
+            });
+            alert(pnameArr[0]+pnameArr[1]);*/
+
+            //判断是作者参会还是聆听参会并传入信息
+            var show="";  
+            var apm = document.getElementsByName("participantType");  
+            for(var i=0;i<apm.length;i++){  
+                if(apm[i].checked)  
+                    show = apm[i].value;  
+            }
+
+            if(show=="1"){
+                var paperId = document.getElementById("paperId").value;
+                var authorName = document.getElementById("authorName").value;
+                if(paperId==""||authorName==""){
+                    alert("请输入论文信息或选择聆听参会！");
+                    return;
+                }
+                else{
+                    alert("注册成功！");
+                }
+            }
+            else{
+                alert("注册成功！");
+            }
+            
+        }
+
+    </script>
+</html>
