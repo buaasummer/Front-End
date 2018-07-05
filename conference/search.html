@@ -6,6 +6,8 @@
     <meta charset="utf-8">
     <link href="../libs/css/bootstrap.css" rel="stylesheet">
     <link href="../libs/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../libs/js/topnav.js"></script>
+    <script src="../libs/js/search.js"></script>
     <script src="../libs/js/jquery.min.js"></script>
     <script src="../libs/js/bootstrap.min.js"></script>
     <style media="screen">
@@ -60,65 +62,68 @@
         margin-bottom: 0px;
       }
       .checkbox-custom {
-    position: relative;
-    padding: 0 15px 0 25px;
-    margin-bottom: 7px;
-    margin-top: 0;
-    display: inline-block;
-}
-/*
-将初始的checkbox的样式改变
-*/
-.checkbox-custom input[type="checkbox"] {
-    opacity: 0;/*将初始的checkbox隐藏起来*/
-    position: absolute;
-    cursor: pointer;
-    z-index: 2;
-    margin: -6px 0 0 0;
-    top: 50%;
-    left: 3px;
-}
-/*
-设计新的checkbox，位置
-*/
-.checkbox-custom label:before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    margin-top: -9px;
-    width: 19px;
-    height: 18px;
-    display: inline-block;
-    border-radius: 2px;
-    border: 1px solid #bbb;
-    background: #fff;
-}
-/*
-点击初始的checkbox，将新的checkbox关联起来
-*/
-.checkbox-custom input[type="checkbox"]:checked +label:after {
-    position: absolute;
-    display: inline-block;
-    font-family: 'Glyphicons Halflings';
-    content: "\e013";
-    top: 42%;
-    left: 3px;
-    margin-top: -5px;
-    font-size: 11px;
-    line-height: 1;
-    width: 16px;
-    height: 16px;
-    color: #333;
-}
-.checkbox-custom label {
-    cursor: pointer;
-    line-height: 1.2;
-    font-weight: normal;/*改变了rememberme的字体*/
-    margin-bottom: 0;
-    text-align: left;
-}
-    </style>
+        position: relative;
+        padding: 0 15px 0 25px;
+        margin-bottom: 7px;
+        margin-top: 0;
+        display: inline-block;
+      }
+/*将初始的checkbox的样式改变*/
+    .checkbox-custom input[type="checkbox"] {
+        opacity: 0;/*将初始的checkbox隐藏起来*/
+        position: absolute;
+        cursor: pointer;
+        z-index: 2;
+        margin: -6px 0 0 0;
+        top: 50%;
+        left: 3px;
+    }
+/*设计新的checkbox，位置*/
+    .checkbox-custom label:before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        margin-top: -9px;
+        width: 19px;
+        height: 18px;
+        display: inline-block;
+        border-radius: 2px;
+        border: 1px solid #bbb;
+        background: #fff;
+    }
+/*点击初始的checkbox，将新的checkbox关联起来*/
+    .checkbox-custom input[type="checkbox"]:checked +label:after {
+        position: absolute;
+        display: inline-block;
+        font-family: 'Glyphicons Halflings';
+        content: "\e013";
+        top: 42%;
+        left: 3px;
+        margin-top: -5px;
+        font-size: 11px;
+        line-height: 1;
+        width: 16px;
+        height: 16px;
+        color: #333;
+    }
+    .checkbox-custom label {
+        cursor: pointer;
+        line-height: 1.2;
+        font-weight: normal;/*改变了rememberme的字体*/
+        margin-bottom: 0;
+        text-align: left;
+    }
+    .remove{
+      float: right;
+      top: 25px;
+      right: 10px;
+      opacity: 0.2;
+    }
+    .remove:hover{
+      opacity: 0.6;
+    }
+  </style>
   </head>
   <header class="main-header" style="background-image: url(../libs/img/c.jpg)">
         <div class="container">
@@ -134,141 +139,9 @@
                 </div>
             </div>
         </div>
-    </header>
-  <body onLoad="uname1()">
-      <!--Navigation导航栏部分-->
-      <div>
-          <nav class="navbar navbar-default" role="navigation">
-              <br/>
-              <div class="container-fluid">
-                  <div class="navbar-header" style="margin-left: 15%">
-                      <a class="navbar-brand" href="#">学术会议管理平台</a>
-                  </div>
-                  <div class="hidden-sm hidden-xs" style="margin-right: 10%">
-                      <form class="navbar-form navbar-left" style="margin-left: 10%">
-                              <div class="form-group">
-                                  <select class="form-control">
-                                          <option>按时间</option>
-                                          <option>按地区</option>
-                                          <option>主办方</option>
-                                          <option>按名称</option>
-                                    </select>
-                                  <input type="text" class="form-control" placeholder="查找会议">
-                                  <button type="submit" class="btn btn-default" onclick="doSearchh()">查找</button>
-                              </div>
-                      </form>
-                  </div>
-                  <div class="navbar-form navbar-left">
-                      <button class="btn btn-default" onclick="createMeeting()">创建会议</button>
-                  </div>
-                  <div>
-                      <div id="navbar">
-                          <ul class="nav navbar-nav" style="margin-left: 10%">
-                              <li class="dropdown">
-                                  <a href="#" id="uname" class="dropdown-toggle" data-toggle="dropdown">
-                                      <span class="caret"></span>
-                                  </a>
-                                  <ul class="dropdown-menu" role="menu" aria-labelledby="drop">
-                                      <li><a id="LogIn" href="#" onclick="userLogin()">登录</a></li>
-                                      <li class="divider"></li>
-                                      <li><a id="SignIn" href="#" onclick="userRegister()">注册</a></li>
-                                      <li class="divider"></li>
-                                      <li><a id="LogOut"href="#" onclick="logout()">登出</a></li>
-                                  </ul>
-                              </li>
-                          </ul>
-                      </div>
-                  </div>
-              </div>
-              <br/>
-          </nav>
-      </div>
-      <!--Navigation导航栏结束-->
-      <!--注册部分-->
-      <div class="modal fade" id="userRegister" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content" style="margin-top:40%">
-                  <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel">注册</h4>
-                  </div>
-                  <div class="modal-body">
-                      <div class="form-horizontal col-md-offset-0" id="login_form">
-                          <div class="col-md-12">
-                              <div class="form-group">
-                                  <label for="username1" class="control-label">昵称：</label>
-                                  <input class="form-control required" type="text" placeholder="Username" id="username" name="username" autofocus maxlength="20"/>
-                              </div>
-                              <div class="form-group">
-                                  <label for="useremail" class="control-label">邮箱：</label>
-                                  <input class="form-control required" type="email" placeholder="Email" id="useremail" name="useremail" autofocus maxlength="20"/>
-                              </div>
-                              <div class="form-group">
-                                  <label for="idnumber" class="control-label">身份证号：</label>
-                                  <input class="form-control required" type="text" placeholder="Idnumber" id="idnumber" name="idnumber" autofocus maxlength="20"/>
-                              </div>
-                              <div class="form-group">
-                                  <label for="password1" class="control-label">密码：</label>
-                                  <input class="form-control required" type="password" placeholder="Password" id="password1" name="password" autofocus maxlength="20"/>
-                              </div>
-                              <div class="form-group">
-                                  <label for="repassword" class="control-label">确认密码：</label>
-                                  <input class="form-control required" type="password" placeholder="Confirm Password" id="repassword" name="repassword" autofocus maxlength="20"/>
-                              </div>
-                              <div class="form-group" >
-                                  <font color="#999999">单位用户注册？</font><a href="../institution/institution-register.html" color="#CCCC00">前往注册</a>
-                              </div>
-                              <div class="form-group col-md-offset-9">
-                                  <button id='btn' type="submit" class="btn btn-primary" name="submit" onclick="doPostRegister()">注册</button>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="modal-footer"></div>
-              </div>
-          </div>
-      </div>
-      <!--注册部分结束-->
-      <!--用户登录部分-->
-      <div class="modal fade" id="userLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content" style="margin-top:40%">
-                  div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel">登录</h4>
-                  </div>
-                  <div class="modal-body">
-                      <div class="form-horizontal col-md-offset-0" id="login_form">
-                          <div class="col-md-12">
-                              <div class="btn-group center" id="option" data-toggle="buttons">
-                                  <label class="btn btn-default">
-                                      <input type="radio" class="toggle" value="user_option">个人用户登录
-                                  </label>
-                                  <label class="btn btn-default">
-                                      <input type="radio" class="toggle" value="institution_option">单位用户登录
-                                  </label>
-                              </div>
-                              <br>
-                              <br>
-                              <div class="form-group">
-                                  <label class="control-label">邮箱/用户名</label>
-                                  <input class="form-control required" type="text" placeholder="Email/Username" id="email_username" name="email" autofocus maxlength="50"/>
-                              </div>
-                              <div class="form-group">
-                                  <label class="control-label">密码</label>
-                                  <input class="form-control required" type="password" placeholder="Password" id="password" name="password" maxlength="20"/>
-                              </div>
-                              <div class="form-group col-md-offset-9">
-                                  <button id='btn' type="submit" class="btn btn-success" name="submit" onclick="doPostLogin()">登录</button>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="modal-footer"></div>
-              </div>
-          </div>
-      </div>
-      <!--用户登录部分结束-->
+  </header>
+  <body>
+    <div id="topnav"></div>
     <!--Search-->
     <div class="information">
       <div class="container">
@@ -282,182 +155,14 @@
               </div>
               <table id="conference-info-container" class="table" border="0" class="table_ric2" cellspacing="0" cellpadding="0" style="100%">
                 <tbody id="info">
-                  <tr>
-                    <th class="list">
-                      <div class="list-item">
-                        <dl class="dll" style="width: 88%;">
-                          <dt>
-                            <h4><a href="../conference/conference-main.html" target="" class="title">2018测试</a></h4>
-                          </dt>
-                          <dd class="">
-                            <p>
-                              <span class="calendar-container" style="">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                                <span id="calendar">2018-06-30</span>
-                              </span>
-                              <span class="place-container" style="">
-                                <i class="glyphicon glyphicon-map-marker"></i>
-                                <span id="place">Beijing</span>
-                              </span>
-                            </p>
-                          </dd>
-                          <dd class="institution">
-                            <div class="">
-                              <i class="glyphicon glyphicon-home"></i>
-                              <span>单位名</span>
-                            </div>
-                          </dd>
-                        </dl>
-                      </div>
-                    </th>
-                  </tr>
-                  <tr>
-                    <th class="list">
-                      <div class="list-item">
-                        <dl class="dll" style="width: 88%;">
-                          <dt>
-                            <h4><a href="#" target="" class="title">2018测试</a></h4>
-                          </dt>
-                          <dd class="">
-                            <p>
-                              <span class="calendar-container" style="">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                                <span id="regist-date">2018-06-30</span>
-                              </span>
-                              <span class="place-container" style="">
-                                <i class="glyphicon glyphicon-map-marker"></i>
-                                <span id="place">Beijing</span>
-                              </span>
-                            </p>
-                          </dd>
-                          <dd>
-                            <p>
-                            <div class="">
-                              <span class="period-container">
-                                <i class="glyphicon glyphicon-time"></i>
-                                <span id="start_date">2018-07-01</span>
-                                <span>~</span>
-                                <span id="end-date">2018-07-20</span>
-                              </span>
-                            </div>
-                            <div class="">
-                              <span class="period_container">
-                                <i class="glyphicon glyphicon-time"></i>
-                                <span id="register_start"></span>
-                                <span id="register_end"></span>
-                              </span>
-                            </div>
-                            </p>
-                          </dd>
-                          <dd class="institution">
-                            <div class="">
-                              <i class="glyphicon glyphicon-home"></i>
-                              <span>单位名</span>
-                            </div>
-                          </dd>
-                        </dl>
-                      </div>
-                    </th>
-                  </tr>
-                  <tr>
-                    <th class="list">
-                      <div class="list-item">
-                        <dl class="dll" style="width: 88%;">
-                          <dt>
-                            <h4><a href="#" target="" class="title">2018测试</a></h4>
-                          </dt>
-                          <dd class="">
-                            <p>
-                              <span class="calendar-container" style="">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                                <span id="calendar">2018-06-30</span>
-                              </span>
-                              <span class="place-container" style="">
-                                <i class="glyphicon glyphicon-map-marker"></i>
-                                <span id="place">Beijing</span>
-                              </span>
-                            </p>
-                          </dd>
-                          <dd class="institution">
-                            <div class="">
-                              <i class="glyphicon glyphicon-home"></i>
-                              <span>单位名</span>
-                            </div>
-                          </dd>
-                        </dl>
-                      </div>
-                    </th>
-                  </tr>
-                  <tr>
-                    <th class="list">
-                      <div class="list-item">
-                        <dl class="dll" style="width: 88%;">
-                          <dt>
-                            <h4><a href="#" target="" class="title">2018测试</a></h4>
-                          </dt>
-                          <dd class="">
-                            <p>
-                              <span class="calendar-container" style="">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                                <span id="calendar">2018-06-30</span>
-                              </span>
-                              <span class="place-container" style="">
-                                <i class="glyphicon glyphicon-map-marker"></i>
-                                <span id="place">Beijing</span>
-                              </span>
-                            </p>
-                          </dd>
-                          <dd class="institution">
-                            <div class="">
-                              <i class="glyphicon glyphicon-home"></i>
-                              <span>单位名</span>
-                            </div>
-                          </dd>
-                        </dl>
-                      </div>
-                    </th>
-                  </tr>
-                  <tr>
-                    <th class="list">
-                      <div class="list-item">
-                        <dl class="dll" style="width: 88%;">
-                          <dt>
-                            <h4><a href="#" target="" class="title">2018测试</a></h4>
-                          </dt>
-                          <dd class="">
-                            <p>
-                              <span class="calendar-container" style="">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                                <span id="calendar">2018-06-30</span>
-                              </span>
-                              <span class="place-container" style="">
-                                <i class="glyphicon glyphicon-map-marker"></i>
-                                <span id="place">Beijing</span>
-                              </span>
-                            </p>
-                          </dd>
-                          <dd class="institution">
-                            <div class="">
-                              <i class="glyphicon glyphicon-home"></i>
-                              <span>单位名</span>
-                            </div>
-                          </dd>
-                        </dl>
-                      </div>
-                    </th>
-                  </tr>
+
                 </tbody>
               </table>
             </div>
             <nav class="text-center">
             <div class="pagination pagination-lg">
-              <li class="page previous" ><a id="page" class="pagg" href="#">上一页</a></li>
-            <!--  <li class="page first active"><a id="page" class="pagg" href="#" >1</a></li>
-              <li class="page second"><a id="page" class="pagg" href="#" >2</a></li>
-              <li class="page third"><a id="page" class="pagg" href="#" >3</a></li>
-              <li class="page fourth"><a id="page" class="pagg" href="#" >4</a></li>
-              <li class="page fifth"><a id="page" class="pagg" href="#" >5</a></li>-->
-              <li class="page next"><a id="page" class="pagg next_link" href="#">下一页</a></li>
+              <li class="page previous" onclick="movepage(0)"><a id="page" class="pagg" href="#">上一页</a></li>
+              <li class="page next" onclick="movepage(1)"><a id="page" class="pagg next_link" href="#">下一页</a></li>
             </div>
             </nav>
           </div>
@@ -465,7 +170,10 @@
             <div class=" panel panel-default" style="padding: 20px;">
               <div class="search-condition">
                 <div class="keyword">
-                  <input id="keyword" class="form-control"type="text" name="keyword" value="" placeholder="关键词">
+                  <div class="remove_container">
+                  <i class="glyphicon glyphicon-remove remove" onclick="doClear()"></i>
+                  </div>
+                  <input id="keyword" class="form-control" type="text" name="keyword" value="" placeholder="关键词" style="padding-right: 25px;">
                 </div>
                 <br>
                 <div class="start-date">
@@ -498,91 +206,29 @@
     </div>
   </body>
   <script type="text/javascript">
-  var meeting_url="http://154.8.211.55:8081/search/meeting";
-  var url="http://154.8.211.55:8081";
+  var url="http://154.8.211.55:8081/search/meeting";
   var cur_page=0;
   var keyword="";
   var start;
   var end;
-  /*function changePageNum(flag)
-  {
-    page_list=$(".pagg");
-    for(var i=1;i<6;i++)
-    {
-      if(flag==true){
-        page_list[i].innerText=parseInt(page_list[i].innerText)+5;
-      }
-      else if(flag==false){
-        page_list[i].innerText=parseInt(page_list[i].innerText)-5;
-      }
-    }
-  }*/
-  $("a.pagg").click(function(){
-    var u=meeting_url;
-    var pre_page;
-    var ele=$(this);
-    var page_list=$(".page");
-    page=ele.text();
-
-    $("tbody").empty();
-    if(page=="上一页")
-    {
-      if(cur_page-1>=0)
-      {
-        pre_page=cur_page;
-        cur_page=cur_page-1;
-      }
-    }
-    else if(page=="下一页"){
-        pre_page=cur_page;
-        cur_page=cur_page+1;
-    }
-    else{
-      pre_page=cur_page;
-      cur_page=page-1;
-    }
-    var pre_data;
-    if(keyword!="")
-    {
-      u=u+"?keyword="+keyword;
-    }
-    if(start!="")
-    {
-      if(u==meeting_url)
-        u=u+"?startdate="+start;
-      else
-        u=u+"&startdate="+start;
-    }
-    if(end!="")
-    {
-      if(u==meeting_url)
-        u=u+"?enddate="+end;
-      else
-        u=u+"&enddate="+end;
-    }
-    if(flag1==true)
-    {
-      if(u==meeting_url)
-        u=u+"?isonposting=1";
-      else
-        u=u+"&isonposting=1";
-    }
-    if(flag2==true)
-    {
-      if(u==meeting_url)
-        u=u+"?isonregist=1";
-      else
-        u=u+"&isonregist=1";
-    }
-    $.get(u,{page:cur_page,size:10},function(data)
-    {
-      if(!data)
-      {
-        alert("错误");
-      }
-      else
-      {
-        if(data.length!=0)
+  window.onload=function(){
+    //var explorer =navigator.userAgent ;
+    //if(explorer.indexOf("Edge")){
+      //$(".remove").hidden();
+    //}
+    $("#topnav").load("topnav.txt",function(){
+      var a=checkName();
+      var d=new Date();
+      var day=d.getDate();
+      var month=d.getMonth() + 1;
+      var year=d.getFullYear();
+      $("#uname").append(a);
+      $.get(url+"?startDate="+year+"-"+month+"-"+day+"&size=10",function(data){
+        if(!data)
+        {
+          alert("错误");
+        }
+        else
         {
           for(var i=0;i<data.length;i++)
           {
@@ -590,7 +236,7 @@
             var v2=data[i].title;
             var v3_1=data[i].postStartDate;
             var v3_2=data[i].postEndDate;
-            var v4=data[i].institution//.institutionName;
+            var v4=data[i].institution;
             if(v4===null)
             {
               v4="未定";
@@ -603,379 +249,27 @@
             var v7=data[i].endDate;
             var v8_1=data[i].registStartDate;
             var v8_2=data[i].registrationDeadline;
+            if(v3_1===null)
+              v3_1="未定";
+            if(v3_2===null)
+              v3_2="未定";
+            if(v6===null)
+              v6="未定";
+            if(v7===null)
+              v7="未定";
+            if(v8_1===null)
+               v8_1="未定";
+            if(v8_2===null)
+              v8_2="未定";
             if(v5==="")
-             v5="无";
-             $("tbody").append(
-               "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span>会议期间: </span><span id='calendar'> "+v6+" ~ "+v7+"</span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'> "+v5+"</span></span></p></dd><dd><p><span><i class='glyphicon glyphicon-time'></i><span>投稿期间：<span><span> "+v3_1+" ~ "+v3_2+"</span></span></p><div class=''><span class='period_container'><p><i class='glyphicon glyphicon-time'></i><span>注册期间: </span><span id='register_period'>"+v8_1+" ~ "+v8_2+"</span></p></div></dd><dd class='institution'><div class=''><i class='glyphicon glyphicon-home'></i> "+v4+"</div></dd></dl></div></th></tr>"
-             );
+              v5="未定";
+            $("tbody").append(
+              "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span>会议期间: </span><span id='calendar'> "+v6+" ~ "+v7+"</span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'> "+v5+"</span></span></p></dd><dd><p><span><i class='glyphicon glyphicon-time'></i><span>投稿期间：<span><span> "+v3_1+" ~ "+v3_2+"</span></span></p><div class=''><span class='period_container'><p><i class='glyphicon glyphicon-time'></i><span>注册期间: </span><span id='register_period'>"+v8_1+" ~ "+v8_2+"</span></p></div></dd><dd class='institution'><div class=''><i class='glyphicon glyphicon-home'></i> "+v4+"</div></dd></dl></div></th></tr>"
+            );
           }
         }
-        else
-        {
-          cur_page=pre_page;
-          $.get(u,{page:cur_page,size:10},function(data)
-          {
-            if(!data)
-            {
-              alert("错误");
-            }
-            else{
-              for(var i=0;i<data.length;i++)
-              {
-                var v1=data[i].meetingId;
-                var v2=data[i].title;
-                var v3_1=data[i].postStartDate;
-                var v3_2=data[i].postEndDate;
-                var v4=data[i].institution//.institutionName;
-                if(v4===null)
-                {
-                  v4="未定";
-                }
-                else{
-                  v4=data[i].institution.institutionName;
-                }
-                var v5=data[i].address;
-                var v6=data[i].startDate;
-                var v7=data[i].endDate;
-                var v8_1=data[i].registStartDate;
-                var v8_2=data[i].registrationDeadline;
-                if(v5==="")
-                 v5="无";
-                 $("tbody").append(
-                   "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span>会议期间: </span><span id='calendar'> "+v6+" ~ "+v7+"</span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'> "+v5+"</span></span></p></dd><dd><p><span><i class='glyphicon glyphicon-time'></i><span>投稿期间：<span><span> "+v3_1+" ~ "+v3_2+"</span></span></p><div class=''><span class='period_container'><p><i class='glyphicon glyphicon-time'></i><span>注册期间: </span><span id='register_period'>"+v8_1+" ~ "+v8_2+"</span></p></div></dd><dd class='institution'><div class=''><i class='glyphicon glyphicon-home'></i> "+v4+"</div></dd></dl></div></th></tr>"
-                 );
-              }
-            }
-          });
-        }
-      }
+      })
     });
-  });
-  function doSearch(){
-      var u=meeting_url;
-      var maxsize=20;
-      page_list=$(".page").removeClass("active");
-      keyword=$("#keyword").val();
-      start=$("#start").val();
-      end=$("#end").val();
-      flag1=$("#check1").is(":checked");
-      flag2=$("#check2").is(":checked");
-
-      $("tbody").empty();
-      if(keyword!="")
-      {
-        u=u+"?keyword="+keyword;
-      }
-      if(start!="")
-      {
-        if(u==meeting_url)
-          u=u+"?startdate="+start;
-        else
-          u=u+"&startdate="+start;
-      }
-      if(end!="")
-      {
-        if(u==meeting_url)
-          u=u+"?enddate="+end;
-        else
-          u=u+"&enddate="+end;
-      }
-      if(flag1==true)
-      {
-        if(u==meeting_url)
-          u=u+"?isonposting=1";
-        else
-          u=u+"&isonposting=1";
-      }
-      if(flag2==true)
-      {
-        if(u==meeting_url)
-          u=u+"?isonregist=1";
-        else
-          u=u+"&isonregist=1";
-      }
-      if(u!=meeting_url)
-      {
-        $.get(u,{size:10},function(data){
-          if(!data)
-          {
-            alert("错误");
-          }
-          else
-          {
-            //alert(data[1].institution);
-            //alert(data[1].institution.institutionName);
-            for(var i=0;i<data.length;i++)
-            {
-              var v1=data[i].meetingId;
-              var v2=data[i].title;
-              var v3_1=data[i].postStartDate;
-              var v3_2=data[i].postEndDate;
-              var v4=data[i].institution;
-              if(v4===null)
-              {
-                v4="未定";
-              }
-              else{
-                v4=data[i].institution.institutionName;
-              }
-              var v5=data[i].address;
-              var v6=data[i].startDate;
-              var v7=data[i].endDate;
-              var v8_1=data[i].registStartDate;
-              var v8_2=data[i].registrationDeadline;
-              if(v3_1===null)
-                v3_1="未定";
-              if(v3_2===null)
-                v3_2="未定";
-              if(v6===null)
-                v6="未定";
-              if(v7===null)
-                v7="未定";
-              if(v8_1===null)
-                 v8_1="未定";
-              if(v8_2===null)
-                v8_2="未定";
-              if(v5==="")
-                v5="未定";
-                $("tbody").append(
-                  "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span>会议期间: </span><span id='calendar'> "+v6+" ~ "+v7+"</span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'> "+v5+"</span></span></p></dd><dd><p><span><i class='glyphicon glyphicon-time'></i><span>投稿期间：<span><span> "+v3_1+" ~ "+v3_2+"</span></span></p><div class=''><span class='period_container'><p><i class='glyphicon glyphicon-time'></i><span>注册期间: </span><span id='register_period'>"+v8_1+" ~ "+v8_2+"</span></p></div></dd><dd class='institution'><div class=''><i class='glyphicon glyphicon-home'></i> "+v4+"</div></dd></dl></div></th></tr>"
-                );
-            }
-          //alert(data.length);
-          }
-          $(".first").addClass("active");
-        });
-    }
-    else{
-      alert("请输入搜索条件");
-    }
   }
-  function doSearchh()
-  {
-    //var select=$("select").find("option:selected").text();
-    var select=$("select").find("option:selected").index();
-    var type="";
-    //alert(select);
-  }
-  function doPostRegister()
-  {
-    //alert("qqq");
-    var val1 = document.getElementById("username").value;
-    var val2 = document.getElementById("password1").value;
-    var val3 = document.getElementById("repassword").value;
-    var val4 = document.getElementById("useremail").value;
-    var val5 = document.getElementById("idnumber").value;
-    var user = {
-        "username":val1,
-        "password":val2,
-        "email":val4,
-        "idnumber":val5
-    };
-    user = JSON.stringify(user);
-        var settings = {
-            type: "POST",
-            url:url+"/personal_user",
-            data:user,
-            error: function(XHR,textStatus,errorThrown) {
-                alert("error!");
-          alert(errorThrown);
-            },
-            success: function(data,textStatus) {
-          if(data==false)
-          {
-            alert("该昵称已被注册！");
-          }
-          else
-          {
-            alert("注册成功！");
-            window.location.href='Navigation.html';
-          }
-            },
-            headers: {
-                "Content-Type":"application/json"
-            }
-    };
-    var isRightForm = true;
-    if(val1=="")
-    {
-      alert("昵称不能为空！");
-              isRightForm = false;
-    }
-    if(val2=="")
-    {
-      alert("密码不能为空！");
-              isRightForm = false;
-    }
-    if(val2!=val3)
-    {
-      alert("两次输入密码不相同！");
-              isRightForm = false;
-    }
-    if(val4=="")
-    {
-      alert("邮箱不能为空！");
-              isRightForm = false;
-    }
-          /*判断输入身份证号是否合法 */
-          /*简单判断是否为18位数字 */
-          /*
-          if(val5.length!=18){
-              isRightForm = false;
-          }
-          if(!isNumber(val5)){
-              isRightForm = false;
-          }*/
-
-          var reg1 = /^(\d{15}|\d{18})$/;
-          if(!reg1.test(val5)){
-              alert("身份证号输入错误！");
-              isRightForm = false;
-          }
-
-          /*判断邮箱是否格式正确 */
-          var reg2 = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"); //正则表达式
-          if(!reg2.test(val4)){
-              alert("邮箱格式输入错误！");
-              isRightForm = false;
-          }
-
-          if(isRightForm){
-              $.ajax(settings);
-          }
-  }
-  function doPostLogin()
-  {
-    //alert("qqq");
-    var val1 = document.getElementById("email_username").value;
-          var val2 = document.getElementById("password").value;
-          var type = $('#option input:radio:checked').val();
-          document.cookie = "type="+type;
-          //alert(document.cookie);
-
-          if(type=="user_option"){
-              $.get(url+"/personal_user?email="+val1+"&password="+val2,function(data)
-              {
-                  if(data==0)
-                  {
-                      alert("用户名或密码不正确！");
-                  }
-                  else
-                  {
-                      //alert(document.cookie);
-                      document.cookie = "userId="+data;
-                      alert("登录成功！");
-                      window.location.href="search.html";
-                  }
-              });
-          }
-          else if(type=="institution_option"){
-              $.get(url+"/institution/login?username="+val1+"&password="+val2,function(data)
-              {
-                  if(data==0)
-                  {
-                      alert("用户名或密码不正确！");
-                  }
-                  else
-                  {
-                      document.cookie = "userId="+data;
-                      alert("登录成功！");
-                      window.location.href="search.html";
-                      //window.location.href="createmeetings.html";
-                  }
-              });
-          }
-  }
-  function logout()
-  {
-        setCookie("userId", "", -1);
-          setCookie("type","",-1)
-      location.reload();
-  }
-  function uname1()
-  {
-    //alert("uname1"+document.cookie);
-    var a=checkName();
-    $("#uname").append(a);
-  }
-  function getCookie(c_name)
-      {
-          let c_end;
-    if(document.cookie.length>0){
-      c_start=document.cookie.indexOf(c_name+"=");
-      if(c_start==-1)
-        return "";
-      else if(c_start!=-1){
-        c_start=c_start+c_name.length+1;
-        c_end=document.cookie.indexOf(";",c_start);
-        if(c_end==-1){
-          c_end=document.cookie.length;
-        }
-      }
-              return unescape(document.cookie.substring(c_start,c_end));
-    }
-    return "";
-  }
-  function checkName()
-      {
-          var type = getCookie("type");
-    var userid = getCookie("userId");
-          //alert("userid"+userid+"  type"+type);
-    if(userid=="")
-    {
-              var b="游客";
-      return b;
-    }
-    else if(userid!="")
-    {
-              if(type=="user_option"){
-                  document.getElementById("SignIn").href="#";
-                  document.getElementById("LogIn").onclick=null;
-                  var c="";
-                  $.ajaxSettings.async=false;
-                  //url=url+"/personal_user";
-                  $.get(url+"/personal_user/info?uid="+userid,function(data,status){
-                      c=data['username'];
-                  });
-                  return c;
-              }
-              else if(type=="institution_option"){
-                  document.getElementById("SignIn").href="#";
-                  document.getElementById("LogIn").onclick=null;
-                  var c="";
-                  $.ajaxSettings.async=false;
-                  //url=url+"/personal_user";
-                  $.get(url+"/institution/info?institution_id="+userid,function(data,status){
-                      c=data['institutionName'];
-
-                  });
-                  return c;
-              }
-
-    }
-  }
-      function setCookie(cname, cvalue, exdays)
-      {
-      var d = new Date();
-      d.setTime(d.getTime() + (exdays*24*60*60*1000));
-      var expires = "expires="+d.toUTCString();
-      document.cookie = cname + "=" + cvalue + "; " + expires;
-    }
-      function userLogin()
-      {
-          $('#userLogin').modal();
-      }
-      function userRegister()
-      {
-          $('#userRegister').modal();
-      }
-      function createMeeting()
-      {
-          var type = getCookie("type");
-    var userid = getCookie("userId");
-          if(type=="institution_option"&&userid!=""){
-              window.location.href="createmeetings.html";
-          }
-      }
   </script>
 </html>
