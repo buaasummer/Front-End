@@ -3,8 +3,9 @@
     <head>
         <title>学术会议管理平台</title>
         <meta charset="utf-8"> 
-        <link rel="stylesheet" href="../libs/css/bootstrap.min.css">
-        <script src="../libs/js/jquery.min.js"></script>
+        <link rel="stylesheet" href="../libs/css/bootstrap.css">
+        <script src="../libs/js/jquery.js"></script>
+        <script src="../libs/js/jquery.form.js"></script>
         <script src="../libs/js/bootstrap.min.js"></script>
     </head>
     <body>
@@ -92,29 +93,55 @@
                     <div class="panel-heading"><h3 class="panel-title">参会人员</h3></div>
                     <div class="panel-body">
                         <br>
+                        <div class="input-group participantInfo" style="width:100%;padding:0 0 1px 0">
+                            <label class="input-group-addon">姓名：</label>
+                            <input type="text" class="form-control" id="pname" name="pname[]" style="max-width:100%">
+                            <label class="input-group-addon">性别：</label>
+                            <select class="form-control" id="gender" name="gender[]" style="min-width:15%">
+                                <option value="0">男</option>
+                                <option value="1">女</option>
+                            </select>
+                            <label class="input-group-addon">邮箱：</label>
+                            <input type="text" class="form-control" id="emailList" name="emailList[]" style="max-width:100%">
+                            <label class="input-group-addon">是否住宿：</label>
+                            <select class="form-control" id="accommodation" name="accommodation[]" style="min-width:15%">
+                                <option value="0">是</option>
+                                <option value="1">否</option>
+                            </select>			
+                            <span class="input-group-btn">
+                                <button class="btn btn-info" type="button" data-toggle="tooltip" title="删除" id="delParticipant" disabled><span class="glyphicon glyphicon-minus"></span></button>
+                            </span>
+                        </div>
                         <button class="btn btn-info" data-toggle="tooltip" id="addParticipants" onclick="addParticipants()" name="addParticipants">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                     </div>
                     <br>
-                </div>              
-                <div class="input-group panel panel-default col-sm-12">
-                    <div class="panel-heading"><h3 class="panel-title">收费凭证</h3></div>
-                    <div class="panel-body">
-                        <br>
-                        <input type="file" id="certificate" name="certificate">
-                        <br>
+                </div>
+                <form id="file" method="Post" enctype="multipart/form-data">
+                    <div class="input-group panel panel-default col-sm-12">
+                        <div class="panel-heading"><h3 class="panel-title">收费凭证</h3></div>
+                        <div class="panel-body">
+                            <br>
+                            <input type="file" id="certicifate" name="file">
+                            <!--iframe style="display:none;" name="frame1" frameborder="0" height="0"></iframe>-->
+                            <br>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group col-md-offset-10">
-                    <button id="btn" class="btn btn-primary" name="submit" onclick="submitInfo()">提交参会信息</button>
-                </div>
+                    <div class="form-group col-md-offset-10">
+                        <button id="btn" class="btn btn-primary" name="submit" onclick="submitInfo()">提交参会信息</button>
+                    </div>
+                </form>
             </div>
         </div>
         <!--主体部分结束-->
     </body>
     <script type="text/javascript">
-        var url="http://154.8.211.55:8081";
+        //var url="http://154.8.211.55:8081";
+        var url = "http://f7ffb69f.ngrok.io";
+        $.ajaxSetup({  
+    		async:false
+		});
         function addUser(){
             $('#addInstitutionUser').modal();
         }
@@ -149,8 +176,8 @@
 							'<option value="0">男</option>'+
 							'<option value="1">女</option>'+
 						'</select>'+
-                        '<label class="input-group-addon">手机号：</label>'+
-                        '<input type="text" class="form-control" id="phoneNumber" name="phoneNumber[]" style="max-width:100%">'+
+                        '<label class="input-group-addon">邮箱：</label>'+
+                        '<input type="text" class="form-control" id="emailList" name="emailList[]" style="max-width:100%">'+
                         '<label class="input-group-addon">是否住宿：</label>'+
                         '<select class="form-control" id="accommodation" name="accommodation[]" style="min-width:15%">'+
 							'<option value="0">是</option>'+
@@ -177,6 +204,25 @@
             return;
         })
 
+        function getCookie(c_name)
+        {
+            //alert(c_name);
+            //alert(document.cookie);
+            let c_end;
+			if(document.cookie.length>0){
+				c_start=document.cookie.indexOf(c_name+"=");
+				if(c_start!=-1){
+					c_start=c_start+c_name.length+1;
+					c_end=document.cookie.indexOf(";",c_start);
+					if(c_end==-1){
+						c_end=document.cookie.length;
+					}
+				}
+                return unescape(document.cookie.substring(c_start,c_end));
+			}
+			return "";
+		}
+
         function submitInfo(){
 
             //判断是否上传凭证
@@ -190,7 +236,7 @@
             //传入参会人员信息到数组并判断是否存在空值
             var pnameArr = new Array;
             var genderArr = new Array;
-            var phoneArr = new Array;
+            var emailArr = new Array;
             var accoArr = new Array;
             $("input[name='pname[]']").each(function(index, item){
                 pnameArr[index] = $(this).val();
@@ -206,9 +252,9 @@
                     return;
                 }
             });
-            $("input[name='phoneNumber[]']").each(function(index, item){
-                phoneArr[index] = $(this).val();
-                if(phoneArr[index]==""){
+            $("input[name='emailList[]']").each(function(index, item){
+                emailArr[index] = $(this).val();
+                if(emailArr[index]==""){
                     alert("请填写完整参会人员信息！");
                     return;
                 }
@@ -234,6 +280,29 @@
             });
             alert(pnameArr[0]+pnameArr[1]);*/
 
+            //参会人列表信息
+            var participantList = [];
+			for(var i=0;i<pnameArr.length;i++)
+			{
+                var g, a;
+                if(genderArr[i]=='0'){
+                    g="男";
+                }
+                else{
+                    g="女";
+                }
+
+                if(accoArr[i]=='0'){
+                    a="是";
+                }
+                else{
+                    a="否"
+                }
+				participantList.push({"name":pnameArr[i],"gender":g,"email":emailArr[i],"bookAccommodation":a});
+			}
+            //alert(participantList[0]['gender']);
+            //alert(participantList[1]['email']);
+
             //判断是作者参会还是聆听参会并传入信息
             var show="";  
             var apm = document.getElementsByName("participantType");  
@@ -241,7 +310,12 @@
                 if(apm[i].checked)  
                     show = apm[i].value;  
             }
+            
+            var u_id=1, m_id=1;
+            //获取用户id和会议id
+            u_id = getCookie("userId");
 
+            //作者参会
             if(show=="1"){
                 var paperId = document.getElementById("paperId").value;
                 var authorName = document.getElementById("authorName").value;
@@ -250,14 +324,47 @@
                     return;
                 }
                 else{
-                    alert("注册成功！");
+                    $.post(url+"/meeting/authorRegister/information?userId="+u_id+"&meetingId="+m_id+"&number="+paperId,{"participants":JSON.stringify(participantList)},function(data)
+                    {
+						if(data==-1){
+                            alert("该论文不存在或尚未被录用！");
+                        }
+                        else{
+                            //上传缴费证明
+                            document.getElementById("file").action=url+"/meeting/Register/uploadFile?participantsId="+data;
+                            $("#file").ajaxForm(function(){
+                                //if(data==true){
+                                    alert("注册成功！");
+                                    window.location="register_meeting.html";
+                                //}
+                                //else{
+                                //    alert("缴费证明上传失败！");
+                                //}
+                            });
+                        }
+					});
                 }
             }
+            //聆听参会
             else{
-                alert("注册成功！");
+                //alert("sss");
+                $.ajaxSetup.async=false;
+                $.post(url+"/meeting/auditRegister/information?userId="+u_id+"&meetingId="+m_id,{"participants":JSON.stringify(participantList)},function(data)
+                {
+                    //alert(data);
+                    //上传缴费证明
+                    document.getElementById("file").action=url+"/meeting/Register/uploadFile?participantsId="+data;
+                    $("#file").ajaxForm(function(){
+                        //if(data==true){
+                            alert("注册成功！");
+                            window.location="register_meeting.html";
+                        //}
+                        //else{
+                        //    alert("缴费证明上传失败！");
+                        //}
+                    });
+				});
             }
-            
         }
-
     </script>
 </html>
