@@ -1,6 +1,6 @@
 # Front-End
 BuaaSummer Front-End part
-由于浏览器同源策略限制了不同目录下cookie的读取，所以暂时将所有展示使用的功能页面统一放在conference目录下
+由于cookie策略限制了不同目录下cookie的读取，所以暂时将所有展示使用的功能页面统一放在conference目录下
 
 项目结构：
 -conference:会议相关页面
