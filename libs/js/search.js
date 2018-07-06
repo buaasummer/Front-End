@@ -1,5 +1,5 @@
 function movepage(n){
-  var u=url;
+  var u=meeting_url;
   var pre_page;
   $("tbody").empty();
   if(n==0)
@@ -21,28 +21,28 @@ function movepage(n){
   }
   if(start!="")
   {
-    if(u==url)
+    if(u==meeting_url)
       u=u+"?startdate="+start;
     else
       u=u+"&startdate="+start;
   }
   if(end!="")
   {
-    if(u==url)
+    if(u==meeting_url)
       u=u+"?enddate="+end;
     else
       u=u+"&enddate="+end;
   }
   if(flag1==true)
   {
-    if(u==url)
+    if(u==meeting_url)
       u=u+"?isonposting=1";
     else
       u=u+"&isonposting=1";
   }
   if(flag2==true)
   {
-    if(u==url)
+    if(u==meeting_url)
       u=u+"?isonregist=1";
     else
       u=u+"&isonregist=1";
@@ -125,9 +125,9 @@ function movepage(n){
   });
 }
 function doSearch(){
-    var u=url;
-    var maxsize=20;
-    page_list=$(".page").removeClass("active");
+    var u=meeting_url;
+    //alert(u);
+    var maxsize=10;
     keyword=$("#keyword").val();
     start=$("#start").val();
     end=$("#end").val();
@@ -141,33 +141,33 @@ function doSearch(){
     }
     if(start!="")
     {
-      if(u==url)
+      if(u==meeting_url)
         u=u+"?startdate="+start;
       else
         u=u+"&startdate="+start;
     }
     if(end!="")
     {
-      if(u==url)
+      if(u==meeting_url)
         u=u+"?enddate="+end;
       else
         u=u+"&enddate="+end;
     }
     if(flag1==true)
     {
-      if(u==url)
+      if(u==meeting_url)
         u=u+"?isonposting=1";
       else
         u=u+"&isonposting=1";
     }
     if(flag2==true)
     {
-      if(u==url)
+      if(u==meeting_url)
         u=u+"?isonregist=1";
       else
         u=u+"&isonregist=1";
     }
-    if(u!=url)
+    if(u!=meeting_url)
     {
       $.get(u,{size:10},function(data){
         if(!data)
@@ -218,6 +218,22 @@ function doSearch(){
   }
   else{
     alert("请输入搜索条件");
+  }
+}
+function checking(n){
+  var flag1=$("#check1").is(":checked");
+  var flag2=$("#check2").is(":checked");
+  if(n==0)
+  {
+    if(flag2===true){
+      $("#check2").prop({checked:false});
+    }
+  }
+  else if(n==1)
+  {
+    if(flag1==true){
+      $("#check1").prop({checked:false});
+    }
   }
 }
 function doClear(){

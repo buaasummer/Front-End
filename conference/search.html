@@ -56,7 +56,7 @@
       }
       tr:hover{
         background-color:#d8e4f7;
-        border-left: 3px solid #000ecc;
+        border-left: 5px solid #000ecc;
       }
       .panel{
         margin-bottom: 0px;
@@ -187,11 +187,11 @@
                 </div>
                 <br>
                 <div class="checkbox-custom check-default">
-                  <input id="check1" type="checkbox" name="" value="">
+                  <input id="check1" type="checkbox" name="" value="" onchange="checking(0)">
                   <label for="check">是否正在投稿</label>
                 </div>
                 <div class="checkbox-custom check-default">
-                  <input id="check2" type="checkbox" name="" value="">
+                  <input id="check2" type="checkbox" name="" value="" onchange="checking(1)">
                   <label for="check">是否正在注册</label>
                 </div>
               </div>
@@ -206,24 +206,21 @@
     </div>
   </body>
   <script type="text/javascript">
-  var url="http://154.8.211.55:8081/search/meeting";
+  var meeting_url="http://154.8.211.55:8081/search/meeting";
+  var url="http://154.8.211.55:8081";
   var cur_page=0;
   var keyword="";
   var start;
   var end;
   window.onload=function(){
-    //var explorer =navigator.userAgent ;
-    //if(explorer.indexOf("Edge")){
-      //$(".remove").hidden();
-    //}
     $("#topnav").load("topnav.txt",function(){
       var a=checkName();
+      $("#uname").append(a);
       var d=new Date();
       var day=d.getDate();
       var month=d.getMonth() + 1;
       var year=d.getFullYear();
-      $("#uname").append(a);
-      $.get(url+"?startDate="+year+"-"+month+"-"+day+"&size=10",function(data){
+      $.get(meeting_url+"?startDate="+year+"-"+month+"-"+day+"&size=10",function(data){
         if(!data)
         {
           alert("错误");
@@ -271,5 +268,64 @@
       })
     });
   }
+  function doPostLogin()
+  {
+      var val1 = document.getElementById("email_username").value;
+      var val2 = document.getElementById("password").value;
+      var userType = $('#option input:radio:checked').val();
+      document.cookie = "type="+userType;
+      if(userType=="user_option"){
+          $.get(url+"/personal_user?email="+val1+"&password="+val2,function(data)
+          {
+              if(data==0)
+              {
+                  alert("用户名或密码不正确！");
+              }
+              else
+              {
+                  //alert(document.cookie);
+                  document.cookie = "userId="+data;
+                  alert("登录成功！");
+                  window.location.reload();
+              }
+          });
+      }
+      else if(userType=="institution_option"){
+          $.get(url+"/institution/login?username="+val1+"&password="+val2,function(data)
+          {
+              if(data==0)
+              {
+                  alert("用户名或密码不正确！");
+              }
+              else
+              {
+                  document.cookie = "userId="+data;
+                  alert("登录成功！");
+                  window.location.reload();
+                  //window.location.href="seach.html";
+                  //window.location.href="createmeetings.html";
+              }
+          });
+      }
+  }
+  /*function checking(n){
+    var flag1=$("#check1").is(":checked");
+    var flag2=$("#check2").is(":checked");
+    if(n==0)
+    {
+      if(flag2===true){
+        $("#check2").prop({checked:false});
+      }
+    }
+    else if(n==1)
+    {
+      if(flag1==true){
+        $("#check1").prop({checked:false});
+      }
+    }
+  }
+  function doClear(){
+    $("#keyword").val("");
+  }*/
   </script>
 </html>
