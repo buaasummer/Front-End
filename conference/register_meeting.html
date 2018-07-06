@@ -59,39 +59,52 @@
         <!--会议注册部分-->
         <div class="container-fluid text-left">
             <div class="modal-body" style="margin-left:20%">
-                <form>
-                    <h3>参会类型</h3>
-                    <input name="participantType" type="radio" value="1" onclick="changeMode()" checked/>作者参会
-                    <input name="participantType" type="radio" value="2" onclick="changeMode()"/>聆听参会
-                </form>
-                <br>
-                <div id="authorInfo">
-                    <h3>论文信息</h3>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label" style="text-align: right">论文编号</label>
-                        <div class="col-sm-9">
-                            <input type="text" id="paperId" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label" style="text-align: right">作者名称</label>
-                        <div class="col-sm-9">
-                            <input type="text" id="authorName" class="form-control">
-                        </div>
-                    </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3 class="panel-title">参会类型</h3></div>
                     <br>
+                    <div class="panel-body">
+                        <input name="participantType" type="radio" value="1" onclick="changeMode()" checked/>作者参会
+                        <input name="participantType" type="radio" value="2" onclick="changeMode()"/>聆听参会
+                    </div>
+                <br>
                 </div>
-                <div class="input-group" id="participants">
-                    <h3>参会人员</h3>
-                    <div>
+                <div id="authorInfo" class="panel panel-default">
+                    <div class="panel-heading"><h3 class="panel-title">论文信息</h3></div>
+                    <div class="panel-body">
+                        <br>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" style="text-align: right">论文编号</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="paperId" class="form-control">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" style="text-align: right">作者名称</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="authorName" class="form-control">
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <div class="input-group panel panel-default col-sm-12" id="participants">
+                    <div class="panel-heading"><h3 class="panel-title">参会人员</h3></div>
+                    <div class="panel-body">
+                        <br>
                         <button class="btn btn-info" data-toggle="tooltip" id="addParticipants" onclick="addParticipants()" name="addParticipants">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                     </div>
-                <br>
-                <div class="input-group">
-                    <h3>收费凭证</h3>
-                    <input type="file" id="certificate" name="certificate">
+                    <br>
+                </div>              
+                <div class="input-group panel panel-default col-sm-12">
+                    <div class="panel-heading"><h3 class="panel-title">收费凭证</h3></div>
+                    <div class="panel-body">
+                        <br>
+                        <input type="file" id="certificate" name="certificate">
+                        <br>
+                    </div>
                 </div>
                 <div class="form-group col-md-offset-10">
                     <button id="btn" class="btn btn-primary" name="submit" onclick="submitInfo()">提交参会信息</button>
@@ -207,6 +220,12 @@
                     return;
                 }
             });
+
+            if(pnameArr.length==0){
+                alert("请至少填写一位参会人信息！");
+                return;
+            }
+
             /*
             var pnameArr = new Array;
             $("input[name='pname[]']").each(function(index, item){
