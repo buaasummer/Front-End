@@ -11,7 +11,7 @@ window.onload=function()
     $('#leftnav').load('./leftnav.txt',function(){
         $('#topnav').load('./topnav.txt',function(){
             $('#maincontent').load('./maincontent.txt',function(){
-                var a=checkName();
+            var a=checkName();
             $("#uname").append(a);
             doooget();	
             $.ajaxSetup({  

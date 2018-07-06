@@ -32,7 +32,7 @@ function doPostRegister()
                 else
                 {
                     alert("注册成功！");
-                    window.location.href='Navigation.html';
+                    window.location.href='search.html';
                     
                 }
             },
@@ -104,7 +104,8 @@ function doPostLogin()
                 //alert(document.cookie);
                 document.cookie = "userId="+data;
                 alert("登录成功！");
-                window.location.href="conference-main.html?meetingid="+meetingid;
+                alert('1');
+                window.location.href="search.html";
             }
         });	
     }
@@ -119,7 +120,7 @@ function doPostLogin()
             {
                 document.cookie = "userId="+data;
                 alert("登录成功！");
-                window.location.href="conference-main.html?meetingid="+meetingid;
+                window.location.href="search.html";
                 //window.location.href="createmeetings.html";
             }
         });	

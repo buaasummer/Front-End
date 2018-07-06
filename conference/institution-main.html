@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Institution Main Page</title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../libs/js/jquery-form.js"></script>
+    <script type="text/javascript" src="../libs/js/institution-main.js"></script>
+    <script type="text/javascript" src="../libs/js/topnav.js"></script>
+    <script src="../libs/js/global.js"></script>
+    <script src="../libs/js/ripple-effect.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../libs/css/button.css">
+    <link rel="stylesheet" href="../libs/css/google-icons.css">
+</head>
+<body>
+    <style type="text/css">
+        #brief{
+            background-color: #009966;
+            height: 190px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        #pages{
+           position: fixed;
+           right: 0px;
+           top: 50%;
+       }
+       
+    </style>
+    <div id='topnav'>
+
+    </div>
+    <div id='brief' class="col-md-12">
+        <div class="col-md-1"></div>
+        <div>
+            <button id='touxiangbtn' type="button" data-toggle="modal" data-target='#touxiangmodal'>
+                <img id='touxiang' alt="吃瓜少年" height="150px" width="150px"> 
+            </button>    
+            <!-- Modal -->
+            <div class="modal fade" id="touxiangmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">修改头像</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id='touxiangform' method="POST" enctype="multipart/form-data" target="iframe">
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">选择头像:</label>
+                                <input type="file" name="img" class="form-control">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button id='changetouxiang' type="button" class="btn btn-primary" onclick="changetouxinag()">保存头像</button>
+                    </div>
+                <iframe name="iframe" id="iframe" style="display: none;"></iframe>
+            
+                </div>
+                </div>
+            </div>    
+        </div>
+        <div>
+            <h1 id='iname'></h1>
+            <form method="POST" id='briefform'  enctype="multipart/form-data" target="iframe2">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea name="description" id="ibrief" cols="120" rows="5" onchange="changebrief()" style="background-color: #009966;"></textarea>
+            </form>
+            <iframe name="iframe2" id="iframe2" style="display: none;"></iframe>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-8">
+            <h2>会议列表</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div id='conference-lists' class="col-md-10">
+            <div class="row" id="conference-list"></div>
+        </div>
+    </div>
+    <div id='pages' class="col-md-1">
+            <button onclick="prevpage()" class="btn pmd-btn-fab pmd-btn-raised btn-primary">上一页</button>
+            <br><br><br><br><br>
+            <button onclick="nextpage()" class="btn pmd-btn-fab pmd-btn-raised btn-primary">下一页</button>
+    </div>
+</body>
+</html>

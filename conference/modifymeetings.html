@@ -278,9 +278,9 @@
                         </div><br>
                         <div class="form-group">
                                 <label for="paperinfo" class="col-sm-2 control-label text-right">论文模板</label>
-                                <div class="input-group col-sm-8" style="margin-left: 18%">
+                                <div id='inputfilediv' class="input-group col-sm-8" style="margin-left: 18%">
                                     <!--<textarea class="form-control" id="paperinfo" name="paperinfo" rows="3"></textarea>-->
-                                    <input type="file" id="inputfile" name="file">
+                                    <input type="file" id="inputfile" name="file" >
                                 </div>
                             </div><br>
                         <div class="form-group">
@@ -363,7 +363,7 @@
                     </div>
 
                 </div>
-                <button class="btn btn-success btn-lg" type="submit" onclick="upevi()" >创建会议</button>
+                <button class="btn btn-success btn-lg" type="submit" onclick="upevi()" >修改会议</button>
                 <br><br><br><br><br><br>
             </form>
         </div>
@@ -383,12 +383,63 @@
             //alert("uname1"+document.cookie);
 			var a=checkCompany();
             var b=checkName();
+            var meetingid = location.search.split('=')[1];
             //docment.getElementById("company").setAttribute('placeholder',a);
             document.getElementById("company").setAttribute("value",a);
             $("#company_name").append(b);
+            doget(meetingid);
             //var b=checkCompany(); 
 			//$("#company").append(b);
-		}
+        }
+        
+        function doget(meetingid)
+        {
+            $.get(url+'/meeting/info?meeting_id='+meetingid, function(data){
+                $('#title').attr('value',data.title);
+                $('#introduction').text(data.introduction);
+                $('#paperinfo').text(data.paperInfo);
+                $('#schedule').text(data.schedule);
+                $('#registrationfee').attr('value',data.registrationFee);
+                $('#traffic').text(data.accommodationAndTraffic);
+                var startdate = data.startDate;
+                var poststartdate = data.postStartDate;
+                var postenddate = data.postEndDate;
+                var informdate = data.informDate;
+                var registstartdate=data.registStartDate;
+                var registrationdeadline = data.registrationDeadline;
+                var enddate = data.endDate;
+                if(data.email!=null)
+                    $('#email').attr('value',data.email);
+                if(data.contactPerson!=null)
+                    $('#contactperson').attr('value',data.contactPerson);
+                if(data.phone!=null)
+                    $('#phone').attr('value',data.phone);
+                if(data.address!=null)
+                    $('#address').attr('value',data.address);
+                if(startdate!=null)
+                    $('#startdate').attr('value',startdate);
+                if(poststartdate!=null)
+                    $('#poststartdate').attr('value',poststartdate);
+                if(postenddate!=null)
+                    $('#postenddate').attr('value',postenddate);
+                if(informdate!=null)
+                    $('#informdate').attr('value',informdate);
+                if(registstartdate!=null)
+                    $('#registstartdate').attr('value',registstartdate);
+                if(registrationdeadline!=null)
+                    $('#registenddate').attr('value',registrationdeadline);
+                if(enddate!=null)
+                    $('#enddate').attr('value',enddate);
+                if(data.modelDownloadUrl!=null)
+                {
+                    
+                    let x= data.modelDownloadUrl.split('/');
+                    let xlength = x.length;
+                    $('#inputfilediv').append('<b>'+x[xlength-1]+'</b>');
+                }
+                    
+            });
+        }
         
 		function getCookie(c_name)
         {
@@ -537,7 +588,7 @@
                 if(data==4)alert("用户名已存在");*/
                 //alert(data);
                 meeting_id=data;
-                alert('创建成功!');
+                alert('修改成功!');
               });  
             
             setTimeout( function(){
