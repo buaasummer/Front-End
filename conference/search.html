@@ -209,8 +209,10 @@
   var url="http://154.8.211.55:8081";
   var cur_page=0;
   var keyword="";
-  var start;
-  var end;
+  var start="";
+  var end="";
+  var flag1=false;
+  var flag2=false;
   window.onload=function(){
     $("#topnav").load("topnav.txt",function(){
       var a=checkName();
@@ -460,31 +462,10 @@
               {
                   document.cookie = "userId="+data;
                   alert("登录成功！");
-                  window.location.reload();
-                  //window.location.href="seach.html";
-                  //window.location.href="createmeetings.html";
+                  window.location.reload();;
               }
           });
       }
   }
-  /*gifunction checking(n){
-    var flag1=$("#check1").is(":checked");
-    var flag2=$("#check2").is(":checked");
-    if(n==0)
-    {
-      if(flag2===true){
-        $("#check2").prop({checked:false});
-      }
-    }
-    else if(n==1)
-    {
-      if(flag1==true){
-        $("#check1").prop({checked:false});
-      }
-    }
-  }
-  function doClear(){
-    $("#keyword").val("");
-  }*/
   </script>
 </html>

@@ -2,11 +2,14 @@ var meeting_url="http://154.8.211.55:8081/search/meeting";
 var url="http://154.8.211.55:8081";
 var cur_page=0;
 var keyword="";
-var start;
-var end;
+var start="";
+var end="";
+var flag1=false;
+var flag2=false;
 function movepage(n){
   var u=meeting_url;
   var pre_page;
+  var u_key=location.search.split("=")[1];
   $("tbody").empty();
   if(n==0)
   {
@@ -24,6 +27,13 @@ function movepage(n){
   if(keyword!="")
   {
     u=u+"?keyword="+keyword;
+  }
+  else if(keyword=="")
+  {
+    if(u_key!=null)
+    {
+      u=u+"?keyword="+u_key;
+    }
   }
   if(start!="")
   {
@@ -139,7 +149,6 @@ function doSearch(){
     end=$("#end").val();
     flag1=$("#check1").is(":checked");
     flag2=$("#check2").is(":checked");
-
     $("tbody").empty();
     if(keyword!="")
     {
@@ -232,17 +241,17 @@ function dosearchh(){
   window.location.href="../conference/search.html?keyword="+keyword;
 }
 function checking(n){
-  var flag1=$("#check1").is(":checked");
-  var flag2=$("#check2").is(":checked");
+  var f1=$("#check1").is(":checked");
+  var f2=$("#check2").is(":checked");
   if(n==0)
   {
-    if(flag2===true){
+    if(f2===true){
       $("#check2").prop({checked:false});
     }
   }
   else if(n==1)
   {
-    if(flag1==true){
+    if(f1==true){
       $("#check1").prop({checked:false});
     }
   }
