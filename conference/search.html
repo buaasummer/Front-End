@@ -205,6 +205,44 @@
     </div>
   </body>
   <script type="text/javascript">
+  function doPostLogin()
+  {
+      var val1 = document.getElementById("email_username").value;
+      var val2 = document.getElementById("password").value;
+      var userType = $('#option input:radio:checked').val();
+      document.cookie = "type="+userType;
+      if(userType=="user_option"){
+          $.get(url+"/personal_user?email="+val1+"&password="+val2,function(data)
+          {
+              if(data==0)
+              {
+                  alert("用户名或密码不正确！");
+              }
+              else
+              {
+                  //alert(document.cookie);
+                  document.cookie = "userId="+data;
+                  alert("登录成功！");
+                  window.location.reload();
+              }
+          });
+      }
+      else if(userType=="institution_option"){
+          $.get(url+"/institution/login?username="+val1+"&password="+val2,function(data)
+          {
+              if(data==0)
+              {
+                  alert("用户名或密码不正确！");
+              }
+              else
+              {
+                  document.cookie = "userId="+data;
+                  alert("登录成功！");
+                  window.location.reload();
+              }
+          });
+      }
+  }
   /*gifunction checking(n){
     var flag1=$("#check1").is(":checked");
     var flag2=$("#check2").is(":checked");

@@ -4,154 +4,6 @@ var cur_page=0;
 var keyword="";
 var start;
 var end;
-window.onload=function(){
-  $("#topnav").load("topnav.txt",function(){
-    var a=checkName();
-    $("#uname").append(a);
-    var d=new Date();
-    var day=d.getDate();
-    var month=d.getMonth() + 1;
-    var year=d.getFullYear();
-    var u_key=location.search.split("=")[1];
-    //alert(u_key);
-    if(u_key==null){
-    $.get(meeting_url+"?startDate="+year+"-"+month+"-"+day+"&size=10",function(data){
-      if(!data)
-      {
-        alert("错误");
-      }
-      else
-      {
-        for(var i=0;i<data.length;i++)
-        {
-          var v1=data[i].meetingId;
-          var v2=data[i].title;
-          var v3_1=data[i].postStartDate;
-          var v3_2=data[i].postEndDate;
-          var v4=data[i].institution;
-          if(v4===null)
-          {
-            v4="未定";
-          }
-          else{
-            v4=data[i].institution.institutionName;
-          }
-          var v5=data[i].address;
-          var v6=data[i].startDate;
-          var v7=data[i].endDate;
-          var v8_1=data[i].registStartDate;
-          var v8_2=data[i].registrationDeadline;
-          if(v3_1===null)
-            v3_1="未定";
-          if(v3_2===null)
-            v3_2="未定";
-          if(v6===null)
-            v6="未定";
-          if(v7===null)
-            v7="未定";
-          if(v8_1===null)
-             v8_1="未定";
-          if(v8_2===null)
-            v8_2="未定";
-          if(v5==="")
-            v5="未定";
-          $("tbody").append(
-            "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span>会议期间: </span><span id='calendar'> "+v6+" ~ "+v7+"</span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'> "+v5+"</span></span></p></dd><dd><p><span><i class='glyphicon glyphicon-time'></i><span>投稿期间：<span><span> "+v3_1+" ~ "+v3_2+"</span></span></p><div class=''><span class='period_container'><p><i class='glyphicon glyphicon-time'></i><span>注册期间: </span><span id='register_period'>"+v8_1+" ~ "+v8_2+"</span></p></div></dd><dd class='institution'><div class=''><i class='glyphicon glyphicon-home'></i> "+v4+"</div></dd></dl></div></th></tr>"
-          );
-        }
-      }
-    })}
-    else{
-      //alert("1111");
-      $.get(meeting_url+"?keyword="+u_key+"&size=10",function(data){
-        if(!data)
-        {
-          alert("错误");
-        }
-        else
-        {
-          for(var i=0;i<data.length;i++)
-          {
-            var v1=data[i].meetingId;
-            var v2=data[i].title;
-            var v3_1=data[i].postStartDate;
-            var v3_2=data[i].postEndDate;
-            var v4=data[i].institution;
-            if(v4===null)
-            {
-              v4="未定";
-            }
-            else{
-              v4=data[i].institution.institutionName;
-            }
-            var v5=data[i].address;
-            var v6=data[i].startDate;
-            var v7=data[i].endDate;
-            var v8_1=data[i].registStartDate;
-            var v8_2=data[i].registrationDeadline;
-            if(v3_1===null)
-              v3_1="未定";
-            if(v3_2===null)
-              v3_2="未定";
-            if(v6===null)
-              v6="未定";
-            if(v7===null)
-              v7="未定";
-            if(v8_1===null)
-               v8_1="未定";
-            if(v8_2===null)
-              v8_2="未定";
-            if(v5==="")
-              v5="未定";
-            $("tbody").append(
-              "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span>会议期间: </span><span id='calendar'> "+v6+" ~ "+v7+"</span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'> "+v5+"</span></span></p></dd><dd><p><span><i class='glyphicon glyphicon-time'></i><span>投稿期间：<span><span> "+v3_1+" ~ "+v3_2+"</span></span></p><div class=''><span class='period_container'><p><i class='glyphicon glyphicon-time'></i><span>注册期间: </span><span id='register_period'>"+v8_1+" ~ "+v8_2+"</span></p></div></dd><dd class='institution'><div class=''><i class='glyphicon glyphicon-home'></i> "+v4+"</div></dd></dl></div></th></tr>"
-            );
-          }
-        }
-      })
-    }
-  });
-}
-function doPostLogin()
-{
-    var val1 = document.getElementById("email_username").value;
-    var val2 = document.getElementById("password").value;
-    var userType = $('#option input:radio:checked').val();
-    document.cookie = "type="+userType;
-    if(userType=="user_option"){
-        $.get(url+"/personal_user?email="+val1+"&password="+val2,function(data)
-        {
-            if(data==0)
-            {
-                alert("用户名或密码不正确！");
-            }
-            else
-            {
-                //alert(document.cookie);
-                document.cookie = "userId="+data;
-                alert("登录成功！");
-                window.location.reload();
-            }
-        });
-    }
-    else if(userType=="institution_option"){
-        $.get(url+"/institution/login?username="+val1+"&password="+val2,function(data)
-        {
-            if(data==0)
-            {
-                alert("用户名或密码不正确！");
-            }
-            else
-            {
-                document.cookie = "userId="+data;
-                alert("登录成功！");
-                window.location.reload();
-                //window.location.href="seach.html";
-                //window.location.href="createmeetings.html";
-            }
-        });
-    }
-}
 function movepage(n){
   var u=meeting_url;
   var pre_page;
@@ -233,7 +85,7 @@ function movepage(n){
           if(v5==="")
            v5="无";
            $("tbody").append(
-             "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span>会议期间: </span><span id='calendar'> "+v6+" ~ "+v7+"</span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'> "+v5+"</span></span></p></dd><dd><p><span><i class='glyphicon glyphicon-time'></i><span>投稿期间：<span><span> "+v3_1+" ~ "+v3_2+"</span></span></p><div class=''><span class='period_container'><p><i class='glyphicon glyphicon-time'></i><span>注册期间: </span><span id='register_period'>"+v8_1+" ~ "+v8_2+"</span></p></div></dd><dd class='institution'><div class=''><i class='glyphicon glyphicon-home'></i> "+v4+"</div></dd></dl></div></th></tr>"
+             "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span>会议期间: </span><span id='calendar'> "+v6+" ~ "+v7+"</span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'> "+v5+"</span></span></p></dd><dd><p><span><i class='glyphicon glyphicon-time'></i><span>投稿期间:<span><span> "+v3_1+" ~ "+v3_2+"</span></span></p><div class=''><span class='period_container'><p><i class='glyphicon glyphicon-time'></i><span>注册期间: </span><span id='register_period'>"+v8_1+" ~ "+v8_2+"</span></p></div></dd><dd class='institution'><div class=''><i class='glyphicon glyphicon-home'></i> "+v4+"</div></dd></dl></div></th></tr>"
            );
         }
       }
@@ -269,7 +121,7 @@ function movepage(n){
               if(v5==="")
                v5="无";
                $("tbody").append(
-                 "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span>会议期间: </span><span id='calendar'> "+v6+" ~ "+v7+"</span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'> "+v5+"</span></span></p></dd><dd><p><span><i class='glyphicon glyphicon-time'></i><span>投稿期间：<span><span> "+v3_1+" ~ "+v3_2+"</span></span></p><div class=''><span class='period_container'><p><i class='glyphicon glyphicon-time'></i><span>注册期间: </span><span id='register_period'>"+v8_1+" ~ "+v8_2+"</span></p></div></dd><dd class='institution'><div class=''><i class='glyphicon glyphicon-home'></i> "+v4+"</div></dd></dl></div></th></tr>"
+                 "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span>会议期间: </span><span id='calendar'> "+v6+" ~ "+v7+"</span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'> "+v5+"</span></span></p></dd><dd><p><span><i class='glyphicon glyphicon-time'></i><span>投稿期间:<span><span> "+v3_1+" ~ "+v3_2+"</span></span></p><div class=''><span class='period_container'><p><i class='glyphicon glyphicon-time'></i><span>注册期间: </span><span id='register_period'>"+v8_1+" ~ "+v8_2+"</span></p></div></dd><dd class='institution'><div class=''><i class='glyphicon glyphicon-home'></i> "+v4+"</div></dd></dl></div></th></tr>"
                );
             }
           }
@@ -364,7 +216,7 @@ function doSearch(){
             if(v5==="")
               v5="未定";
             $("tbody").append(
-                "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span>会议期间: </span><span id='calendar'> "+v6+" ~ "+v7+"</span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'> "+v5+"</span></span></p></dd><dd><p><span><i class='glyphicon glyphicon-time'></i><span>投稿期间：<span><span> "+v3_1+" ~ "+v3_2+"</span></span></p><div class=''><span class='period_container'><p><i class='glyphicon glyphicon-time'></i><span>注册期间: </span><span id='register_period'>"+v8_1+" ~ "+v8_2+"</span></p></div></dd><dd class='institution'><div class=''><i class='glyphicon glyphicon-home'></i> "+v4+"</div></dd></dl></div></th></tr>"
+                "<tr><th class='list'><div class='list-item'><dl class='dll' style='width: 88%;'><dt><h4><a href='../conference/conference-main.html?meetingId="+v1+"' target='' class='title'>"+v2+"</a></h4></dt><dd class=''><p><span class='calendar-container' style=''><i class='glyphicon glyphicon-calendar'></i><span>会议期间: </span><span id='calendar'> "+v6+" ~ "+v7+"</span></span><span class='place-container' style=''><i class='glyphicon glyphicon-map-marker'></i><span id='place'> "+v5+"</span></span></p></dd><dd><p><span><i class='glyphicon glyphicon-time'></i><span>投稿期间:<span><span> "+v3_1+" ~ "+v3_2+"</span></span></p><div class=''><span class='period_container'><p><i class='glyphicon glyphicon-time'></i><span>注册期间: </span><span id='register_period'>"+v8_1+" ~ "+v8_2+"</span></p></div></dd><dd class='institution'><div class=''><i class='glyphicon glyphicon-home'></i> "+v4+"</div></dd></dl></div></th></tr>"
             );
           }
         }
