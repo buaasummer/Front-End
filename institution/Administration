@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>学术会议管理平台</title>
+        <meta charset="utf-8"> 
+        <link rel="stylesheet" href="../libs/css/bootstrap.min.css">
+        <script src="../libs/js/jquery.js"></script>
+        <script src="../libs/js/bootstrap.js"></script>
+        <script src="../libs/js/jquery-form.js"></script>
+    </head>
+    <body onload="onload()">
+        
+        <div id='topnav'>
+                <!--Navigation导航栏部分-->
+                <div>
+                    <nav class="navbar navbar-default" role="navigation">
+                        <br/> 
+                        <div class="container-fluid">
+                            <div class="navbar-header" style="margin-left: 15%">
+                                <a class="navbar-brand" href="#">学术会议管理平台</a>
+                            </div>
+                            <div class="hidden-sm hidden-xs" style="margin-right: 10%">
+                                <form class="navbar-form navbar-left" style="margin-left: 10%">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="查找会议">
+                                            <button type="submit" class="btn btn-default">查找</button>
+                                        </div>
+                                </form>
+                            </div>
+                            <div class="navbar-form navbar-left">
+                                <button class="btn btn-default" onclick="createMeeting()">创建会议</button>
+                            </div>
+                            <div>
+                                <div id="navbar">
+                                    <ul class="nav navbar-nav" style="margin-left: 10%">
+                                        <li class="dropdown">
+                                            <a href="#" id="admin_name" class="dropdown-toggle" data-toggle="dropdown"> 
+                                                <span class="caret"></span>
+                                            </a>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop">
+                                                <li><a id="LogIn" href="#" onclick="adminLogin()">管理员登录</a></li>
+                                                <li class="divider"></li>
+                                                <li><a id="LogOut"href="#" onclick="logout()">登出</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div> 
+                            </div>
+                        </div>  
+                        <br/>   
+                    </nav>
+                </div>
+                <!--Navigation导航栏结束-->
+                <!--管理员登录部分-->
+                <div class="modal fade" id="adminLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="margin-top:40%">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">登录</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-horizontal col-md-offset-0" id="login_form">
+                                    <div class="col-md-12">
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="control-label">账号</label>
+                                            <input class="form-control required" type="text" placeholder="Email/Username" id="adminID" name="adminID" autofocus maxlength="50"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">密码</label>
+                                            <input class="form-control required" type="password" placeholder="Password" id="adminPD" name="adminPD" maxlength="20"/>
+                                        </div>
+                                        
+                                        <div class="form-group" >
+                                        </div>
+                                            <div class="form-group col-md-offset-9">
+                                                <button id='btn' type="submit" class="btn btn-success" name="submit" onclick="doPostLogin()">登录</button>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                            <div class="modal-footer"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--用户登录部分结束-->
+            </div>
+            <br><br>
+            <!--注册单位展示界面-->
+            <div class="modal fade" id="ins_information" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" style="margin-top:40%">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" onclick="closeDisplay()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="ins_Name"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <label for="time" style="display: inline;">申请时间</label>&nbsp;&nbsp;&nbsp;<div id="time" style="display: inline;"></div><br>
+                            <label for="organizationCode" style="display: inline;">组织机构代码</label>&nbsp;&nbsp;&nbsp;<div id="organizationCode" style="display: inline;"></div><br>
+                            <label for="legalPersonName" style="display: inline;">法人名称</label>&nbsp;&nbsp;&nbsp;<div id="legalPersonName" style="display: inline;"></div><br>
+                            <label for="legalPersonEmail" style="display: inline;">法人邮件</label>&nbsp;&nbsp;&nbsp;<div id="legalPersonEmail" style="display: inline;"></div><br>
+                            <label for="legalPersonPhoneNumber" style="display: inline;">法人电话</label>&nbsp;&nbsp;&nbsp;<div id="legalPersonPhoneNumber" style="display: inline;"></div><br>
+                            <label for="taxPayerCode" style="display: inline;">纳税人编号</label>&nbsp;&nbsp;&nbsp;<div id="taxPayerCode" style="display: inline;"></div><br>
+                            <label for="postalAddress" style="display: inline;">单位地址</label>&nbsp;&nbsp;&nbsp;<div id="postalAddress" style="display: inline;"></div><br>
+                            <label for="downloadUrl" style="display: inline;">网页链接</label>&nbsp;&nbsp;&nbsp;<div id="downloadUrl" style="display: inline;"></div><br>
+                            <label for="description">单位简介</label>&nbsp;&nbsp;&nbsp;<div id="description"></div><br>
+                            
+                            </div>
+                        <div class="modal-footer"></div>
+                    </div>
+                </div>
+            </div>
+            <!--注册单位展示界面结束-->
+            <!--已注册单位列表-->
+            <div class="modal fade" id="registed_Ins" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" style="margin-top:40%">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" onclick="closeDisplay()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="registedIns_Name"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <label for="organizationCode2" style="display: inline;">组织机构代码</label>&nbsp;&nbsp;&nbsp;<div id="organizationCode2" style="display: inline;"></div><br>
+                            <label for="legalPersonName2" style="display: inline;">法人名称</label>&nbsp;&nbsp;&nbsp;<div id="legalPersonName2" style="display: inline;"></div><br>
+                            <label for="legalPersonEmail2" style="display: inline;">法人邮件</label>&nbsp;&nbsp;&nbsp;<div id="legalPersonEmail2" style="display: inline;"></div><br>
+                            <label for="legalPersonPhoneNumber2" style="display: inline;">法人电话</label>&nbsp;&nbsp;&nbsp;<div id="legalPersonPhoneNumber2" style="display: inline;"></div><br>
+                            <label for="taxPayerCode2" style="display: inline;">纳税人编号</label>&nbsp;&nbsp;&nbsp;<div id="taxPayerCode2" style="display: inline;"></div><br>
+                            <label for="postalAddress2" style="display: inline;">单位地址</label>&nbsp;&nbsp;&nbsp;<div id="postalAddress2" style="display: inline;"></div><br>
+                            <label for="downloadUrl2" style="display: inline;">网页链接</label>&nbsp;&nbsp;&nbsp;<div id="downloadUrl2" style="display: inline;"></div><br>
+                            <label for="description2">单位简介</label>&nbsp;&nbsp;&nbsp;<div id="description2"></div><br>
+                            
+                            </div>
+                        <div class="modal-footer"></div>
+                    </div>
+                </div>
+            </div>
+            <!--已注册单位列表结束-->
+        <!--管理员审核界面-->
+            <div class="container bg-white">
+                <div class="container-fluid">
+                    <h3>您的管理员编号是<label id="admin_ID"></label></div></h3><br>
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">待审核单位列表</h3>
+                        </div><br>
+                        <div class="panel-body">
+                            <!--<div class="form-inline col-md-12" style="border-bottom: solid; border-width: 1px;border-color: rgb(161, 168, 170);height: 100px;">
+                                
+                                <h3 id="institution_ID" style="display: inline;">1</h3>&nbsp;&nbsp;&nbsp;
+                               <h3 id="institution_Name" style="display: inline;">这里有个单位名称</h3> <br><br>
+                               <button class="btn btn-success" style="margin-left:75%" onclick="Permit()">通过申请</button>&nbsp;&nbsp;
+                               <button class="btn btn-success" onclick="Resist()">拒绝申请</button>&nbsp;&nbsp;
+                               <button class="btn btn-success" onclick="Check()">查看详情</button>
+                            </div>-->
+                            
+                            <div class="col-md-12" data-toggle="tooltip" id="addParticipants" style="border-bottom: solid;border-width: 1px;border-color: rgb(161, 168, 170);height: 1px;" name="addParticipants"></div>
+                                <label class="col-md-12" style="text-align: center"><h6>没有更多了！</h6></label>
+                        </div>
+                    </div>
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">已通过单位列表</h3>
+                        </div><br>
+                        <div class="panel-body">
+                            <!--<div class="form-inline col-md-12" style="border-bottom: solid; border-width: 1px;border-color: rgb(161, 168, 170);height: 100px;">
+                                
+                                <h3 id="institution_ID" style="display: inline;">1</h3>&nbsp;&nbsp;&nbsp;
+                               <h3 id="institution_Name" style="display: inline;">这里有个单位名称</h3> <br><br>
+                               <button class="btn btn-success" style="margin-left:75%" onclick="Permit()">通过申请</button>&nbsp;&nbsp;
+                               <button class="btn btn-success" onclick="Resist()">拒绝申请</button>&nbsp;&nbsp;
+                               <button class="btn btn-success" onclick="Check()">查看详情</button>
+                            </div>-->
+                            
+                            <div class="col-md-12" data-toggle="tooltip" id="addParticipants2" style="border-bottom: solid;border-width: 1px;border-color: rgb(161, 168, 170);height: 1px;" name="addParticipants"></div>
+                                <label class="col-md-12" style="text-align: center"><h6>没有更多了！</h6></label>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        <!--管理员审核界面结束-->
+    </body>
+        <script>
+        var url="http://154.8.211.55:8081";
+        function onload()
+        {
+            var b=checkName();
+            $("#admin_name").append(b);
+            var a=checkID();
+            $("#admin_ID").append(a);
+            //docment.getElementById("admin_ID").setAttribute('placeholder',a);
+            $.get(url+"/admin/apply",function(data)
+            //$.get(url+"/admin/get_all_institution",function(data)
+            {
+                //alert(data);
+                if(!data)
+                {
+                    alert("错误");
+                }
+                else
+                {
+                    /*for(var i=0;i<data.length;i++){
+                        var v1=data[i].institutionId;
+                        alert(v1);
+                    }*/
+                    //alert(data);
+                    for(var i=0;i<data.length;i++){
+                        var institution_Id=data[i].applicationId;
+                        var institution_Name=data[i].institution.institutionName;
+                        //var v1=document.getElementById("institution_ID").value;
+                        //alert(v1);
+                        //alert("institution_Id="+institution_Id+"institution_Name="+institution_Name);
+                        var html = '<div class="form-inline col-md-12" style="border-bottom: solid; border-width: 1px;border-color: rgb(161, 168, 170);height: 120px;">'+
+                               '<div style="height: 20px"></div>'+
+                               '<h3 id=institution_ID" style="display: inline;">'+institution_Id+'</h3>&nbsp;&nbsp;&nbsp;'+
+                               '<h3 id="institution_Name" style="display: inline;">'+institution_Name+'</h3> <br><br>'+
+                               '<button class="btn btn-success" style="margin-left:75%" onclick="Permit('+institution_Id+')">通过申请</button>&nbsp;&nbsp;'+
+                               '<button class="btn btn-success" onclick="Resist('+institution_Id+')">拒绝申请</button>&nbsp;&nbsp;'+
+                               '<button class="btn btn-success" onclick="CheckIns('+i+')">查看详情</button>'+
+                            '</div>'
+                            var obj = document.getElementById("addParticipants");
+                            obj.insertAdjacentHTML('beforeBegin',html);
+                    }                    
+                }
+            }); 
+            $.get(url+"/admin/get_all_institution",function(data)
+            {
+                //alert(data);
+                if(!data)
+                {
+                    alert("错误");
+                }
+                else
+                {
+                    /*for(var i=0;i<data.length;i++){
+                        var v1=data[i].institutionId;
+                        alert(v1);
+                    }*/
+                    //alert(data);
+                    for(var i=0;i<data.length;i++){
+                        var institution_Id=data[i].institutionId;
+                        var logo=data[i].logo;
+                        var institution_Name=data[i].institutionName;
+                        //var v1=document.getElementById("institution_ID").value;
+                        //alert(v1);
+                        //alert("institution_Id="+institution_Id+"institution_Name="+institution_Name);
+                        var html = '<div class="form-inline col-md-12" style="border-bottom: solid; border-width: 1px;border-color: rgb(161, 168, 170);height: 120px;">'+
+                               '<div style="height: 20px"></div>'+
+                               //'<img src="'+logo+'" style="height:100px"/>'
+                               '<h3 id=institution_ID" style="display: inline;">'+institution_Id+'</h3>&nbsp;&nbsp;&nbsp;'+
+                               '<h3 id="institution_Name" style="display: inline;">'+institution_Name+'</h3> <br><br>'+
+                               '<button class="btn btn-success" style="margin-left:85%"  onclick="CheckIns('+i+')">查看详情</button>'+
+                            '</div>'
+                            var obj = document.getElementById("addParticipants2");
+                            obj.insertAdjacentHTML('beforeBegin',html);
+                    }                    
+                }
+            });             
+        }
+        function Permit(ins_id)
+        {
+            var isAdmin = getCookie("isAdmin");
+            if(!isAdmin)
+            {
+                alert("没有权限！");
+            }
+            else
+            {
+                $.get(url+"/admin/check_apply?apply_id="+ins_id+"&result=1",function(data)
+                {
+                    alert(data);
+                    location.reload();
+                });
+            }
+            
+        }
+        function Resist(ins_id)
+        {
+            var isAdmin = getCookie("isAdmin");
+            if(!isAdmin)
+            {
+                alert("没有权限！");
+            }
+            else
+            {
+                $.get(url+"/admin/check_apply?apply_id="+ins_id+"&result=0",function(data)
+                {
+                    alert(data);
+                    location.reload();
+                });
+            }
+        }
+        //154.8.211.55:8081/admin/check_apply?apply_id=1&result=1
+        function CheckIns(ins_id)
+        {
+
+            $.get(url+"/admin/get_all_institution",function(data)
+            {
+                
+                if(!data)
+                {
+                    alert("错误");
+                }
+                else
+                {
+                    $('#registed_Ins').modal();
+                    var v1=data[ins_id].institutionName;
+                    //var v2=data[ins_id].time;
+                    var v3=data[ins_id].organizationCode;
+                    var v4=data[ins_id].legalPersonName;
+                    var v5=data[ins_id].legalPersonEmail;
+                    var v6=data[ins_id].legalPersonPhoneNumber;
+                    var v7=data[ins_id].taxPayerCode;
+                    var v8=data[ins_id].postalAddress;
+                    var v9=data[ins_id].downloadUrl;
+                    var v10=data[ins_id].description;
+                    //alert(v1);
+                    //document.getElementById("ins_Name").value=v1;
+                    $("#registedIns_Name").append(v1);
+                    //$("#time").append(v2);
+                    $("#organizationCode2").append(v3);
+                    $("#legalPersonName2").append(v4);
+                    $("#legalPersonEmail2").append(v5);
+                    $("#legalPersonPhoneNumber2").append(v6);
+                    $("#taxPayerCode2").append(v7);
+                    $("#postalAddress2").append(v8);
+                    $("#downloadUrl2").append(v9);
+                    $("#description2").append(v10);
+                }
+
+            });
+        }
+        function Check(institution_Id)
+        {
+           // alert(institution_Id);
+            $.get(url+"/admin/apply",function(data)
+            {
+                
+                if(!data)
+                {
+                    alert("错误");
+                }
+                else
+                {
+                    $('#ins_information').modal();
+                    var v1=data[institution_Id].institution.institutionName;
+                    var v2=data[institution_Id].time;
+                    var v3=data[institution_Id].institution.organizationCode;
+                    var v4=data[institution_Id].institution.legalPersonName;
+                    var v5=data[institution_Id].institution.legalPersonEmail;
+                    var v6=data[institution_Id].institution.legalPersonPhoneNumber;
+                    var v7=data[institution_Id].institution.taxPayerCode;
+                    var v8=data[institution_Id].institution.postalAddress;
+                    var v9=data[institution_Id].institution.downloadUrl;
+                    var v10=data[institution_Id].institution.description;
+                    //alert(v1);
+                    //document.getElementById("ins_Name").value=v1;
+                    $("#ins_Name").append(v1);
+                    $("#time").append(v2);
+                    $("#organizationCode").append(v3);
+                    $("#legalPersonName").append(v4);
+                    $("#legalPersonEmail").append(v5);
+                    $("#legalPersonPhoneNumber").append(v6);
+                    $("#taxPayerCode").append(v7);
+                    $("#postalAddress").append(v8);
+                    $("#downloadUrl").append(v9);
+                    $("#description").append(v10);
+                }
+
+            });
+
+        }
+        function closeDisplay()
+        {
+            $("#ins_Name").empty();
+            $("#time").empty();
+            $("#organizationCode").empty();
+            $("#legalPersonName").empty();
+            $("#legalPersonEmail").empty();
+            $("#legalPersonPhoneNumber").empty();
+            $("#taxPayerCode").empty();
+            $("#postalAddress").empty();
+            $("#downloadUrl").empty();
+            $("#description").empty();
+            $("#registedIns_Name").empty();
+            $("#organizationCode2").empty();
+            $("#legalPersonName2").empty();
+            $("#legalPersonEmail2").empty();
+            $("#legalPersonPhoneNumber2").empty();
+            $("#taxPayerCode2").empty();
+            $("#postalAddress2").empty();
+            $("#downloadUrl2").empty();
+            $("#description2").empty();
+        }
+        /**********************管理员登录登出部分*************************/
+        /***/function adminLogin()
+        /***/{
+        /***/    $('#adminLogin').modal();
+        /***/}
+        /***/function doPostLogin()
+		/***/{   
+		/***/	var admin_ID = document.getElementById("adminID").value;
+        /***/    var admin_Password = document.getElementById("adminPD").value;
+        /***/   // var type = $('#option input:radio:checked').val();
+        /***/   // document.cookie = "type="+type;
+        /***/    //alert(document.cookie);
+        /***/    $.get(url+"/admin/login?username="+admin_ID+"&password="+admin_Password,function(data)
+        /***/    {
+        /***/        if(data==1)
+        /***/        {
+        /***/            document.cookie = "isAdmin="+true;
+        /***/            document.cookie = "adminID="+data;
+        /***/            document.cookie = "adminName="+admin_ID;
+        /***/            alert("登陆成功！");
+        /***/            window.location.href="Administration.html";
+        /***/        }
+        /***/        else
+        /***/        {
+        /***/            alert("用户名或密码不正确，或没有管理员权限!");
+        /***/        }
+        /***/        //alert(document.cookie);
+        /***/    });
+        /***/    //154.8.211.55:8081/admin/login?username=ljiangf&password=password
+        /***/    //document.cookie = "type="+type;
+        /***/    //alert(document.cookie);
+        /***/}
+        /***/function getCookie(c_name)
+        /***/{
+        /***/    //alert(c_name);
+        /***/    //alert(document.cookie);
+        /***/    let c_end;
+		/***/	if(document.cookie.length>0){
+		/***/		c_start=document.cookie.indexOf(c_name+"=");
+		/***/		if(c_start!=-1){
+		/***/			c_start=c_start+c_name.length+1;
+		/***/			c_end=document.cookie.indexOf(";",c_start);
+		/***/			if(c_end==-1){
+		/***/				c_end=document.cookie.length;
+		/***/			}
+		/***/		}
+        /***/        return unescape(document.cookie.substring(c_start,c_end));
+		/***/	}
+		/***/	return "";
+		/***/}
+        /***/function setCookie(cname, cvalue, exdays)
+        /***/{
+		/***/    var d = new Date();
+		/***/    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+		/***/    var expires = "expires="+d.toUTCString();
+		/***/    document.cookie = cname + "=" + cvalue + "; " + expires;
+	    /***/}        
+        /***/function logout() 
+		/***/{
+   		/***/    setCookie("userId", "", -1);
+        /***/    setCookie("type","",-1)
+		/***/    location.reload();
+		/***/}
+        /***/function checkName()
+        /***/{
+        /***/    var adminID = getCookie("adminName");
+        /***/    //alert("userid"+userid+"  type"+type);
+		/***/	if(adminID=="")
+		/***/	{
+        /***/        var b="游客";
+		/***/		return b;
+		/***/	}
+		/***/	else if(adminID!="")
+		/***/	{
+        /***/        return adminID;                
+		/***/	}
+		/***/}
+        /***/function checkID()
+        /***/{
+        /***/    var adminID = getCookie("adminID");
+        /***/    //alert("userid"+userid+"  type"+type);
+		/***/	if(adminID=="")
+		/***/	{
+        /***/        var b="";
+		/***/		return b;
+		/***/	}
+		/***/	else if(adminID!="")
+		/***/	{
+        /***/        return adminID;                
+		/***/	}
+        /***/}
+        /**********************管理员登录登出部分**************************/
+        </script>
+        
+</html>
+
+        

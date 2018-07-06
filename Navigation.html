@@ -25,12 +25,6 @@
                     <div class="hidden-sm hidden-xs" style="margin-right: 10%">
                         <form class="navbar-form navbar-left" style="margin-left: 10%">
                                 <div class="form-group">
-                                    <select class="form-control">
-                                            <option>按时间</option>
-                                            <option>按地区</option>
-                                            <option>主办方</option>
-                                            <option>按名称</option>
-                                        </select>  
                                     <input type="text" class="form-control" placeholder="查找会议">
                                     <button type="submit" class="btn btn-default">查找</button>
                                 </div>
@@ -38,6 +32,9 @@
                     </div>
                     <div class="navbar-form navbar-left">
                         <button class="btn btn-default" onclick="createMeeting()">创建会议</button>
+                    </div>
+                    <div class="navbar-form navbar-left">
+                        <button class="btn btn-default" onclick="administration()">管理员入口</button>
                     </div>
                     <div>
                         <div id="navbar">
@@ -391,6 +388,10 @@
             if(type=="institution_option"&&userid!=""){
                 window.location.href="createmeetings.html";
             }
+        }
+        function administration()
+        {
+            window.location.href="Administration.html";
         }
     </script>
 </html>
