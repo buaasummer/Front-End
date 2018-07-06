@@ -22,12 +22,6 @@
                             <div class="hidden-sm hidden-xs" style="margin-right: 10%">
                                 <form class="navbar-form navbar-left" style="margin-left: 10%">
                                         <div class="form-group">
-                                            <select class="form-control">
-                                                    <option>按时间</option>
-                                                    <option>按地区</option>
-                                                    <option>主办方</option>
-                                                    <option>按名称</option>
-                                                </select>  
                                             <input type="text" class="form-control" placeholder="查找会议">
                                             <button type="submit" class="btn btn-default">查找</button>
                                         </div>
@@ -118,6 +112,30 @@
                 </div>
             </div>
             <!--注册单位展示界面结束-->
+            <!--已注册单位列表-->
+            <div class="modal fade" id="registed_Ins" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" style="margin-top:40%">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" onclick="closeDisplay()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="registedIns_Name"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <label for="organizationCode2" style="display: inline;">组织机构代码</label>&nbsp;&nbsp;&nbsp;<div id="organizationCode2" style="display: inline;"></div><br>
+                            <label for="legalPersonName2" style="display: inline;">法人名称</label>&nbsp;&nbsp;&nbsp;<div id="legalPersonName2" style="display: inline;"></div><br>
+                            <label for="legalPersonEmail2" style="display: inline;">法人邮件</label>&nbsp;&nbsp;&nbsp;<div id="legalPersonEmail2" style="display: inline;"></div><br>
+                            <label for="legalPersonPhoneNumber2" style="display: inline;">法人电话</label>&nbsp;&nbsp;&nbsp;<div id="legalPersonPhoneNumber2" style="display: inline;"></div><br>
+                            <label for="taxPayerCode2" style="display: inline;">纳税人编号</label>&nbsp;&nbsp;&nbsp;<div id="taxPayerCode2" style="display: inline;"></div><br>
+                            <label for="postalAddress2" style="display: inline;">单位地址</label>&nbsp;&nbsp;&nbsp;<div id="postalAddress2" style="display: inline;"></div><br>
+                            <label for="downloadUrl2" style="display: inline;">网页链接</label>&nbsp;&nbsp;&nbsp;<div id="downloadUrl2" style="display: inline;"></div><br>
+                            <label for="description2">单位简介</label>&nbsp;&nbsp;&nbsp;<div id="description2"></div><br>
+                            
+                            </div>
+                        <div class="modal-footer"></div>
+                    </div>
+                </div>
+            </div>
+            <!--已注册单位列表结束-->
         <!--管理员审核界面-->
             <div class="container bg-white">
                 <div class="container-fluid">
@@ -137,6 +155,24 @@
                             </div>-->
                             
                             <div class="col-md-12" data-toggle="tooltip" id="addParticipants" style="border-bottom: solid;border-width: 1px;border-color: rgb(161, 168, 170);height: 1px;" name="addParticipants"></div>
+                                <label class="col-md-12" style="text-align: center"><h6>没有更多了！</h6></label>
+                        </div>
+                    </div>
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">已通过单位列表</h3>
+                        </div><br>
+                        <div class="panel-body">
+                            <!--<div class="form-inline col-md-12" style="border-bottom: solid; border-width: 1px;border-color: rgb(161, 168, 170);height: 100px;">
+                                
+                                <h3 id="institution_ID" style="display: inline;">1</h3>&nbsp;&nbsp;&nbsp;
+                               <h3 id="institution_Name" style="display: inline;">这里有个单位名称</h3> <br><br>
+                               <button class="btn btn-success" style="margin-left:75%" onclick="Permit()">通过申请</button>&nbsp;&nbsp;
+                               <button class="btn btn-success" onclick="Resist()">拒绝申请</button>&nbsp;&nbsp;
+                               <button class="btn btn-success" onclick="Check()">查看详情</button>
+                            </div>-->
+                            
+                            <div class="col-md-12" data-toggle="tooltip" id="addParticipants2" style="border-bottom: solid;border-width: 1px;border-color: rgb(161, 168, 170);height: 1px;" name="addParticipants"></div>
                                 <label class="col-md-12" style="text-align: center"><h6>没有更多了！</h6></label>
                         </div>
                     </div>
@@ -181,9 +217,42 @@
                                '<h3 id="institution_Name" style="display: inline;">'+institution_Name+'</h3> <br><br>'+
                                '<button class="btn btn-success" style="margin-left:75%" onclick="Permit('+institution_Id+')">通过申请</button>&nbsp;&nbsp;'+
                                '<button class="btn btn-success" onclick="Resist('+institution_Id+')">拒绝申请</button>&nbsp;&nbsp;'+
-                               '<button class="btn btn-success" onclick="Check('+i+')">查看详情</button>'+
+                               '<button class="btn btn-success" onclick="CheckIns('+i+')">查看详情</button>'+
                             '</div>'
                             var obj = document.getElementById("addParticipants");
+                            obj.insertAdjacentHTML('beforeBegin',html);
+                    }                    
+                }
+            }); 
+            $.get(url+"/admin/get_all_institution",function(data)
+            {
+                //alert(data);
+                if(!data)
+                {
+                    alert("错误");
+                }
+                else
+                {
+                    /*for(var i=0;i<data.length;i++){
+                        var v1=data[i].institutionId;
+                        alert(v1);
+                    }*/
+                    //alert(data);
+                    for(var i=0;i<data.length;i++){
+                        var institution_Id=data[i].institutionId;
+                        var logo=data[i].logo;
+                        var institution_Name=data[i].institutionName;
+                        //var v1=document.getElementById("institution_ID").value;
+                        //alert(v1);
+                        //alert("institution_Id="+institution_Id+"institution_Name="+institution_Name);
+                        var html = '<div class="form-inline col-md-12" style="border-bottom: solid; border-width: 1px;border-color: rgb(161, 168, 170);height: 120px;">'+
+                               '<div style="height: 20px"></div>'+
+                               //'<img src="'+logo+'" style="height:100px"/>'
+                               '<h3 id=institution_ID" style="display: inline;">'+institution_Id+'</h3>&nbsp;&nbsp;&nbsp;'+
+                               '<h3 id="institution_Name" style="display: inline;">'+institution_Name+'</h3> <br><br>'+
+                               '<button class="btn btn-success" style="margin-left:85%"  onclick="CheckIns('+i+')">查看详情</button>'+
+                            '</div>'
+                            var obj = document.getElementById("addParticipants2");
                             obj.insertAdjacentHTML('beforeBegin',html);
                     }                    
                 }
@@ -223,6 +292,45 @@
             }
         }
         //154.8.211.55:8081/admin/check_apply?apply_id=1&result=1
+        function CheckIns(ins_id)
+        {
+
+            $.get(url+"/admin/get_all_institution",function(data)
+            {
+                
+                if(!data)
+                {
+                    alert("错误");
+                }
+                else
+                {
+                    $('#registed_Ins').modal();
+                    var v1=data[ins_id].institutionName;
+                    //var v2=data[ins_id].time;
+                    var v3=data[ins_id].organizationCode;
+                    var v4=data[ins_id].legalPersonName;
+                    var v5=data[ins_id].legalPersonEmail;
+                    var v6=data[ins_id].legalPersonPhoneNumber;
+                    var v7=data[ins_id].taxPayerCode;
+                    var v8=data[ins_id].postalAddress;
+                    var v9=data[ins_id].downloadUrl;
+                    var v10=data[ins_id].description;
+                    //alert(v1);
+                    //document.getElementById("ins_Name").value=v1;
+                    $("#registedIns_Name").append(v1);
+                    //$("#time").append(v2);
+                    $("#organizationCode2").append(v3);
+                    $("#legalPersonName2").append(v4);
+                    $("#legalPersonEmail2").append(v5);
+                    $("#legalPersonPhoneNumber2").append(v6);
+                    $("#taxPayerCode2").append(v7);
+                    $("#postalAddress2").append(v8);
+                    $("#downloadUrl2").append(v9);
+                    $("#description2").append(v10);
+                }
+
+            });
+        }
         function Check(institution_Id)
         {
            // alert(institution_Id);
@@ -275,6 +383,15 @@
             $("#postalAddress").empty();
             $("#downloadUrl").empty();
             $("#description").empty();
+            $("#registedIns_Name").empty();
+            $("#organizationCode2").empty();
+            $("#legalPersonName2").empty();
+            $("#legalPersonEmail2").empty();
+            $("#legalPersonPhoneNumber2").empty();
+            $("#taxPayerCode2").empty();
+            $("#postalAddress2").empty();
+            $("#downloadUrl2").empty();
+            $("#description2").empty();
         }
         /**********************管理员登录登出部分*************************/
         /***/function adminLogin()
@@ -302,7 +419,7 @@
         /***/        {
         /***/            alert("用户名或密码不正确，或没有管理员权限!");
         /***/        }
-        /***/        alert(document.cookie);
+        /***/        //alert(document.cookie);
         /***/    });
         /***/    //154.8.211.55:8081/admin/login?username=ljiangf&password=password
         /***/    //document.cookie = "type="+type;
