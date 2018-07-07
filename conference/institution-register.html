@@ -145,13 +145,16 @@
           var v9=$("#taxpayer1").val();        //var val9=document.getElementById("taxpayer1")..value
           if(v1===""){
             alert("用户名不能为空");
+            return false;
           }
           else if(v2===""){
             alert("请正确输入密码");
+            return false;
           }
           else if(v2!=v22)
           {
             alert("两次密码不相同");
+            return false;
           }
           else if(v3===""){
             alert("请输入单位名");
@@ -177,10 +180,20 @@
           else{
             $("#aaa").ajaxForm(function(data){
                     if(data==1)alert("注册成功");
-                    if(data==2)alert("该单位已存在");
-                    if(data==3)alert("上传审核文件失败");
-                    if(data==4)alert("用户名已存在");
+                    if(data==2){
+                        alert("该单位已存在");
+                        window.location="institution-register.html";
+                    }
+                    if(data==3){
+                        alert("上传审核文件失败");
+                        window.location="institution-register.html";
+                    }
+                    if(data==4){
+                        alert("用户名已存在");
+                        window.location="institution-register.html";
+                    }
             });
+            $("#aaa").submit();
             setTimeout(function(){
               window.location="search.html";
             },3000);
