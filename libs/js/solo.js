@@ -26,7 +26,7 @@ function reference(){
 }
 
 function toRegistration(){
-	alert('to Registration!');
+	window.location = 'register_meeting.html?xixixi='+location.search.split('=')[1];;
 }
 
 function toReserve(){

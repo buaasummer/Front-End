@@ -6,6 +6,10 @@ var authornum=1;
 var reauthornum=1;
 var PId;
 
+$.ajaxSetup({  
+    async:false
+}); 
+
 window.onload=function()
 {
     $('#leftnav').load('./leftnav.txt',function(){

@@ -10,10 +10,17 @@
 	<script type="text/javascript" src="../libs/js/conference-main.js"></script>
 	<script type="text/javascript" src="../libs/js/topnav.js"></script>
 	<script type="text/javascript" src="../libs/js/paper.js"></script>
+	<script src="./layer/layer.js"></script>
 	<link rel="stylesheet" type="text/css" href="../libs/css/bootstrap.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<style type="text/css">
+	.layui-layer-setmybg 
+		.layui-layer-content{
+			background-color:  #000;
+			color: #FFF;
+		}
+
 	#maincontent{
 		float: right;
 		right: 170px;
@@ -23,12 +30,12 @@
 		float: none;
 		margin-left: 26%;
 	}
-	td{
+	#important_table td{
 		font-size: 20px;
 		text-align: center;
 		vertical-align: center;
 	}
-	th{
+	#important_table th{
 		text-align: center;
 	}
 	.now{

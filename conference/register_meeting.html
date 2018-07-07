@@ -314,7 +314,7 @@
             var u_id=1, m_id=1;
             //获取用户id和会议id
             u_id = getCookie("userId");
-
+            m_id = location.search.split('=')[1];
             //作者参会
             if(show=="1"){
                 var paperId = document.getElementById("paperId").value;

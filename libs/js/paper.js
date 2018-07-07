@@ -1,4 +1,17 @@
 //upload-download js
+$.ajaxSetup({  
+    async:false
+}); 
+
+function cancel1()
+{
+    $('#upload').modal('hide');
+}
+function cancel2()
+{
+    $('#change').modal('hide');
+}
+
 function checkIDCard(idcode)
 {
     var weight_factor = [7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2];
@@ -28,124 +41,122 @@ function paperChange(pid)
     $('#change').modal();
     PId=pid;
 }
+
 function upLoad()
 {
     var val1 = document.getElementById("author1").value;
     var val2 = document.getElementById("organ1").value;
     var val3 = document.getElementById("title").value;
     var val4 = document.getElementById("paperAbstract").value;		
-    var val7 = document.getElementById("authorid1").value;
+    var val7 = document.getElementById("email1").value;
     var val8 = document.getElementById("multipartFile").value;
     var customizedAuthorList = [];
-    var user_authorname;
+    var Email;
+    var Isemail = 0;
     $.get(url+"/personal_user/info?uid="+userid,function(data){
-        user_authorname=data.username;
+        Email=data.email;
     });
-    var namenum = 0;
     for(var i=1;i<=authornum;i++)
     {
-        if(document.getElementById("author"+i).value!=user_authorname)
+        customizedAuthorList.push({"authorName":document.getElementById("author"+i).value,"organization":document.getElementById("organ"+i).value,"email":document.getElementById("email"+i).value});
+        if(document.getElementById("email"+i).value!=Email)
         {
-            namenum++;
+            Isemail++;
         }
-        customizedAuthorList.push({"authorName":document.getElementById("author"+i).value,"identificationNumber":document.getElementById("authorid"+i).value,"organization":document.getElementById("organ"+i).value});
     }
     if(val1=="")
     {
-        alert("至少有一个作者！");
-    }
-    else if(namenum==authornum)
-    {
-        alert("您必须是作者之一！");
+        layer.tips('至少有一个作者！', '#author1', {
+            tips: [3, '#000']
+        });
     }
     else
     {
         if(val7=="")
         {
-            alert("身份证号不能为空！");
+            layer.tips('邮箱不能为空！', '#email1', {
+                tips: [3, '#000']
+            });
         }
-        else
+        else if(checkemail(val7)==false)
         {
-            if(checkIDCard(val7)==false)
+            layer.tips('邮箱格式不合法！', '#email1', {
+                tips: [3, '#000']
+            });
+        }
+        else if(Isemail==authornum)
+        {
+            layer.tips('用户必须是作者之一！', '#author'+authornum, {
+                tips: [3, '#000']
+            });
+        }
+        else if(val3=="")
             {
-                alert("身份证号不合法！");
-            }
-            else if(val3=="")
-            {
-                alert("稿件题目不能为空！");
+                layer.tips('稿件题目不能为空！', '#title', {
+                    tips: [3, '#000']
+                });
             }
             else
             {
                 if(val8.length==0)
                 {
-                    alert("上传稿件不能为空！");
+                    layer.tips('上传稿件不能为空！', '#multipartFile', {
+                        tips: [3, '#000']
+                    });
                 }
                 else
                 {
                     $.post(url+"/paper/author?userId="+userid+"&meetingId="+meetingid,{"customizedAuthorList":JSON.stringify(customizedAuthorList)},function(data){
                         document.getElementById("infile").action=url+"/paper/submission?paperId="+data;
                         $("#infile").ajaxForm(function(){
-                            alert("提交成功！");
-                            window.location="conference-main.html?meetingid="+meetingid;
+                            layer.msg('提交成功！3秒后刷新页面...', {
+                                icon: 16,
+                                shade: 0.01,
+                                skin: 'layui-layer-setmybg'
+                            });
+                            setTimeout(function(){
+                                location.reload();
+                            }, 3000);
                         });
                     });
                 }
             }
-        }
     }
 }
 function Change()
 {
-    var val1 = document.getElementById("reauthor1").value;
-    var val2 = document.getElementById("reorgan1").value;
-    var val3 = document.getElementById("title").value;
-    var val4 = document.getElementById("paperAbstract").value;	
-    var val7 = document.getElementById("reauthorid1").value;
-    var val8 = document.getElementById("multipartFile").value;
-    var customizedAuthorList = [];
-    for(var i=1;i<=reauthornum;i++)
-    {
-        customizedAuthorList.push({"authorName":document.getElementById("reauthor"+i).value,"identificationNumber":document.getElementById("reauthorid"+i).value,"organization":document.getElementById("reorgan"+i).value});
-    }
-    if(val1=="")
-    {
-        alert("至少有一个作者！");
-    }
-    else
-    {
-        if(val7=="")
+    var val3 = document.getElementById("retitle").value;
+    var val4 = document.getElementById("repaperAbstract").value;
+    var val8 = document.getElementById("remultipartFile").value;
+        if(val3=="")
         {
-            alert("身份证号不能为空！");
+            layer.tips('稿件题目不能为空！', '#title', {
+                tips: [3, '#000']
+            });
         }
         else
         {
-            if(checkIDCard(val7)==false)
+            if(val8.length==0)
             {
-                alert("身份证号不合法！");
-            }
-            else if(val3=="")
-            {
-                alert("稿件题目不能为空！");
+                layer.tips('上传稿件不能为空！', '#multipartFile', {
+                    tips: [3, '#000']
+                });
             }
             else
             {
-                if(val8.length==0)
-                {
-                    alert("上传稿件不能为空！");
-                }
-                else
-                {
-                    $.post(url+"/paper/author?userId="+userid+"&meetingId="+meetingid,{"customizedAuthorList":JSON.stringify(customizedAuthorList)},function(data){
-                        document.getElementById("infile").action=url+"/paper/submission?paperId="+data;
-                        $("#infile").ajaxForm(function(){
-                            alert("提交成功！");
-                            window.location="uploaddocument.html";
-                        });
+                document.getElementById("refile").action=url+"/paper/update?paperId="+PId;
+                $("#refile").ajaxForm(function(){
+                    layer.msg('修改重投成功！3秒后刷新页面...', {
+                        icon: 16,
+                        shade: 0.01,
+                        skin: 'layui-layer-setmybg'
                     });
-                }
+                    setTimeout(function(){
+                        loaction.reload();
+                    }, 3000);
+                });
             }
         }
-    }
 }
 function Add()
 {
@@ -155,8 +166,8 @@ function Add()
         "<div class='form-group' id='add"+authornum+"'>"+
         "<i class='fa fa-user fa-lg'></i>"+
         "<input class='form-control' style='width:15%; float:left;' type='text' placeholder='请输入姓名' id='author"+authornum+"' name='author"+authornum+"' autofocus maxlength='20'/>"+
-        "<input class='form-control' style='width:25%; float:left; margin-left:2%' type='text' placeholder='请输入身份证号' id='authorid"+authornum+"' name='authorid"+authornum+"' autofocus maxlength='20'/>"+
-        "<input class='form-control' style='width:40%; float:left; margin-left:2%' type='text' placeholder='请输入单位名称' id='organ"+authornum+"' name='organ"+authornum+"' autofocus maxlength='20'/>"+
+        "<input class='form-control' style='width:35%; float:left; margin-left:2%' type='text' placeholder='请输入单位名称' id='organ"+authornum+"' name='organ"+authornum+"' autofocus maxlength='20'/>"+
+        "<input class='form-control' style='width:30%; float:left; margin-left:2%' type='text' placeholder='请输入邮箱' id='email"+authornum+"' name='email"+authornum+"' autofocus maxlength='30'/>"+
         "</div>"
     )
 }
@@ -169,31 +180,10 @@ function Sub()
         $("#subbtn").attr("disabled",true);
     }
 }
-function reAdd()
-{
-    reauthornum++;
-    $("#resubbtn").attr("disabled",false);
-    $("#readd").append(
-        "<div class='form-group' id='readd"+reauthornum+"'>"+
-        "<i class='fa fa-user fa-lg'></i>"+
-        "<input class='form-control' style='width:15%; float:left;' type='text' placeholder='请输入姓名' id='reauthor"+reauthornum+"' name='reauthor"+reauthornum+"' autofocus maxlength='20'/>"+
-        "<input class='form-control' style='width:25%; float:left; margin-left:2%' type='text' placeholder='请输入身份证号' id='reauthorid"+reauthornum+"' name='reauthorid"+reauthornum+"' autofocus maxlength='20'/>"+
-        "<input class='form-control' style='width:40%; float:left; margin-left:2%' type='text' placeholder='请输入单位名称' id='reorgan"+reauthornum+"' name='reorgan"+reauthornum+"' autofocus maxlength='20'/>"+
-        "</div>"
-    )
-}
-function reSub()
-{
-    $("#readd"+reauthornum).remove();
-    reauthornum--;
-    if(reauthornum==1)
-    {
-        $("#resubbtn").attr("disabled",true);
-    }
-}
+
 function userpaperShow()
 {
-    $("#usertable").append("<caption style='text-align:center;'><h2>投稿录用情况</h2></caption><thead><tr style='height:30px'><td style='width:100px'>投稿编号</td><td style='width:200px'>题目</td><td style='width:400px'>摘要</td><td style='width:100px'>作者</td><td style='width:200px'>单位</td><td style='width:100px'>状态</td><td style='width:100px'>可能操作</td></tr></thead><tbody>");
+    $("#usertable").append("<caption style='text-align:center;'><h2>投稿录用情况</h2></caption><thead><tr style='height:30px'><td style='width:30px'>论文编号</td><td style='width:100px'>题目</td><td style='width:300px'>摘要</td><td style='width:100px'>作者</td><td style='width:100px'>单位</td><td style='width:100px'>状态</td><td style='width:100px'>可能操作</td></tr></thead><tbody>");
     $.get(url+"/paper/display?userId="+userid+"&meetingId="+meetingid,function(data){
         for(var i=0;i<data.length;i++)
         {
@@ -220,19 +210,27 @@ function userpaperShow()
             {
                 t="审核中";
             }
-            else
+            else if(data[i].status==4)
             {
                 t="未录用";
             }
-            if(data[i].status==1)
+            else if(data[i].status==5)
+            {
+                t="待修改";
+            }
+            else if(data[i].status==6)
+            {
+                t="修改后审核中";
+            }
+            if(data[i].status==1||data[i].status==2)
             {
                 col = "green";
             }
-            else if(data[i].status==2)
+            else if(data[i].status==5)
             {
                 col = "#F90";
             }
-            else if(data[i].status==3)
+            else if(data[i].status==3||data[i].status==6)
             {
                 col = "gray";
             }
@@ -240,7 +238,7 @@ function userpaperShow()
             {
                 col = "red";
             }
-            $("#usertable").append("<tr><td style='vertical-align:middle;'>"+(i+1)+
+            $("#usertable").append("<tr><td style='vertical-align:middle;'>"+data[i].number+
                     "</td><td style='vertical-align:middle;'>"+data[i].title+
                     "</td><td style='vertical-align:middle;'>"+data[i].paperAbstract+
                     "</td><td style='vertical-align:middle;'>"+namestring+
@@ -248,19 +246,61 @@ function userpaperShow()
                     "</td><td style='vertical-align:middle;'>"+"<font color='"+col+"'>"+t+"</font>"+
                     "</td><td style='vertical-align:middle;'>"+"<button id='reloadbtn"+i+"' type='submit' class='btn btn-info btn-sm' name='submit' onClick='paperChange("+data[i].paperId+")'>修改重投</button>"+
                     "</td></tr>")
-            if(data[i].status!=2)
+            if(data[i].status!=5)
             {
                 $("#reloadbtn"+i).attr("style","display:none;");
             }
         }
-    }); 
+    });
 }
 function meetingpaperShow()
 {
-    $("#meetingtable").append("<caption style='text-align:center;'><h2>投稿审核情况</h2></caption><thead><tr style='height:30px'><td style='width:100px'>投稿编号</td><td style='width:200px'>题目</td><td style='width:400px'>摘要</td><td style='width:100px'>作者</td><td style='width:200px'>单位</td><td style='width:100px'>下载</td><td style='width:100px'>审核</td></tr></thead><tbody>");
+    $("#meetingtable").append("<caption style='text-align:center;'><h2>投稿审核情况</h2></caption><thead><tr style='height:30px'><td style='width:50px'>论文编号</td><td style='width:100px'>题目</td><td style='width:200px'>摘要</td><td style='width:100px'>作者</td><td style='width:200px'>单位</td><td style='width:200px'>投稿人邮箱</td><td style='width:100px'>下载</td><td style='width:100px'>审核状态</td><td style='width:100px'>操作</td></tr></thead><tbody>");
     $.get(url+"/paper/"+meetingid,function(data){
         for(var i=0;i<data.length;i++)
         {
+            var col = "";
+            var t = "";
+            if(data[i].status==1)
+            {
+                t="录用";
+            }
+            else if(data[i].status==2)
+            {
+                t="修改后录用";
+            }
+            else if(data[i].status==3)
+            {
+                t="待审核";
+            }
+            else if(data[i].status==4)
+            {
+                t="不录用";
+            }
+            else if(data[i].status==5)
+            {
+                t="待修改";
+            }
+            else if(data[i].status==6)
+            {
+                t="已修改待审核";
+            }
+            if(data[i].status==1||data[i].status==2)
+            {
+                col = "green";
+            }
+            else if(data[i].status==5)
+            {
+                col = "#F90";
+            }
+            else if(data[i].status==3||data[i].status==6)
+            {
+                col = "gray";
+            }
+            else
+            {
+                col = "red";
+            }
             var splitArray1 = new Array();
             var splitArray2 = new Array();
             var stringname = data[i].names;
@@ -270,20 +310,19 @@ function meetingpaperShow()
             splitArray2 = stringorgan.split(regex);
             var namestring = splitArray1.join("<br />");
             var organstring = splitArray2.join("<br />");
-            $("#meetingtable").append("<tr><td style='vertical-align:middle;'>"+(i+1)+
+            $("#meetingtable").append("<tr><td style='vertical-align:middle;'>"+data[i].number+
                     "</td><td style='vertical-align:middle;'>"+data[i].title+
                     "</td><td style='vertical-align:middle;'>"+data[i].paperAbstract+
                     "</td><td style='vertical-align:middle;'>"+namestring+
                     "</td><td style='vertical-align:middle;'>"+organstring+
+                    "</td><td style='vertical-align:middle;'>"+data[i].email+
                     "</td><td style='vertical-align:middle;'>"+"<button id='downloadbtn"+i+"' class='btn btn-info btn-sm' name='submit'>下载</button>"+
-                    "</td><td style='vertical-align:middle;'>"+"<button id='checkbtn"+i+"' class='btn btn-success btn-sm' name='submit' onClick='Check("+data[i].paperId+")'>待审核</button>"+
+                    "</td><td style='vertical-align:middle;'>"+"<font color='"+col+"'>"+t+"</font>"+
+                    "</td><td style='vertical-align:middle;'>"+"<button id='checkbtn"+i+"' class='btn btn-default btn-sm' name='submit' onClick='Check("+data[i].paperId+")'>审核</button>"+
                     "</td></tr>")
-            if(data[i].status!=3)
+            if(data[i].status!=3&&data[i].status!=6)
             {
-                $("#checkbtn"+i).attr("disabled",true);
-                $("#checkbtn"+i).css("background-color","red");
-                $("#checkbtn"+i).css("border-color","red");
-                document.getElementById("checkbtn"+i).innerHTML = "已审核";
+                $("#checkbtn"+i).attr("style","display:none;");
             }
             var downurl = data[i].downloadUrl;
             $("#downloadbtn"+i).click(function(){				
@@ -297,5 +336,58 @@ function meetingpaperShow()
 }
 function Check(pid)
 {
+    $('#checkpaper').modal();
+    PId=pid;
+}
+function checkemail(obj)
+{
+    var result = false;
+    if(obj!=""){
+        var str = obj;
+        if(str.indexOf("@") != -1 && str.indexOf(".") != -1){
+            var a = str.split("@");
+            if(a[0].length > 0){
+                if(a[1].length > 0){
+                    var b = a[1].split(".");
+                    if(b[0].length > 0){
+                        if(b[1].length > 1){
+                            result = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return result;
+}
+function sendemail()
+{
+var advice = document.getElementById("advice").value;
+var value=0;
+var result = document.getElementsByName("checkresult");
+for(var i = 0;i<result.length;i++)
+{
+    if(result[i].checked==true)
+    {
+        value = result[i].value;
+        break;
+    }
+}
+if(advice=="")
+{
+    layer.tips('评价不能为空！', '#advice', {
+        tips: [3, '#000']
+    });
+}
+$.post(url+"/paper/review?paperId="+PId+"&status="+value,{"mes":advice},function(data){
+    layer.msg('审核成功！3秒后刷新页面...', {
+        icon: 16,
+        shade: 0.01,
+        skin: 'layui-layer-setmybg'
+    });
+    setTimeout(function(){
+        location.reload();
+    }, 3000);
+});
 }
 //end

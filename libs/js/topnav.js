@@ -31,8 +31,7 @@ function doPostRegister()
                 else
                 {
                     alert("注册成功！");
-                    window.location.href='Navigation.html';
-                    
+                    location.reload(); 
                 }
             },
             headers: {
@@ -115,7 +114,7 @@ function doPostLogin()
                         //alert(document.cookie);
                         document.cookie = "userId="+data;
                         alert("登录成功！");
-                        location.reaload();
+                        location.reload();
                     }
                 });	
             }
