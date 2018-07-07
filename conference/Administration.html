@@ -145,7 +145,7 @@
                                '<h3 id="institution_Name" style="display: inline;">'+institution_Name+'</h3> <br><br>'+
                                '<button class="btn btn-success" style="margin-left:75%" onclick="Permit('+institution_Id+')">通过申请</button>&nbsp;&nbsp;'+
                                '<button class="btn btn-success" onclick="Resist('+institution_Id+')">拒绝申请</button>&nbsp;&nbsp;'+
-                               '<button class="btn btn-success" onclick="CheckIns('+i+')">查看详情</button>'+
+                               '<button class="btn btn-success" onclick="Check('+i+')">查看详情</button>'+
                             '</div>'
                             var obj = document.getElementById("addParticipants");
                             obj.insertAdjacentHTML('beforeBegin',html);
@@ -166,7 +166,7 @@
                         alert(v1);
                     }*/
                     //alert(data);
-                    for(var i=0;i<data.length;i++){
+                    for(let i=0;i<data.length;i++){
                         var institution_Id=data[i].institutionId;
                         var logo=data[i].logo;
                         var institution_Name=data[i].institutionName;

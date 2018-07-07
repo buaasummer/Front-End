@@ -108,7 +108,7 @@
                 </div>
                 <br>
                 <div class="form-group col-md-offset-10">
-                    <button id="btn" class="btn btn-primary" name="submit" onclick="upevi();">确认注册</button>
+                    <button id="btn" class="btn btn-primary" name="submit" type="button" onclick="upevi();">确认注册</button>
                     <!--<input id="btn" type="submit" class="btn btn-primary" name="submit" value="确认注册">-->
                 </div>
         </form>
@@ -130,14 +130,7 @@
           //}
         });
       }
-        $(document).ready(function() {
-        $("#aaa").ajaxForm(function(data){
-                      if(data==1)alert("注册成功");
-                      if(data==2)alert("该单位已存在");
-                      if(data==3)alert("上传审核文件失败");
-                      if(data==4)alert("用户名已存在");
-              });
-        });
+
         function upevi()
         {
           var v1=$("#username1").val();//var val1=document.getElementById("username1").value;
@@ -182,8 +175,14 @@
             alert("请输入纳税人编号");
           }
           else{
+            $("#aaa").ajaxForm(function(data){
+                    if(data==1)alert("注册成功");
+                    if(data==2)alert("该单位已存在");
+                    if(data==3)alert("上传审核文件失败");
+                    if(data==4)alert("用户名已存在");
+            });
             setTimeout(function(){
-              window.location="../conference/search.html";
+              window.location="search.html";
             },3000);
           }
         }
