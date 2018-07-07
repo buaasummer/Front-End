@@ -30,7 +30,7 @@
                             <label for="legalPersonPhoneNumber" style="display: inline;">法人电话</label>&nbsp;&nbsp;&nbsp;<div id="legalPersonPhoneNumber" style="display: inline;"></div><br>
                             <label for="taxPayerCode" style="display: inline;">纳税人编号</label>&nbsp;&nbsp;&nbsp;<div id="taxPayerCode" style="display: inline;"></div><br>
                             <label for="postalAddress" style="display: inline;">单位地址</label>&nbsp;&nbsp;&nbsp;<div id="postalAddress" style="display: inline;"></div><br>
-                            <label for="downloadUrl" style="display: inline;">网页链接</label>&nbsp;&nbsp;&nbsp;<div id="downloadUrl" style="display: inline;"></div><br>
+                            <label for="downloadUrl2" style="display: inline;">审核材料</label>&nbsp;&nbsp;&nbsp;<a href="#" id="downloadUrl" style="color:black;">下载链接</a><br>
                             <label for="description">单位简介</label>&nbsp;&nbsp;&nbsp;<div id="description"></div><br>
                             
                             </div>
@@ -54,7 +54,7 @@
                             <label for="legalPersonPhoneNumber2" style="display: inline;">法人电话</label>&nbsp;&nbsp;&nbsp;<div id="legalPersonPhoneNumber2" style="display: inline;"></div><br>
                             <label for="taxPayerCode2" style="display: inline;">纳税人编号</label>&nbsp;&nbsp;&nbsp;<div id="taxPayerCode2" style="display: inline;"></div><br>
                             <label for="postalAddress2" style="display: inline;">单位地址</label>&nbsp;&nbsp;&nbsp;<div id="postalAddress2" style="display: inline;"></div><br>
-                            <label for="downloadUrl2" style="display: inline;">网页链接</label>&nbsp;&nbsp;&nbsp;<div id="downloadUrl2" style="display: inline;"></div><br>
+                            <label for="downloadUrl2" style="display: inline;">审核材料</label>&nbsp;&nbsp;&nbsp;<a href="#" id="downloadUrl2" style="color:black;">下载链接</a><br>
                             <label for="description2">单位简介</label>&nbsp;&nbsp;&nbsp;<div id="description2"></div><br>
                             
                             </div>
@@ -197,7 +197,7 @@
             {
                 $.get(url+"/admin/check_apply?apply_id="+ins_id+"&result=1",function(data)
                 {
-                    alert(data);
+                    //alert(data);
                     location.reload();
                 });
             }
@@ -214,7 +214,7 @@
             {
                 $.get(url+"/admin/check_apply?apply_id="+ins_id+"&result=0",function(data)
                 {
-                    alert(data);
+                    //alert(data);
                     location.reload();
                 });
             }
@@ -253,7 +253,7 @@
                     $("#legalPersonPhoneNumber2").append(v6);
                     $("#taxPayerCode2").append(v7);
                     $("#postalAddress2").append(v8);
-                    $("#downloadUrl2").append(v9);
+                    $("#downloadUrl2").attr('href','http://'+v9);
                     $("#description2").append(v10);
                 }
 
@@ -292,7 +292,7 @@
                     $("#legalPersonPhoneNumber").append(v6);
                     $("#taxPayerCode").append(v7);
                     $("#postalAddress").append(v8);
-                    $("#downloadUrl").append(v9);
+                    $("#downloadUrl").attr('href','http://'+v9);
                     $("#description").append(v10);
                 }
 
@@ -318,7 +318,7 @@
             $("#legalPersonPhoneNumber2").empty();
             $("#taxPayerCode2").empty();
             $("#postalAddress2").empty();
-            $("#downloadUrl2").empty();
+            //$("#downloadUrl2").empty();
             $("#description2").empty();
         }
         /**********************管理员登录登出部分*************************/
