@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+      <meta charset="utf-8">
+      <link href="../libs/css/font-awesome.css" rel="stylesheet" type="text/css">
+      <link href="../libs/css/bootstrap.min.css" rel="stylesheet">
+      <script src="../libs/js/jquery.min.js"></script>
+      <script src="../libs/js/bootstrap.min.js"></script>
+      <script src="../libs/js/jquery-form.js"></script>
+      <script src="../libs/js/topnav.js"></script>
+      <title>学术会议管理平台</title>
+      <style media="screen">
+        .center{
+          left:150px;
+        }
+      </style>
+    </head>
+    <body>
+        <div id="topnav"></div>
+        <!--单位注册-->
+        <div class="container-fluid text-left">
+          <div class="modal-body" style="margin-left:25%">
+              <form id="aaa" class="col-md-6  col-md-offset-1" enctype="multipart/form-data" action="http://154.8.211.55:8081/institution/register" method="post"  style="margin:opx auto">
+                <br>
+                <div class="form-group">
+                    <label for="username1" class="col-sm-2 control-label">用户名：</label>
+                    <div class="col-sm-10">
+                        <input class="form-control required" type="text" placeholder="用户名" id="username1" name="username" autofocus maxlength="20"/>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                    <label for="password1" class="col-sm-2 control-label">密码：</label>
+                        <div class="col-sm-10">
+                            <input class="form-control " type="password" placeholder="密码" id="password11" name="password" autofocus maxlength="20"/>
+                        </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                    <label for="repassword1" class="col-sm-2 control-label">确认密码：</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="password" placeholder="重复密码" id="repassword11" name="repassword" autofocus maxlength="20"/>
+                        </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                    <label for="companyname1" class="col-sm-2 control-label">单位：</label>
+                        <div class="col-sm-10">
+                            <input class="form-control required" type="text" placeholder="单位名成" id="institution1" name="institution" autofocus maxlength="20"/>
+                        </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                    <label for="companyname1" class="col-sm-2 control-label">法人名称：</label>
+                        <div class="col-sm-10">
+                            <input class="form-control required" type="text" placeholder="名称" id="legalperson1" name="legalPerson" autofocus maxlength="20"/>
+                        </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                    <label for="phonenumber1" class="col-sm-2 control-label">联系电话：</label>
+                        <div class="col-sm-10">
+                            <input class="form-control required" type="text" placeholder="电话" id="contact1" name="contact" autofocus maxlength="20"/>
+                        </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                    <label for="email1" class="col-sm-2 control-label">法人邮件：</label>
+                        <div class="col-sm-10">
+                            <input class="form-control required" type="text" placeholder="电子邮件" id="email1" name="email" autofocus maxlength="20"/>
+                        </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                    <label for="email1" class="col-sm-2 control-label">纳税人编号：</label>
+                        <div class="col-sm-10">
+                            <input class="form-control required" type="text" placeholder="编号" id="taxpayer1" name="taxpayer" autofocus maxlength="20"/>
+                        </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                    <label for="address1" class="col-sm-2 control-label">单位地址：</label>
+                        <div class="col-sm-10">
+                            <input class="form-control required" type="text" placeholder="地址" id="address1" name="address" autofocus maxlength="20"/>
+                        </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                    <label for="address1" class="col-sm-2 control-label">机构代码：</label>
+                        <div class="col-sm-10">
+                            <input class="form-control required" type="text" placeholder="组织机构代码" id="institutioncode1" name="institutionCode" autofocus maxlength="20"/>
+                        </div>
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                  <label for="InputSubject1" class="col-sm-2 control-label" style="">上传证件:</label>
+                  <input type="file" name="file"/>
+                </div>
+                <br>
+                <div class="form-group col-md-offset-10">
+                    <button id="btn" class="btn btn-primary" name="submit" onclick="upevi();">确认注册</button>
+                    <!--<input id="btn" type="submit" class="btn btn-primary" name="submit" value="确认注册">-->
+                </div>
+        </form>
+        <!--单位注册结束-->
+    </body>
+    <script type="text/javascript">
+      window.onload=function(){
+        $("#topnav").load("../conference/topnav.txt",function(){
+          var a=checkName();
+          $("#uname").append(a);
+          //if(a=="游客"){
+            //$("#LogOut").hide();
+            //$(".divider")[1].remove();
+          //}
+          //else{
+            //$("#SignIn").hide();
+            //$("#LogIn").hide();
+            //$(".divider").remove();
+          //}
+        });
+      }
+        $(document).ready(function() {
+        $("#aaa").ajaxForm(function(data){
+                      if(data==1)alert("注册成功");
+                      if(data==2)alert("该单位已存在");
+                      if(data==3)alert("上传审核文件失败");
+                      if(data==4)alert("用户名已存在");
+              });
+        });
+        function upevi()
+        {
+          var v1=$("#username1").val();//var val1=document.getElementById("username1").value;
+          var v2=$("#password11").val();//var val2=document.getElementById("password1").value;
+          var v22=$("#repassword11").val();//var vall2=document.getElementById("repassword1").value;
+          var v3=$("#institution1").val();  //var val3=document.getElementById("institution1").value;
+          var v4=$("#legalperson1").val();      //var val4=document.getElementById("legalperson1").value;
+          var v5=$("#contact1").val();       //var val5=document.getElementById("contact1").value;
+          var v6=$("#email1").val();         //var val6=document.getElementById("email1").value;
+          var v7=$("#address1").val();            //var val7=document.getElementById("address1").value;
+          var v8=$("#institutioncode1").val();          //var val8=document.getElementById("institutioncode1").value;
+          var v9=$("#taxpayer1").val();        //var val9=document.getElementById("taxpayer1")..value
+          if(v1===""){
+            alert("用户名不能为空");
+          }
+          else if(v2===""){
+            alert("请正确输入密码");
+          }
+          else if(v2!=v22)
+          {
+            alert("两次密码不相同");
+          }
+          else if(v3===""){
+            alert("请输入单位名");
+          }
+          else if(v4===""){
+            alert("请输入法人名");
+          }
+          else if(v5===""){
+            alert("请输入联系电话");
+          }
+          else if(v6===""){
+            alert("请正确输入电子邮件");
+          }
+          else if(v7===""){
+            alert("请输入单位地址");
+          }
+          else if(v8===""){
+            alert("请输入机构代码");
+          }
+          else if(v9===""){
+            alert("请输入纳税人编号");
+          }
+          else{
+            setTimeout(function(){
+              window.location="../conference/search.html";
+            },3000);
+          }
+        }
+       </script>
+   </html>

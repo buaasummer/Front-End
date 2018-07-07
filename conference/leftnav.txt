@@ -55,7 +55,7 @@
 						&nbsp;<span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;&nbsp;Contact With Us
 					</a>
 				</h4>
-				<h4>
+				<h4 id='postPaperH4'>
 					<a href="#postPaper" onclick="now_postPaper()" class="aa list-group-item " id="postPaper_link">
 						&nbsp;<span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;Post Paper
 					</a>

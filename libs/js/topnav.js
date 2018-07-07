@@ -7,14 +7,13 @@ function doPostRegister()
     var val2 = document.getElementById("password1").value;
     var val3 = document.getElementById("repassword").value;
     var val4 = document.getElementById("useremail").value;
-    var val5 = document.getElementById("idnumber").value;
+    /*var val5 = document.getElementById("idnumber").value;*/
     var user = {
     "username":val1,
     "password":val2,
-    "email":val4,
-    "idnumber":val5
+    "email":val4
     };
-            
+           
     user = JSON.stringify(user);
     var settings = {
             type: "POST",
@@ -32,7 +31,7 @@ function doPostRegister()
                 else
                 {
                     alert("注册成功！");
-                    window.location.href='search.html';
+                    window.location.href='Navigation.html';
                     
                 }
             },
@@ -65,11 +64,22 @@ function doPostRegister()
         isRightForm = false;
     }
     
+
+    /*判断输入身份证号是否合法 */
+    /*简单判断是否为18位数字 */
+    /*
+    if(val5.length!=18){ 
+        isRightForm = false; 
+    }
+    if(!isNumber(val5)){ 
+        isRightForm = false;
+    }
+    
     var reg1 = /^(\d{15}|\d{18})$/;
     if(!reg1.test(val5)){
         alert("身份证号输入错误！");
         isRightForm = false;
-    }
+    }*/
 
     /*判断邮箱是否格式正确 */
     var reg2 = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"); //正则表达式
@@ -84,48 +94,49 @@ function doPostRegister()
 }
 
 function doPostLogin()
-{
-    //alert("qqq");
-    var val1 = document.getElementById("email_username").value;
-    var val2 = document.getElementById("password").value;
-    var userType = $('#option input:radio:checked').val();
-    document.cookie = "type="+userType;
-    //alert(document.cookie);
+		{
+			//alert("qqq");
+			var val1 = document.getElementById("email_username").value;
+            var val2 = document.getElementById("password").value;
+            var type = $('#option input:radio:checked').val();
+            document.cookie = "type="+type;
+            //alert(document.cookie);
 
-    if(userType=="user_option"){
-        $.get(url+"/personal_user?email="+val1+"&password="+val2,function(data)
-        {
-            if(data==0)
-            {
-                alert("用户名或密码不正确！");
+            if(type=="user_option"){
+                
+                $.get(url+"/personal_user?email="+val1+"&password="+val2,function(data)
+                {
+                    if(data==0)
+                    {
+                        alert("用户名或密码不正确！");
+                    }
+                    else
+                    {
+                        //alert(document.cookie);
+                        document.cookie = "userId="+data;
+                        alert("登录成功！");
+                        location.reaload();
+                    }
+                });	
             }
-            else
-            {
-                //alert(document.cookie);
-                document.cookie = "userId="+data;
-                alert("登录成功！");
-                alert('1');
-                window.location.href="search.html";
+            else if(type=="institution_option"){
+
+                $.get(url+"/institution/login?username="+val1+"&password="+val2,function(data)
+                {
+                    if(data==0)
+                    {
+                        alert("用户名或密码不正确！");
+                    }
+                    else
+                    {
+                        document.cookie = "userId="+data;
+                        alert("登录成功！");
+                        location.reload();
+                        //window.location.href="createmeetings.html";
+                    }
+                });	
             }
-        });	
-    }
-    else if(userType=="institution_option"){
-        $.get(url+"/institution/login?username="+val1+"&password="+val2,function(data)
-        {
-            if(data==0)
-            {
-                alert("用户名或密码不正确！");
-            }
-            else
-            {
-                document.cookie = "userId="+data;
-                alert("登录成功！");
-                window.location.href="search.html";
-                //window.location.href="createmeetings.html";
-            }
-        });	
-    }
-}
+		}
 function logout() 
 {
     setCookie("userId", "", -1);
@@ -155,9 +166,9 @@ function getCookie(c_name)
 
 function checkName()
 {
+    var type = getCookie("type");
+    var userid = getCookie("userId");
     //alert("userid"+userid+"  type"+type);
-    userType = getCookie("type");
-    userid = getCookie("userId");
     if(userid=="")
     {
         var b="游客";
@@ -165,7 +176,7 @@ function checkName()
     }
     else if(userid!="")
     {
-        if(userType=="user_option"){
+        if(type=="user_option"){
             document.getElementById("SignIn").href="#";
             document.getElementById("LogIn").onclick=null;
             var c="";
@@ -176,7 +187,7 @@ function checkName()
             });
             return c;
         }
-        else if(userType=="institution_option"){
+        else if(type=="institution_option"){
             document.getElementById("SignIn").href="#";
             document.getElementById("LogIn").onclick=null;
             var c="";
@@ -184,7 +195,6 @@ function checkName()
             //url=url+"/personal_user";
             $.get(url+"/institution/info?institution_id="+userid,function(data,status){
                 c=data['institutionName'];
-
             });
             return c;
         }
@@ -215,3 +225,7 @@ function createMeeting()
         window.location.href="createmeetings.html";
     }
 }
+function administration()
+        {
+            window.location.href="Administration.html";
+        }

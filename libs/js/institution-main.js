@@ -9,6 +9,24 @@ window.onload = function(){
     $('#topnav').load('./topnav-mat.txt',function(){
         var a=checkName();
         $("#uname").append(a);
+        let userType = getCookie('type');
+        let userid = getCookie('userId');
+        if(userType == "user_option")
+        {
+            $('#institutionIn').attr('style','display:none');
+            $('#instutionadd').attr('style','display:none');
+        }
+        else if(userType == "institution_option")
+        {
+            $('#institutionIn a').attr('href','institution-main.html?ins='+userid+'&page=0&size=9');
+        
+        }
+        else
+        {
+            $('#institutionIn').attr('style','display:none');
+            $('#instutionadd').attr('style','display:none');
+
+        }
     });
     pagecount=0;
     institutionid = location.search.split('=')[1].split('&')[0];
