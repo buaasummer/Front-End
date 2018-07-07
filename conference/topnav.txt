@@ -1,21 +1,14 @@
-
-    <!--Navigation导航栏部分-->
-    <div>
+<!--Navigation导航栏部分-->
+        <div>
             <nav class="navbar navbar-default" role="navigation">
                 <br/> 
                 <div class="container-fluid">
                     <div class="navbar-header" style="margin-left: 15%">
-                        <a class="navbar-brand" href="#">学术会议管理平台</a>
+                        <a class="navbar-brand" href="search.html">学术会议管理平台</a>
                     </div>
                     <div class="hidden-sm hidden-xs" style="margin-right: 10%">
                         <form class="navbar-form navbar-left" style="margin-left: 10%">
                                 <div class="form-group">
-                                    <select class="form-control">
-                                            <option>按时间</option>
-                                            <option>按地区</option>
-                                            <option>主办方</option>
-                                            <option>按名称</option>
-                                        </select>  
                                     <input type="text" class="form-control" placeholder="查找会议">
                                     <button type="submit" class="btn btn-default">查找</button>
                                 </div>
@@ -23,6 +16,9 @@
                     </div>
                     <div class="navbar-form navbar-left">
                         <button class="btn btn-default" onclick="createMeeting()">创建会议</button>
+                    </div>
+                    <div class="navbar-form navbar-left">
+                        <button class="btn btn-default" onclick="administration()">管理员入口</button>
                     </div>
                     <div>
                         <div id="navbar">
@@ -37,6 +33,8 @@
                                         <li><a id="SignIn" href="#" onclick="userRegister()">注册</a></li>
                                         <li class="divider"></li>
                                         <li><a id="LogOut"href="#" onclick="logout()">登出</a></li>
+                                        <li class="divider"></li>
+                                        <li id="institutionIn"><a href="#">进入单位主页</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -66,10 +64,11 @@
                                     <label for="useremail" class="control-label">邮箱：</label>
                                     <input class="form-control required" type="email" placeholder="Email" id="useremail" name="useremail" autofocus maxlength="20"/>
                                 </div>
+                                <!--
                                 <div class="form-group">
                                     <label for="idnumber" class="control-label">身份证号：</label>
                                     <input class="form-control required" type="text" placeholder="Idnumber" id="idnumber" name="idnumber" autofocus maxlength="20"/>
-                                </div>
+                                </div>-->
                                 <div class="form-group">
                                     <label for="password1" class="control-label">密码：</label>
                                     <input class="form-control required" type="password" placeholder="Password" id="password1" name="password" autofocus maxlength="20"/>
@@ -79,7 +78,7 @@
                                     <input class="form-control required" type="password" placeholder="Confirm Password" id="repassword" name="repassword" autofocus maxlength="20"/>
                                 </div>
                                 <div class="form-group" >
-                                    <font color="#999999">单位用户注册？</font><a href="../institution/institution-register.html" color="#CCCC00">前往注册</a>
+                                    <font color="#999999">单位用户注册？</font><a href="institution/institution-register.html" color="#CCCC00">前往注册</a>
                                 </div>
                                 <div class="form-group col-md-offset-9">
                                     <button id='btn' type="submit" class="btn btn-primary" name="submit" onclick="doPostRegister()">注册</button>

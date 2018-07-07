@@ -17,12 +17,16 @@ window.onload=function()
             $.ajaxSetup({  
                 async:false
             }); 
+            userType=getCookie('type');
+            userid = getCookie('userId');
             if(userType == "user_option")
             {
+                $('#institutionIn').attr('style','display:none');
                 userpaperShow();
             }
             else if(userType == "institution_option")
             {
+                $('#institutionIn a').attr('href','institution-main.html?ins='+userid+'&page=0&size=9');
                 $("#uploadbtn").attr("style","display:none;");
                 $.get(url+"/meeting/isMatch?meetingId="+meetingid+"&institutionId="+userid,function(data){
                     if(data==true)
@@ -33,7 +37,9 @@ window.onload=function()
             }
             else
             {
+                $('#institutionIn').attr('style','display:none');
                 $("#uploadbtn").attr("style","display:none;");
+                $('#postPaperH4').attr('style','display:none');
             }
         })
     })
