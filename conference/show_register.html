@@ -66,7 +66,7 @@
 			$("#participanttable").html("");
 			$("#participanttable").append("<caption style='text-align:center;'><h2>旁听参会人员情况</h2></caption><thead><tr style='height:30px'><td style='width:100px'>序号</td><td style='width:100px'>姓名</td><td style='width:100px'>性别</td><td style='width:200px'>邮箱</td><td style='width:100px'>是否住宿</td><td style='width:100px'>下载</td></tr></thead><tbody>");
 			$.get(url+"/meeting/auditorRegisterInfo?meetingId="+meetingid,function(data){
-            	for(var i=0;i<data.length;i++)
+            	for(let i=0;i<data.length;i++)
 				{
 					var string1 = data[i].names;
 					var string2 = data[i].genders;
