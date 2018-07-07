@@ -1,0 +1,556 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8"> 
+	<title>上传稿件</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/jquery.min.js"></script>
+    <script src="js/jquery.form.js"></script>
+    <script src="layer/layer.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    <style>
+        .layui-layer-setmybg 
+			.layui-layer-content{
+				background-color:  #000;
+				color: #FFF;
+			}
+    </style>
+</head>
+
+<body>
+    <div class="container">
+    	<div class="form row" style="text-align:right; margin-right:100px; margin-top:5%; float:right;">
+            <button id="uploadbtn" type="submit" class="btn btn-success" onClick="documentupload()">提交稿件</button>
+        </div>
+        <div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="width:50%">
+                <div class="modal-content" style="margin-top:7%;">
+                    <div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">提交稿件</h4>
+                    </div>
+                    <div class="modal-body">
+                    	<div class="form-horizontal col-md-offset-0" id="update_form">
+                            <div class="col-md-12">
+                            	<div class="form-group">
+                                	<i class="fa fa-user fa-lg"></i>
+                                    <label for="name">作者</label>
+                                    <label for="name" style="margin-left:13%;">单位</label>
+                                    <label for="name" style="margin-left:33%;">邮箱</label>
+                                </div>
+                                <div class="form-group">
+                                	<i class="fa fa-user fa-lg"></i>
+                                    <input class="form-control" style="width:15%; float:left;" type="text" placeholder="请输入姓名" id="author1" name="author1" autofocus maxlength="20"/>
+                                    <input class="form-control" style="width:35%; float:left; margin-left:2%" type="text" placeholder="请输入单位名称" id="organ1" name="organ1" autofocus maxlength="20"/>
+                                    <input class="form-control" style="width:30%; float:left; margin-left:2%" type="text" placeholder="请输入邮箱" id="email1" name="email1" autofocus maxlength="30"/>
+                                    <button id='addbtn' type="submit" class="btn btn-sm" style="margin-left:2%; width:5%;" name="submit" onclick="Add()">+</button>
+                                    <button id='subbtn' type="submit" class="btn btn-sm" style="margin-left:2%; width:5%;" name="submit" onclick="Sub()" disabled="disabled">-</button>
+                                </div>
+                                <div id="add">
+                                </div>
+                                <form id="infile" method="post" target="frame1" enctype="multipart/form-data" class="form-group">
+                                    <i class="fa fa-user fa-lg"></i>
+                                    <label for="name">题目</label>
+                                    <input class="form-control" type="text" placeholder="请输入稿件题目" id="title" name="title" autofocus maxlength="20"/>
+                                	<br />
+                                    <i class="fa fa-lock fa-lg"></i>
+                                    <label for="name">摘要</label>
+                                    <textarea class="form-control" placeholder="请输入摘要，0~200字" id="paperAbstract" name="paperAbstract" autofocus rows="5" cols="20" maxlength="200"></textarea>
+                                	<br />
+                                    <i class="fa fa-lock fa-lg"></i>
+                                    <label for="inputfile">文件输入</label>
+                                    <input type="file" name="multipartFile" id="multipartFile">
+                                	<br />
+                                    <i class="fa fa-lock fa-lg"></i>
+                                    <button id='submitbtn' class="btn btn-success" style="float:right" onclick="upLoad()">提交</button>
+                                    <button id='cancelbtn1' class="btn btn-default" style="float:right; margin-right:20px;" onclick="cancel1()">取消</button>
+                                </form>
+                                <iframe style="display:none;" name="frame1" frameborder="0" height="0"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+    	</div>
+        <div class="modal fade" id="change" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document" style="width:50%">
+                <div class="modal-content" style="margin-top:7%;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">改稿重传</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-horizontal col-md-offset-0" id="update_form">
+                            <div class="col-md-12">
+                                <form id="refile" method="post" enctype="multipart/form-data" target="frame2" class="form-group">
+                                    <i class="fa fa-user fa-lg"></i>
+                                    <label for="name">重投题目</label>
+                                    <input class="form-control" type="text" placeholder="请输入稿件题目" id="retitle" name="title" autofocus maxlength="20"/>
+                                	<br />
+                                    <i class="fa fa-lock fa-lg"></i>
+                                    <label for="name">重投摘要</label>
+                                    <textarea class="form-control" placeholder="请输入摘要，0~200字" id="repaperAbstract" name="paperAbstract" autofocus rows="5" cols="20" maxlength="200"></textarea>
+                                	<br />
+                                    <i class="fa fa-lock fa-lg"></i>
+                                    <label for="inputfile">文件输入</label>
+                                    <input type="file" name="multipartFile" id="remultipartFile">
+                                	<br>
+                                    <i class="fa fa-lock fa-lg"></i>
+                                    <button id='resubmitbtn' class="btn btn-success" style="float:right" onclick="Change()">重投</button>
+                                    <button id='cancelbtn2' class="btn btn-default" style="float:right; margin-right:20px;" onclick="cancel2()">取消</button>
+                                </form>
+                                <iframe style="display:none" name="frame2" frameborder="0" height="0"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+    	</div>
+        <table id="usertable" style="margin-top:7%; text-align:center;" class="table table-striped table-hover">
+        </table>
+        <table id="meetingtable" style="margin-top:2%; text-align:center;" class="table table-striped table-hover">
+        </table>
+        <div class="modal fade" id="checkpaper" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="margin-top:7%;">
+                    <div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">审核稿件</h4>
+                    </div>
+                    <div class="modal-body">
+                    	<img src="images/pass.png" style="height:40px; width:40px;" class="img-rounded">
+                    	<label class="radio-inline">
+                            <input type="radio" name="checkresult" id="checkresult1" value="1">录用
+                        </label>
+                        <img src="images/rewrite.png" style="height:40px; width:40px; margin-left:120px;" class="img-rounded">
+                        <label class="radio-inline">
+                            <input type="radio" name="checkresult" id="checkresult2" value="5">修改后重投
+                        </label>
+                        <img src="images/fail.png" style="height:40px; width:40px; margin-left:100px;" class="img-rounded">
+                        <label class="radio-inline">
+                            <input type="radio" name="checkresult" id="checkresult3" value="4">不录用
+                        </label>
+                    </div>
+                    <div class="modal-footer">
+                    	<label for="name" style="float:left">评价或修改意见</label>
+                        <textarea class="form-control" placeholder="请输入评价或修改意见，0~200字" id="advice" name="advice" autofocus rows="5" cols="20" maxlength="200"></textarea>
+                        <br>
+                        <i class="fa fa-lock fa-lg"></i>
+                        <button id='sendemailbtn' class="btn btn-success" onclick="sendemail()">发送邮件</button>
+                    </div>
+                </div>
+            </div>
+    	</div>
+    </div>
+</body>
+<script type='text/javascript'>
+	var url="http://154.8.211.55:8081";
+	var authornum=1;
+	var reauthornum=1;
+	var userid=1;
+	var meetingid=1;
+	var institutionid=1;
+	var PId;
+	//var myDate = new Date();
+	//var year = myDate.getFullYear();
+	//var month = myDate.getMonth();
+	//var day = myDate.getDay();
+	$.ajaxSetup({  
+    	async:false
+	}); 
+	var userType = "user_option";
+	if(userType == "user_option")
+	{
+		userpaperShow();
+	}
+	else if(userType == "institution_option")
+	{
+		$("#uploadbtn").attr("style","display:none;");
+		$.get(url+"/meeting/isMatch?meetingId="+meetingid+"&institutionId="+institutionid,function(data){
+			if(data==true)
+			{
+				meetingpaperShow();
+			}
+		});
+	}
+	else
+	{
+		$("#uploadbtn").attr("style","display:none;");
+	}
+	//if(year<2017)
+	//{
+		//$("#uploadbtn").attr("disabled",true);
+		//$("#uploadbtn").css("background-color","red");
+		//$("#uploadbtn").css("border-color","red");
+		//document.getElementById("uploadbtn").innerHTML="截止提交";
+	//}
+	function cancel1()
+		{
+			$('#upload').modal('hide');
+		}
+	function cancel2()
+		{
+			$('#change').modal('hide');
+		}
+	function documentupload()
+        {
+            $('#upload').modal();
+        }
+	function paperChange(pid)
+        {
+            $('#change').modal();
+			PId=pid;
+        }
+	function upLoad()
+		{
+			var val1 = document.getElementById("author1").value;
+			var val2 = document.getElementById("organ1").value;
+			var val3 = document.getElementById("title").value;
+			var val4 = document.getElementById("paperAbstract").value;		
+			var val7 = document.getElementById("email1").value;
+			var val8 = document.getElementById("multipartFile").value;
+			var customizedAuthorList = [];
+			var Email;
+			var Isemail = 0;
+			$.get(url+"/personal_user/info?uid="+userid,function(data){
+				Email=data.email;
+			});
+			for(var i=1;i<=authornum;i++)
+			{
+				customizedAuthorList.push({"authorName":document.getElementById("author"+i).value,"organization":document.getElementById("organ"+i).value,"email":document.getElementById("email"+i).value});
+				if(document.getElementById("email"+i).value!=Email)
+				{
+					Isemail++;
+				}
+			}
+			if(val1=="")
+			{
+				layer.tips('至少有一个作者！', '#author1', {
+				  tips: [3, '#000']
+				});
+			}
+			else
+			{
+				if(val7=="")
+				{
+					layer.tips('邮箱不能为空！', '#email1', {
+					  tips: [3, '#000']
+					});
+				}
+				else if(checkemail(val7)==false)
+				{
+					layer.tips('邮箱格式不合法！', '#email1', {
+					  tips: [3, '#000']
+					});
+				}
+				else if(Isemail==authornum)
+				{
+					layer.tips('用户必须是作者之一！', '#author'+authornum, {
+					  tips: [3, '#000']
+					});
+				}
+				else if(val3=="")
+					{
+						layer.tips('稿件题目不能为空！', '#title', {
+						  tips: [3, '#000']
+						});
+					}
+					else
+					{
+						if(val8.length==0)
+						{
+							layer.tips('上传稿件不能为空！', '#multipartFile', {
+							  tips: [3, '#000']
+							});
+						}
+						else
+						{
+							$.post(url+"/paper/author?userId="+userid+"&meetingId="+meetingid,{"customizedAuthorList":JSON.stringify(customizedAuthorList)},function(data){
+								document.getElementById("infile").action=url+"/paper/submission?paperId="+data;
+								$("#infile").ajaxForm(function(){
+									layer.msg('提交成功！3秒后刷新页面...', {
+										icon: 16,
+										shade: 0.01,
+										skin: 'layui-layer-setmybg'
+									});
+									setTimeout(function(){
+										window.location="uploadpaper.html";
+									}, 3000);
+								});
+							});
+						}
+					}
+			}
+		}
+	function Change()
+		{
+			var val3 = document.getElementById("retitle").value;
+			var val4 = document.getElementById("repaperAbstract").value;
+			var val8 = document.getElementById("remultipartFile").value;
+				if(val3=="")
+				{
+					layer.tips('稿件题目不能为空！', '#title', {
+						tips: [3, '#000']
+					});
+				}
+				else
+				{
+					if(val8.length==0)
+					{
+						layer.tips('上传稿件不能为空！', '#multipartFile', {
+							tips: [3, '#000']
+						});
+					}
+					else
+					{
+						document.getElementById("refile").action=url+"/paper/update?paperId="+PId;
+						$("#refile").ajaxForm(function(){
+							layer.msg('修改重投成功！3秒后刷新页面...', {
+								icon: 16,
+								shade: 0.01,
+								skin: 'layui-layer-setmybg'
+							});
+							setTimeout(function(){
+								window.location="uploadpaper.html";
+							}, 3000);
+						});
+					}
+				}
+		}
+	function Add()
+		{
+			authornum++;
+			$("#subbtn").attr("disabled",false);
+            $("#add").append(
+				"<div class='form-group' id='add"+authornum+"'>"+
+                "<i class='fa fa-user fa-lg'></i>"+
+                "<input class='form-control' style='width:15%; float:left;' type='text' placeholder='请输入姓名' id='author"+authornum+"' name='author"+authornum+"' autofocus maxlength='20'/>"+
+				"<input class='form-control' style='width:35%; float:left; margin-left:2%' type='text' placeholder='请输入单位名称' id='organ"+authornum+"' name='organ"+authornum+"' autofocus maxlength='20'/>"+
+                "<input class='form-control' style='width:30%; float:left; margin-left:2%' type='text' placeholder='请输入邮箱' id='email"+authornum+"' name='email"+authornum+"' autofocus maxlength='30'/>"+
+                "</div>"
+			)
+		}
+	function Sub()
+		{
+            $("#add"+authornum).remove();
+			authornum--;
+			if(authornum==1)
+			{
+				$("#subbtn").attr("disabled",true);
+			}
+		}
+	function userpaperShow()
+		{
+			$("#usertable").append("<caption style='text-align:center;'><h2>投稿录用情况</h2></caption><thead><tr style='height:30px'><td style='width:100px'>论文编号</td><td style='width:200px'>题目</td><td style='width:400px'>摘要</td><td style='width:100px'>作者</td><td style='width:200px'>单位</td><td style='width:100px'>状态</td><td style='width:100px'>可能操作</td></tr></thead><tbody>");
+			$.get(url+"/paper/display?userId="+userid+"&meetingId="+meetingid,function(data){
+            	for(var i=0;i<data.length;i++)
+				{
+					var splitArray1 = new Array();
+					var splitArray2 = new Array();
+					var stringname = data[i].names;
+					var stringorgan = data[i].organizations;
+					var regex = ",";
+					splitArray1 = stringname.split(regex);
+					splitArray2 = stringorgan.split(regex);
+					var namestring = splitArray1.join("<br />");
+					var organstring = splitArray2.join("<br />");
+					var col = "";
+					var t = "";
+					if(data[i].status==1)
+					{
+						t="已录用";
+					}
+					else if(data[i].status==2)
+					{
+						t="修改后录用";
+					}
+					else if(data[i].status==3)
+					{
+						t="审核中";
+					}
+					else if(data[i].status==4)
+					{
+						t="未录用";
+					}
+					else if(data[i].status==5)
+					{
+						t="待修改";
+					}
+					else if(data[i].status==6)
+					{
+						t="修改后审核中";
+					}
+					if(data[i].status==1||data[i].status==2)
+					{
+						col = "green";
+					}
+					else if(data[i].status==5)
+					{
+						col = "#F90";
+					}
+					else if(data[i].status==3||data[i].status==6)
+					{
+						col = "gray";
+					}
+					else
+					{
+						col = "red";
+					}
+					$("#usertable").append("<tr><td style='vertical-align:middle;'>"+data[i].number+
+                    		"</td><td style='vertical-align:middle;'>"+data[i].title+
+                            "</td><td style='vertical-align:middle;'>"+data[i].paperAbstract+
+							"</td><td style='vertical-align:middle;'>"+namestring+
+							"</td><td style='vertical-align:middle;'>"+organstring+
+							"</td><td style='vertical-align:middle;'>"+"<font color='"+col+"'>"+t+"</font>"+
+							"</td><td style='vertical-align:middle;'>"+"<button id='reloadbtn"+i+"' type='submit' class='btn btn-info btn-sm' name='submit' onClick='paperChange("+data[i].paperId+")'>修改重投</button>"+
+                            "</td></tr>")
+					if(data[i].status!=5)
+					{
+						$("#reloadbtn"+i).attr("style","display:none;");
+					}
+        		}
+			});
+		}
+	function meetingpaperShow()
+		{
+			$("#meetingtable").append("<caption style='text-align:center;'><h2>投稿审核情况</h2></caption><thead><tr style='height:30px'><td style='width:100px'>论文编号</td><td style='width:200px'>题目</td><td style='width:400px'>摘要</td><td style='width:100px'>作者</td><td style='width:200px'>单位</td><td style='width:200px'>投稿人邮箱</td><td style='width:100px'>下载</td><td style='width:100px'>审核状态</td><td style='width:100px'>操作</td></tr></thead><tbody>");
+			$.get(url+"/paper/"+meetingid,function(data){
+            	for(var i=0;i<data.length;i++)
+				{
+					var col = "";
+					var t = "";
+					if(data[i].status==1)
+					{
+						t="录用";
+					}
+					else if(data[i].status==2)
+					{
+						t="修改后录用";
+					}
+					else if(data[i].status==3)
+					{
+						t="待审核";
+					}
+					else if(data[i].status==4)
+					{
+						t="不录用";
+					}
+					else if(data[i].status==5)
+					{
+						t="待修改";
+					}
+					else if(data[i].status==6)
+					{
+						t="已修改待审核";
+					}
+					if(data[i].status==1||data[i].status==2)
+					{
+						col = "green";
+					}
+					else if(data[i].status==5)
+					{
+						col = "#F90";
+					}
+					else if(data[i].status==3||data[i].status==6)
+					{
+						col = "gray";
+					}
+					else
+					{
+						col = "red";
+					}
+					var splitArray1 = new Array();
+					var splitArray2 = new Array();
+					var stringname = data[i].names;
+					var stringorgan = data[i].organizations;
+					var regex = ",";
+					splitArray1 = stringname.split(regex);
+					splitArray2 = stringorgan.split(regex);
+					var namestring = splitArray1.join("<br />");
+					var organstring = splitArray2.join("<br />");
+					$("#meetingtable").append("<tr><td style='vertical-align:middle;'>"+data[i].number+
+                    		"</td><td style='vertical-align:middle;'>"+data[i].title+
+                            "</td><td style='vertical-align:middle;'>"+data[i].paperAbstract+
+							"</td><td style='vertical-align:middle;'>"+namestring+
+							"</td><td style='vertical-align:middle;'>"+organstring+
+							"</td><td style='vertical-align:middle;'>"+data[i].email+
+							"</td><td style='vertical-align:middle;'>"+"<button id='downloadbtn"+i+"' class='btn btn-info btn-sm' name='submit'>下载</button>"+
+							"</td><td style='vertical-align:middle;'>"+"<font color='"+col+"'>"+t+"</font>"+
+							"</td><td style='vertical-align:middle;'>"+"<button id='checkbtn"+i+"' class='btn btn-default btn-sm' name='submit' onClick='Check("+data[i].paperId+")'>审核</button>"+
+                            "</td></tr>")
+					if(data[i].status!=3&&data[i].status!=6)
+					{
+						$("#checkbtn"+i).attr("style","display:none;");
+					}
+					var downurl = data[i].downloadUrl;
+					$("#downloadbtn"+i).click(function(){				
+						var $eleForm = $("<form method='get'></form>");
+						$eleForm.attr("action",downurl);
+						$(document.body).append($eleForm);
+						$eleForm.submit();
+					});
+        		}
+			}); 
+		}
+	function Check(pid)
+		{
+			$('#checkpaper').modal();
+			PId=pid;
+		}
+	function checkemail(obj)
+		{
+			var result = false;
+			if(obj!=""){
+				var str = obj;
+				if(str.indexOf("@") != -1 && str.indexOf(".") != -1){
+					var a = str.split("@");
+					if(a[0].length > 0){
+						if(a[1].length > 0){
+							var b = a[1].split(".");
+							if(b[0].length > 0){
+								if(b[1].length > 1){
+									result = true;
+								}
+							}
+						}
+					}
+				}
+			}
+			return result;
+		}
+	function sendemail()
+	{
+		var advice = document.getElementById("advice").value;
+		var value=0;
+		var result = document.getElementsByName("checkresult");
+		for(var i = 0;i<result.length;i++)
+		{
+			if(result[i].checked==true)
+			{
+				value = result[i].value;
+				break;
+			}
+		}
+		if(advice=="")
+		{
+			layer.tips('评价不能为空！', '#advice', {
+				tips: [3, '#000']
+			});
+		}
+		$.post(url+"/paper/review?paperId="+PId+"&status="+value,{"mes":advice},function(data){
+			layer.msg('审核成功！3秒后刷新页面...', {
+				icon: 16,
+				shade: 0.01,
+				skin: 'layui-layer-setmybg'
+			});
+			setTimeout(function(){
+				window.location="uploadpaper.html";
+			}, 3000);
+		});
+	}
+</script>
+</html>
