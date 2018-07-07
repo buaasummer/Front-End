@@ -186,6 +186,24 @@
                 $("#uname").append(b);
                 //var b=checkCompany(); 
                 //$("#company").append(b);
+                //start
+                let userType = getCookie('type');
+                let userid = getCookie('userId');
+                if(userType == "user_option")
+                {
+                    $('#institutionIn').attr('style','display:none');
+                }
+                else if(userType == "institution_option")
+                {
+                    $('#institutionIn a').attr('href','institution-main.html?ins='+userid+'&page=0&size=9');
+                
+                }
+                else
+                {
+                    $('#institutionIn').attr('style','display:none');
+
+                }
+                //end
             });
             
 		}
