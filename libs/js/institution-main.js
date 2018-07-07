@@ -128,7 +128,7 @@ function doget(){
                                 </i>
                             </a>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="show_register.html?meetingid=${data[x].meetingId}" class="btn pmd-btn-fab pmd-btn-raised btn-primary" title="审核注册人员">
+                            <a href="show_register.html?meetingid=${data[x].meetingId}" class="btn pmd-btn-fab pmd-btn-raised btn-primary" title="查看注册人员">
                                 <i class="material-icons pmd-sm">
                                     <img src="../libs/img/addpeople.png" alt="Modify">
                                 </i>
