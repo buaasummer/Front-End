@@ -152,7 +152,7 @@ function Change()
                         skin: 'layui-layer-setmybg'
                     });
                     setTimeout(function(){
-                        loaction.reload();
+                        location.reload();
                     }, 3000);
                 });
             }
