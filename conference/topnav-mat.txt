@@ -31,7 +31,7 @@
                                         <li class="divider"></li>
                                         <li id="institutionIn"><a class="dropdown-item" href="#">进入单位主页</a></li>
                                         <li class="divider"></li>
-                                        <li id="instutionadd"><a class="dropdown-item" href="add-institutionuser.html">添加单位账号</a></li>
+                                        <li id="instutionadd"><a class="dropdown-item" href="#" onclick='addUser()'>添加单位账号</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -100,10 +100,10 @@
                             <div class="col-md-12">
                                 <div class="btn-group center" id="option" data-toggle="buttons">
                                     <label class="btn btn-default">
-                                        <input type="radio" class="toggle" value="user_option">个人用户登录
+                                        <input type="radio" name='login' class="toggle" value="user_option">个人用户登录
                                     </label>
                                     <label class="btn btn-default">
-                                        <input type="radio" class="toggle" value="institution_option">单位用户登录
+                                        <input type="radio" name='login' class="toggle" value="institution_option">单位用户登录
                                     </label>
                                 </div>
                                 <br>

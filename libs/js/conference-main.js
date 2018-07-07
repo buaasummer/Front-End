@@ -30,6 +30,8 @@ window.onload=function()
             }
             else if(userType == "institution_option")
             {
+                $('#register-show').attr('style','display:none;');
+                $('#register_link').attr('style','display:none;');
                 $('#institutionIn a').attr('href','institution-main.html?ins='+userid+'&page=0&size=9');
                 $("#uploadbtn").attr("style","display:none;");
                 $.get(url+"/meeting/isMatch?meetingId="+meetingid+"&institutionId="+userid,function(data){
@@ -41,6 +43,8 @@ window.onload=function()
             }
             else
             {
+                $('#register-show').attr('style','display:none;');
+                $('#register_link').attr('style','display:none;');
                 $('#institutionIn').attr('style','display:none');
                 $("#uploadbtn").attr("style","display:none;");
                 $('#postPaperH4').attr('style','display:none');
@@ -63,6 +67,9 @@ function doooget(){
         var registstartdate=data.registStartDate;
         var registrationdeadline = data.registrationDeadline;
         var enddate = data.endDate;
+        var down = data.modelDownloadUrl;
+        if(down!=null)
+            $('#papertemplate').attr('href',down);
         if(startdate!=null)
             $('#important_table').append('<tr><td>会议开始时间</td><td>'+startdate+'</td></tr>');
         else

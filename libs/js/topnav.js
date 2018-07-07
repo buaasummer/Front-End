@@ -99,7 +99,6 @@ function doPostLogin()
             var val2 = document.getElementById("password").value;
             var type = $('#option input:radio:checked').val();
             document.cookie = "type="+type;
-            //alert(document.cookie);
 
             if(type=="user_option"){
                 

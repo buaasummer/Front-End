@@ -56,7 +56,6 @@ window.onload = function(){
 }
 
 function changebrief(){
-    alert('a');
     $('#briefform').submit();
 }
 
@@ -64,8 +63,12 @@ function changebrief(){
 
 function changetouxinag(){
     $('#touxiangform').submit();
-    setTimeout(function(){},3000);
-    location.reload();
+    layer.msg('上传成功！3秒后刷新页面...', {
+        icon: 16,
+        shade: 0.01,
+        skin: 'layui-layer-setmybg'
+    });
+    setTimeout(function(){location.reload();},3000);
 }
 
 function prevpage(){
@@ -125,7 +128,7 @@ function doget(){
                                 </i>
                             </a>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="conference-main.html?meetingid=${data[x].meetingId}#registerpeople" class="btn pmd-btn-fab pmd-btn-raised btn-primary" title="审核注册人员">
+                            <a href="show_register.html?meetingid=${data[x].meetingId}" class="btn pmd-btn-fab pmd-btn-raised btn-primary" title="审核注册人员">
                                 <i class="material-icons pmd-sm">
                                     <img src="../libs/img/addpeople.png" alt="Modify">
                                 </i>
@@ -163,4 +166,75 @@ function doget(){
     });
     
 }
+function addUser(){
+    $('#addInstitutionUser').modal();
+}
+
+function doAddUser(){
+            
+    //获取要添加的用户信息
+    var val1 = document.getElementById("addusername").value;
+    var val2 = document.getElementById("addpassword").value;
+    var val3 = document.getElementById("addrepassword").value;
+    var user = {
+    "userName":val1,
+    "password":val2
+    };
+    //获取单位用户ID
+    var userid = getCookie("userId");
+    //alert(userid);
+
+    user = JSON.stringify(user);
+    var settings = {
+            type: "POST",
+            url:url+'/institution/addUser?institutionId='+userid,
+            data:user,
+            error: function(XHR,textStatus,errorThrown) {
+                alert("error!");
+                alert(errorThrown);
+            },
+            success: function(data,textStatus) {
+                if(data==0)
+                {
+                    alert("该账号无效！");
+                }
+                else if(data==1)
+                {
+                    alert("添加账号成功！");
+                    location.reload();	
+                }
+                else if(data==2)
+                {
+                    alert("用户名已存在！");
+                }
+            },
+            headers: {
+                "Content-Type":"application/json"
+            }        
+    };
+
+    //判断格式是否正确
+    var isRightForm = true;
+    if(val1=="")
+    {
+        alert("昵称不能为空！");
+        isRightForm = false;
+    }
+    if(val2=="")
+    {
+        alert("密码不能为空！");
+        isRightForm = false;
+    }
+    if(val2!=val3)
+    {
+        alert("两次输入密码不相同！");
+        isRightForm = false;
+    }
+
+    if(isRightForm){
+        $.ajax(settings);
+    }
+}
+
+
 

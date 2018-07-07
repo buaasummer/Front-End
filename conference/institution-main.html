@@ -11,6 +11,7 @@
     <script type="text/javascript" src="../libs/js/jquery-form.js"></script>
     <script type="text/javascript" src="../libs/js/institution-main.js"></script>
     <script type="text/javascript" src="../libs/js/topnav.js"></script>
+    <script src='./layer/layer.js'></script>
     <script src="../libs/js/global.js"></script>
     <script src="../libs/js/ripple-effect.js"></script>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css">
@@ -99,5 +100,40 @@
             <br><br><br><br><br>
             <button onclick="nextpage()" class="btn pmd-btn-fab pmd-btn-raised btn-primary">下一页</button>
     </div>
+
+    <!--注册部分-->
+    <div class="modal fade" id="addInstitutionUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="margin-top:40%">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">添加账号</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>   
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal col-md-offset-0" id="login_form">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="username" class="control-label">昵称：</label>
+                                <input class="form-control required" type="text" placeholder="Username" id="addusername" name="username" autofocus maxlength="20"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="control-label">密码：</label>
+                                <input class="form-control required" type="password" placeholder="Password" id="addpassword" name="password" autofocus maxlength="20"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="repassword" class="control-label">确认密码：</label>
+                                <input class="form-control required" type="password" placeholder="Confirm Password" id="addrepassword" name="repassword" autofocus maxlength="20"/>
+                            </div>
+                            <div class="form-group col-md-offset-9">
+                                <button id='btn' type="submit" class="btn btn-primary" name="submit" onclick="doAddUser()">添加账号</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+    <!--注册部分结束-->
 </body>
 </html>

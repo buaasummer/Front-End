@@ -220,10 +220,10 @@
         <br><br>
         <!--创建会议页面-->
         <div class="container bg-warning">
-            <h2>发布新的会议</h2>
+            <h2>修改当前会议</h2>
             <br><br>
             <!--<form class="form-horizonal" id="aaa">-->
-            <form class="form-horizonal" enctype="multipart/form-data" method="post" action="http://154.8.211.55:8081/meeting/modify/"+meetingid id="aaa">
+            <form class="form-horizonal" enctype="multipart/form-data" method="post" action="http://154.8.211.55:8081/meeting/modify/" id="aaa">
                 <div class="panel panel-success">
                     <div class="panel-heading">
                         <h3 class="panel-title">会议基本信息</h3>
@@ -562,7 +562,7 @@
             /***/    alert("审核结果发布时间不能晚于注册结束时间！");
             /***/    event.returnValue=false;
             /***/}
-            /*else if(inputfile==null||inputfile=="")
+            else if(inputfile==null||inputfile=="")
             {
                 alert("请上传论文模板！");
                 event.returnValue=false;
@@ -571,6 +571,7 @@
                 alert("路径不正确!");
                 event.returnValue=false;
             }
+            /*
             else if(fileExt.indexOf(extName+"|")==-1)
             {
                 alert("该文件类型不允许上传。请上传 "+fileExt+" 类型的文件，当前文件类型为"+extName);
@@ -580,7 +581,8 @@
 
             else
             {
-                //$("#aaa").submit();         
+                //$("#aaa").submit();   
+                $('#aaa').attr('action','http://154.8.211.55:8081/meeting/modify/'+location.search.split('=')[1]);      
                 $("#aaa").ajaxForm(function(data){
                 /* if(data==1)alert("注册成功");
                 if(data==2)alert("该单位已存在");
@@ -588,7 +590,7 @@
                 if(data==4)alert("用户名已存在");*/
                 //alert(data);
                 meeting_id=data;
-                alert('修改成功!');
+                alert('修改会议成功!');
               });  
             
             setTimeout( function(){
@@ -629,7 +631,7 @@
 						else
 						{
 							alert("注册成功！");
-							window.location.href='Navigation.html';
+							window.location.href='search.html';
 							
 						}
 			        },

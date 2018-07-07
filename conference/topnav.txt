@@ -104,10 +104,10 @@
                             <div class="col-md-12">
                                 <div class="btn-group center" id="option" data-toggle="buttons">
                                     <label class="btn btn-default">
-                                        <input type="radio" class="toggle" value="user_option">个人用户登录
+                                        <input type="radio" name='login' class="toggle" value="user_option">个人用户登录
                                     </label>
                                     <label class="btn btn-default">
-                                        <input type="radio" class="toggle" value="institution_option">单位用户登录
+                                        <input type="radio" name='login' class="toggle" value="institution_option">单位用户登录
                                     </label>
                                 </div>
                                 <br>

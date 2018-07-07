@@ -511,7 +511,7 @@
             /***/    alert("审核结果发布时间不能晚于注册结束时间！");
             /***/    event.returnValue=false;
             /***/}
-            /*else if(inputfile==null||inputfile=="")
+            else if(inputfile==null||inputfile=="")
             {
                 alert("请上传论文模板！");
                 event.returnValue=false;
@@ -520,6 +520,7 @@
                 alert("路径不正确!");
                 event.returnValue=false;
             }
+            /*
             else if(fileExt.indexOf(extName+"|")==-1)
             {
                 alert("该文件类型不允许上传。请上传 "+fileExt+" 类型的文件，当前文件类型为"+extName);
@@ -578,7 +579,7 @@
 						else
 						{
 							alert("注册成功！");
-							window.location.href='Navigation.html';
+							window.location.href='search.html';
 							
 						}
 			        },
