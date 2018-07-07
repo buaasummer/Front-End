@@ -97,6 +97,7 @@ function doPostLogin()
 			//alert("qqq");
 			var val1 = document.getElementById("email_username").value;
             var val2 = document.getElementById("password").value;
+           
             var type = $('#option input:radio:checked').val();
             document.cookie = "type="+type;
 
@@ -138,7 +139,8 @@ function doPostLogin()
 function logout() 
 {
     setCookie("userId", "", -1);
-    setCookie("type","",-1)
+    setCookie("type","",-1);
+    setCookie("adminID","",-1);
     location.reload();
 }
 
@@ -225,5 +227,5 @@ function createMeeting()
 }
 function administration()
         {
-            window.location.href="Administration.html";
+            window.location.href="adminLogin.html";
         }

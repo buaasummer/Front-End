@@ -222,6 +222,10 @@
       var month=d.getMonth() + 1;
       var year=d.getFullYear();
       var u_key=location.search.split("=")[1];
+      if(getCookie('adminID')=='')
+      {
+          $('adminbtn').attr('style','display:none;');
+      }
       //alert(u_key);
       if(u_key==null){
       $.get(meeting_url+"?startDate="+year+"-"+month+"-"+day+"&size=10",function(data){
@@ -484,6 +488,9 @@
                   window.location.reload();;
               }
           });
+      }
+      else{
+        alert('请选择账户类型');
       }
   }
   </script>
